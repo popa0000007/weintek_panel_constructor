@@ -7,6 +7,7 @@ const SIM = cfg.__sim === true;                                 // констр�
 const ELS = SCREEN.els || [];
 const POPS = SCREEN.pops || {};
 const TAGS = SCREEN.tags || {};
+const LIB = SCREEN.lib || {};
 const POLLS = SCREEN.polls || [];
 const buf = {};                  // ключ опроса -> слова
 const demoV = {};                // демо-значения тегов (запись в демо-режиме)
@@ -573,6 +574,50 @@ const RENDER = {
     });
     strokeRect(px, py, pw, ph, C.panelBorder, 1);
   },
+  sym: function (e, x, y) {
+    // пользовательский символ из библиотеки проекта (SCREEN.lib[e.lib]): фигуры в своих координатах d.w × d.h,
+    // масштабируются в e.w × e.h; цвета '@f' / '@s' / '@c' берутся из состояния по значению тега e.tag
+    const d = LIB[e.lib];
+    if (!d) { rrect(x, y, e.w, e.h, 3, C.panel, C.alarm, 1.5, [4, 3]); textFit('нет символа', x + e.w / 2, y + e.h / 2, e.w - 4, 11, C.alarm, 'center', false); return; }
+    const v = e.tag ? tagVal(e.tag) : undefined;
+    let s = null;
+    const sl = d.sts || [];
+    if (!ndv(v)) for (let i = 0; i < sl.length; i++) if (+sl[i].v === +v) { s = sl[i]; break; }
+    if (!s) s = (ndv(v) ? d.nd : d.df) || { f: C.stop, s: C.text, c: C.text, tx: '' };
+    const kx = e.w / (+d.w || 1), ky = e.h / (+d.h || 1), ks = Math.min(kx, ky);
+    const col = function (c) { return c === '@f' ? s.f : c === '@s' ? s.s : c === '@c' ? s.c : c; };
+    const off = s.bl && !ui.blink;
+    if (off) cv.globalAlpha = 0.45;
+    (d.shapes || []).forEach(function (h) {
+      if (h.sv && h.sv.length) {
+        let ok = false;
+        for (let i = 0; i < h.sv.length; i++) if (!ndv(v) && +h.sv[i] === +v) ok = true;
+        if (!ok) return;
+      }
+      const fill = col(h.fill), stroke = col(h.stroke), lw = (+h.lw || 1) * ks, dash = h.dash ? [4, 3] : null;
+      if (h.k === 'rect') rrect(x + h.x * kx, y + h.y * ky, h.w * kx, h.h * ky, (+h.r || 0) * ks, fill, stroke, lw, dash);
+      else if (h.k === 'ell') {
+        const n = 36, cx = x + (h.x + h.w / 2) * kx, cy = y + (h.y + h.h / 2) * ky, rx = h.w * kx / 2, ry = h.h * ky / 2, pts = [];
+        for (let i = 0; i < n; i++) { const a = i * 2 * Math.PI / n; pts.push(cx + rx * Math.cos(a), cy + ry * Math.sin(a)); }
+        poly(pts, fill, stroke, lw, dash);
+      } else if (h.k === 'poly' || h.k === 'line') {
+        const p = h.pts || [], pts = [];
+        for (let i = 0; i + 1 < p.length; i += 2) pts.push(x + p[i] * kx, y + p[i + 1] * ky);
+        if (pts.length < 4) return;
+        if (h.k === 'poly' && h.closed !== false) poly(pts, fill, stroke, lw, dash);
+        else {
+          cv.beginPath(); cv.moveTo(pts[0], pts[1]);
+          for (let i = 2; i < pts.length; i += 2) cv.lineTo(pts[i], pts[i + 1]);
+          if (fill) { cv.fillStyle = fill; cv.fill(); }
+          cv.strokeStyle = stroke || fill || C.text; cv.lineWidth = lw; cv.lineJoin = 'round'; cv.setLineDash(dash || []); cv.stroke(); if (dash) cv.setLineDash([]);
+        }
+      } else if (h.k === 'text') {
+        const t = String(h.tx || '').split('@lb').join(subst(e.lb)).split('@st').join(s.tx || '');
+        textFit(t, x + h.x * kx, y + h.y * ky, h.w ? h.w * kx : e.w, Math.max(8, Math.round((+h.size || 12) * ks)), col(h.color) || C.text, h.align || 'center', !!h.bold);
+      }
+    });
+    if (off) cv.globalAlpha = 1;
+  },
   group: function (e, x, y) {
     const sx = GX, sy = GY;
     GX = x; GY = y;
@@ -631,6 +676,8 @@ function screenInit() {
       ELS.length = 0; (s.els || []).forEach(function (e) { ELS.push(e); });
       Object.keys(POPS).forEach(function (k) { delete POPS[k]; });
       Object.keys(s.pops || {}).forEach(function (k) { POPS[k] = s.pops[k]; });
+      Object.keys(LIB).forEach(function (k) { delete LIB[k]; });
+      Object.keys(s.lib || {}).forEach(function (k) { LIB[k] = s.lib[k]; });
       req();
     },
     showPop: function (id, p) { ui.stack = []; ui.popup = id ? { type: 'cpop', id: id, p: p } : null; req(); },

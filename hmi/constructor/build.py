@@ -128,7 +128,7 @@ def main():
     html = rd(tpl_path)
     repl = {
         '/*@@CSS@@*/': rd(HERE, 'src', 'editor.css'),
-        '/*@@JS@@*/': rd(HERE, 'src', 'export.js') + '\n' + rd(HERE, 'src', 'editor.js'),
+        '/*@@JS@@*/': rd(HERE, 'src', 'export.js') + '\n' + rd(HERE, 'src', 'symlib.js') + '\n' + rd(HERE, 'src', 'panel.js') + '\n' + rd(HERE, 'src', 'editor.js'),
         '/*@@ENGINE@@*/': 'const ENGINE = ' + json.dumps(parts, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + ';',
         '/*@@EXAMPLES@@*/': 'const EXAMPLES = ' + json.dumps(examples, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + ';',
         '@@VERSION@@': VERSION,

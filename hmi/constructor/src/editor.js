@@ -52,21 +52,25 @@ const GCU_TAGS = (() => {
     [['view', 'состояние для символа (0 стоит, 1 готов, 2 работа, 3 авария, 4 ремонт, 5 пуск/останов)', 'int'], ['step', 'шаг программы', 'int'], ['faultCode', 'код аварии линии', 'int'],
       ['speed', 'задание скорости, %', 'real'], ['running', 'работает', 'bool'], ['ready', 'готов', 'bool'], ['fault', 'авария', 'bool'], ['remote', 'ПЧ в дистанции', 'bool'],
       ['starting', 'пуск', 'bool'], ['stopping', 'останов', 'bool'], ['duty', 'основной', 'bool'], ['repair', 'в ремонте', 'bool'], ['starts', 'число пусков', 'int'], ['drv', 'состояние ПЧ', 'int'],
-      ['fltDrive', 'авария ПЧ', 'bool'], ['fltComm', 'нет связи с ПЧ', 'bool']].forEach(x => a(P + x[0], N + x[1], x[2]));
+      ['fltDrive', 'авария ПЧ', 'bool'], ['fltComm', 'нет связи с ПЧ', 'bool'], ['fltStart', 'частотник не запустился', 'bool'], ['fltStop', 'частотник не остановился', 'bool'],
+      ['fltUnxStart', 'самопроизвольный пуск', 'bool'], ['fltUnxStop', 'самопроизвольный останов', 'bool']].forEach(x => a(P + x[0], N + x[1], x[2]));
     a('gcu:line.' + n + '.p', N + 'давление линии нагнетания, бар', 'real'); a('gcu:line.' + n + '.ok', N + 'датчик давления линии достоверен', 'bool');
     a('gcu:seal.' + n + '.p', N + 'давление гидроподпора', 'real'); a('gcu:seal.' + n + '.f', N + 'расход гидроподпора', 'real');
+    a('gcu:seal.' + n + '.pOk', N + 'датчик давления гидроподпора достоверен', 'bool'); a('gcu:seal.' + n + '.fOk', N + 'датчик расхода гидроподпора достоверен', 'bool');
     a('gcu:seal.' + n + '.hh', N + 'гидроподпор HH', 'bool'); a('gcu:seal.' + n + '.ll', N + 'гидроподпор LL', 'bool');
     a('gcu:manSpeed.' + n, N + 'ручное задание скорости, % (чтение)', 'real');
   });
   a('gcu:air.2.p', 'Воздух ПМУ насосов, бар', 'real'); a('gcu:air.2.ok', 'Воздух ПМУ насосов: датчик достоверен', 'bool');
   a('gcu:air.1.p', 'Воздух ПМУ циклонов, бар', 'real'); a('gcu:air.1.ok', 'Воздух ПМУ циклонов: датчик достоверен', 'bool');
   ['пульт ГЦУ', 'шкаф гидроциклонов', 'шкаф ПЛК', 'панель HMI'].forEach((w, i) => a('gcu:alm2.estop.' + i, 'Нажат аварийный стоп: ' + w, 'bool'));
+  [1, 2].forEach(n => a('gcu:alm2.sealBad.' + n, 'Н-' + n + ': датчик давления гидроподпора неисправен', 'bool'));
   a('gcu:alm2.light', 'Световая сигнализация включена', 'bool'); a('gcu:alm2.horn', 'Звуковая сигнализация включена', 'bool');
   a('gcu:alm2.doorGcu', 'Дверь пульта ГЦУ открыта', 'bool'); a('gcu:alm2.doorCyc', 'Дверь шкафа ГЦ открыта', 'bool'); a('gcu:alm2.doorPlc', 'Дверь шкафа ПЛК открыта', 'bool');
   for (let i = 1; i <= 18; i++) {
     const P = 'gcu:valve.' + i + '.', N = VALVE_N[i] + ': ';
     [['view', 'состояние для символа (0 закр., 1 откр., 2 движ., 3 авария, 4 ремонт, 5 неизв.)', 'int'], ['opened', 'открыта', 'bool'], ['closed', 'закрыта', 'bool'],
-      ['moving', 'в движении', 'bool'], ['fault', 'авария', 'bool'], ['local', 'местное управление', 'bool'], ['repair', 'ремонт', 'bool']].forEach(x => a(P + x[0], N + x[1], x[2]));
+      ['moving', 'в движении', 'bool'], ['fault', 'авария', 'bool'], ['local', 'местное управление', 'bool'], ['repair', 'ремонт', 'bool'],
+      ['fltTravel', 'превышено время хода', 'bool'], ['fltLimits', 'неисправность концевиков', 'bool'], ['fltSwitch', 'неисправность местного переключателя', 'bool'], ['fltSignal', 'недостоверный сигнал', 'bool']].forEach(x => a(P + x[0], N + x[1], x[2]));
   }
   const SET = [['pressSP', 'Уставка давления, бар', 'real'], ['kp', 'Kp регулятора давления', 'real'], ['ti', 'Ti регулятора давления, с', 'real'],
     ['spdMin', 'Скорость минимум, %', 'real'], ['spdMax', 'Скорость максимум, %', 'real'], ['levelSP', 'Уставка уровня, %', 'real'], ['hyst', 'Зона нечувствительности ±, %', 'real'],
@@ -74,6 +78,7 @@ const GCU_TAGS = (() => {
     ['nStart', 'Циклонов при пуске', 'int'], ['nMin', 'Циклонов минимум', 'int'], ['nMax', 'Циклонов максимум', 'int'], ['duty', 'Основной насос (1/2)', 'int'],
     ['tScour', 'Размыв при пуске, с', 'int'], ['tFlushStart', 'Промывка при пуске, с', 'int'], ['tFlushStop', 'Промывка при останове, с', 'int'], ['tDrain', 'Дренаж, с', 'int']];
   SET.forEach(x => a('gcuset:' + x[0], 'Уставка DB101 (чтение и запись): ' + x[1], x[2]));
+  SET.forEach(x => a('gcu:set.' + x[0], 'Уставка DB101 (только чтение): ' + x[1], x[2]));
   ['Н-1', 'Н-2', 'ГЦ-1', 'ГЦ-2', 'ГЦ-3', 'ГЦ-4', 'ГЦ-5', 'ГЦ-6'].forEach((w, i) => a('gcuset:repair.' + i, 'Вывод в ремонт (запись): ' + w, 'bool'));
   a('gcuspd:1', 'Ручное задание скорости Н-1, % (запись)', 'real'); a('gcuspd:2', 'Ручное задание скорости Н-2, % (запись)', 'real');
   return L;
@@ -85,7 +90,7 @@ const TL = {
   text: 'Текст', value: 'Значение', valuebox: 'Окно значения', rect: 'Прямоугольник', pipe: 'Труба', circle: 'Круг', line: 'Линия', tri: 'Треугольник',
   clock: 'Дата и время', valve: 'Задвижка', pump: 'Насос / мотор', pumpcard: 'Карточка насоса ГЦУ', cyclone: 'Гидроциклон', sensor: 'Датчик (кружок)',
   tank: 'Ёмкость с уровнем', bar: 'Столбик', lamp: 'Лампа', state: 'Многосостояние', button: 'Кнопка', hold: 'Кнопка «пока нажата»', input: 'Поле ввода',
-  alarmline: 'Строка аварий ГЦУ', alarms: 'Список сообщений', trend: 'Тренд', group: 'Группа'
+  alarmline: 'Строка аварий ГЦУ', alarms: 'Список сообщений', trend: 'Тренд', group: 'Группа', sym: 'Свой символ'
 };
 const PAL = [
   ['Основные', [
@@ -178,7 +183,9 @@ const F = {
   alarmline: [],
   alarms: [['items', 'Сообщения', 'items'], ['empty', 'Если пусто', 'text'], ['size', 'Шрифт', 'num'], ['rh', 'Высота строки', 'num']],
   trend: [['pens', 'Перья', 'pens'], ['min', 'Мин. шкалы', 'num'], ['max', 'Макс. шкалы', 'num'], ['span', 'Окно, с', 'num'], ['dec', 'Знаков после ,', 'num']],
-  group: []
+  group: [],
+  get sym() { return [['lib', 'Символ', 'sel', (proj.lib || []).length ? proj.lib.map(d => [d.id, d.name]) : [['', '— библиотека пуста —']]], ['edit', '', 'libbtn'],
+    ['tag', 'Состояние (тег)', 'tag', null, 'Значение тега выбирает состояние из таблицы символа'], ['lb', 'Подпись', 'text', null, 'Подставляется вместо «@lb» в тексте символа']]; }
 };
 const NOTE = {
   alarmline: 'Бегущая строка аварий ГЦУ (те же сообщения, что в окне «Аварии»). Нужны данные DB100.',
@@ -190,7 +197,7 @@ const NOTE = {
 const RULE_KEYS = {
   rect: ['fill', 'stroke', 'lw'], pipe: ['fill'], circle: ['fill', 'stroke'], text: ['tx', 'color', 'size', 'bold'], value: ['color', 'fill', 'stroke', 'unit'], valuebox: ['color', 'stroke', 'ti'],
   line: ['color', 'lw', 'dash'], tri: ['fill'], lamp: ['on', 'off', 'lb'], state: ['stroke'], button: ['tx', 'style'], sensor: ['fill', 'color', 'tx'], bar: ['fill'], tank: ['fill'],
-  clock: ['color'], valve: [], pump: ['lb'], hold: ['tx'], input: [], alarms: [], trend: [], cyclone: [], pumpcard: [], alarmline: [], group: []
+  clock: ['color'], sym: ['lb'], valve: [], pump: ['lb'], hold: ['tx'], input: [], alarms: [], trend: [], cyclone: [], pumpcard: [], alarmline: [], group: []
 };
 const KEY_KIND = { fill: 'color', stroke: 'color', color: 'color', on: 'color', off: 'color', lw: 'num', size: 'num', tx: 'text', lb: 'text', unit: 'text', ti: 'text', bold: 'bool', dash: 'bool', style: 'sel' };
 const KEY_NAME = { fill: 'Заливка', stroke: 'Рамка', color: 'Цвет', on: 'Цвет при 1', off: 'Цвет при 0', lw: 'Толщина', size: 'Шрифт', tx: 'Текст', lb: 'Подпись', unit: 'Ед. изм.', ti: 'Заголовок', bold: 'Жирный', dash: 'Пунктир', style: 'Цвет кнопки', hide: 'Скрыть' };
@@ -264,6 +271,7 @@ function unionBox(list) {
 function elLabel(e) {
   if (e.nm) return e.nm;
   const t = TL[e.t] || e.t;
+  if (e.t === 'sym') { const d = symFind(e.lib); return 'Символ «' + (d ? d.name : '?') + '»'; }
   if (e.t === 'text') return '«' + String(e.tx || '').split('\n')[0].slice(0, 24) + '»';
   if (e.t === 'button' || e.t === 'hold') return t + ' «' + (e.tx || '') + '»';
   if ((e.t === 'valve' || e.t === 'pump' || e.t === 'cyclone') && e.src !== 'tag') return t + ' ' + (e.t === 'valve' ? VALVE_N[e.n] || e.n : (e.t === 'pump' ? 'Н-' + e.n : 'ГЦ-' + e.n));
@@ -715,6 +723,7 @@ function refreshAll(keepZoom) {
 function addPreset(key, x, y) {
   let pre = null;
   PAL.forEach(g => g[1].forEach(p => { if (p[0] === key) pre = p[2]; }));
+  if (key.indexOf('sym:') === 0) { const d = symFind(key.slice(4)); if (d) pre = { t: 'sym', lib: d.id, w: Math.round(d.w), h: Math.round(d.h), tag: '', lb: '' }; }
   if (!pre) return;
   pushUndo();
   const e = JSON.parse(JSON.stringify(pre));
@@ -879,14 +888,16 @@ function icon(key, cv) {
 }
 function renderPalette() {
   const box = $('#tab-pal'); if (box.childElementCount) return;
-  PAL.forEach(g => {
+  const groups = PAL.concat([['Мои символы', (proj.lib || []).map(d => ['sym:' + d.id, d.name, null])]]);
+  groups.forEach(g => {
     const grid2 = h('div', { class: 'pal' });
     g[1].forEach(p => {
-      const cv = h('canvas', { 'aria-hidden': 'true' }); icon(p[0], cv);
+      const cv = h('canvas', { 'aria-hidden': 'true' }); if (p[0].indexOf('sym:') === 0) symIcon(symFind(p[0].slice(4)), cv); else icon(p[0], cv);
       const b = h('button', { draggable: 'true', title: 'Перетащите на холст или нажмите', onclick: () => { if (mode !== 'edit') setMode('edit'); addPresetCenter(p[0]); } }, cv, p[1]);
       b.addEventListener('dragstart', ev => { ev.dataTransfer.setData('text/x-gcu-pal', p[0]); ev.dataTransfer.effectAllowed = 'copy'; });
       grid2.append(b);
     });
+    if (g[0] === 'Мои символы') grid2.append(h('button', { title: 'Создать и изменить свои технологические элементы, импорт SVG', onclick: () => openLib() }, h('span', { style: 'font-size:20px;line-height:26px' }, '＋'), 'Библиотека…'));
     box.append(h('div', { class: 'palgrp' }, h('h3', {}, g[0]), grid2));
   });
   box.append(h('p', { class: 'note' }, 'Перетащите элемент на холст. Двойной щелчок по элементу — к его тексту или тегу в свойствах. Правая кнопка — меню.'));
@@ -1187,6 +1198,7 @@ function renderInsp() {
         case 'tag': ctl = tagIn(e, k); break;
         case 'tagw': ctl = tagIn(e, k, true); break;
         case 'cond': s1.append(h('div', { style: 'font-size:12px;color:var(--fg2);margin-top:6px' }, l)); s1.append(condEd(e, k)); if (hint) s1.append(h('div', { class: 'hint' }, hint)); return;
+        case 'libbtn': s1.append(h('div', { class: 'row' }, h('button', { class: 'mini', onclick: () => openLib(e.lib) }, 'Изменить символ…'))); return;
         case 'act': s1.append(h('div', { style: 'font-size:12px;color:var(--fg2);margin-top:6px' }, l)); s1.append(actEd(e, k)); return;
         case 'sts': s1.append(h('div', { style: 'font-size:12px;color:var(--fg2);margin-top:6px' }, 'Состояния: значение → текст, заливка, цвет текста, мигание'));
           s1.append(listEd(e, k, [['v', 'num', '46px'], ['tx', 'text', '1fr'], ['f', 'color', '64px'], ['c', 'color', '64px'], ['bl', 'bool', '30px', '']], () => ({ v: (e.sts || []).length, tx: 'СОСТОЯНИЕ', f: CL.stop, c: CL.text }), 'состояние')); return;
@@ -1416,7 +1428,7 @@ async function delDb(db) {
   pushUndo(); proj.dbs.splice(proj.dbs.indexOf(db), 1); dataSel = null; refreshDatalist(); rtSync(true); openData();
 }
 function openImport() {
-  const ta = h('textarea', { class: 'code', id: 'impText', placeholder: 'Вставьте сюда:\n• исходник DB из TIA (ПКМ по блоку → Generate source from blocks → открыть .db/.scl блокнотом → скопировать всё). Если DB использует свои типы (UDT) — вставьте и их описание TYPE … END_TYPE;\n• или таблицу из Excel: Имя ⇥ Тип ⇥ Смещение ⇥ Комментарий;\n• или файл тегов EasyBuilder (.csv).', style: 'height:240px' });
+  const ta = h('textarea', { class: 'code', id: 'impText', placeholder: 'Вставьте сюда:\n• исходник из TIA: ПКМ по DB (и по его типам данных UDT) → Generate source from blocks → открыть файл(ы) блокнотом → скопировать всё в одно поле, DB и TYPE … END_TYPE можно подряд и в любом порядке (UDT отдельно вставлять не обязательно, если они в одном файле);\n• или таблицу из Excel: Имя ⇥ Тип ⇥ Смещение ⇥ Комментарий;\n• или файл тегов EasyBuilder (.csv).', style: 'height:240px' });
   const file = h('input', { type: 'file', accept: '.scl,.db,.udt,.csv,.txt,.awl' });
   file.addEventListener('change', () => { const f = file.files[0]; if (!f) return; const rd = new FileReader(); rd.onload = () => { ta.value = rd.result; preview(); }; rd.readAsText(f, 'utf-8'); });
   const out = h('div');
@@ -1576,7 +1588,7 @@ function download(name, text) {
 // ---------------------------------------------------------------- проект: файлы
 function normalize(p) {
   p.v = 1; p.conn = Object.assign({ dev: 'Siemens S7-1200/S7-1500', hiFirst: true, realSwap: false, maxWords: 90, font: 'Arial', bold: true }, p.conn || {});
-  p.dbs = p.dbs || []; p.screens = p.screens || []; p.pops = p.pops || [];
+  p.dbs = p.dbs || []; p.screens = p.screens || []; p.pops = p.pops || []; p.lib = p.lib || []; p.panel = Object.assign(panelDefault(), p.panel || {});
   if (!p.screens.length) p.screens.push({ id: 's1', name: 'Окно 1', w: 1024, h: 664, ox: 0, oy: 48, bg: CL.bg, els: [] });
   let mx = +p.nextId || 0;
   const scan = l => walkEls(l, e => { const n = +String(e.id || '').replace(/\D/g, ''); if (n > mx) mx = n; });
@@ -1588,6 +1600,7 @@ function normalize(p) {
 }
 function loadProject(p, msg) {
   proj = normalize(p);
+  refreshPalette();
   cur = { kind: 'screen', id: proj.screens[0].id }; lastScreen = cur.id; sel = [];
   undoS.length = 0; redoS.length = 0; RT.mem = {};
   memInitDemo(true);
@@ -1597,7 +1610,7 @@ function loadProject(p, msg) {
 async function newProject() {
   if (!(await ask('Новый проект?', 'Текущий проект в браузере будет заменён. Сохраните его в файл, если он нужен.', 'Создать'))) return;
   loadProject({ name: 'Новый проект', dbs: [{ id: 'db1', name: 'MY_DB', num: 200, ms: 500, fields: autoOffsets([{ n: 'Level', t: 'real', cm: 'уровень, %', d: 50, ds: 'sin', da: 20 }, { n: 'Run', t: 'bool', cm: 'работает', d: 1 }, { n: 'Cmd', t: 'int', cm: 'команда', wr: true }]) }],
-    screens: [{ id: 's1', name: 'Окно 1', w: 1024, h: 664, ox: 0, oy: 48, bg: CL.bg, demoChip: [860, 60], els: [] }], pops: [] }, 'Новый проект. Добавьте блоки данных в «Данные ПЛК» и перетащите элементы.');
+    screens: [{ id: 's1', name: 'Окно 1', w: 1024, h: 664, ox: 0, oy: 48, bg: CL.bg, demoChip: [860, 60], els: [] }], pops: [], lib: [] }, 'Новый проект. Добавьте блоки данных в «Данные ПЛК» и перетащите элементы.');
 }
 function saveProject() {
   const txt = JSON.stringify(proj, null, 1);
@@ -1704,7 +1717,7 @@ function init() {
   $('#cSnap').onchange = ev => { grid.snap = ev.target.checked; };
   $('#sZoom').onchange = ev => { if (ev.target.value === 'fit') { zoomMode = 'fit'; layoutStage(); } else setZoom(+ev.target.value); };
   $('#mEdit').onclick = () => setMode('edit'); $('#mRun').onclick = () => setMode('run');
-  $('#bData').onclick = openData; $('#bExport').onclick = openExport; $('#bHelp').onclick = help;
+  $('#bPanel').onclick = openPanel; $('#bLib').onclick = () => openLib(); $('#bData').onclick = openData; $('#bExport').onclick = openExport; $('#bHelp').onclick = help;
   $('#mClose').onclick = closeModal;
   $('#modal').addEventListener('mousedown', ev => { if (ev.target.id === 'modal') closeModal(); });
   $$('.tabs button').forEach(b => b.onclick = () => { leftTab = b.dataset.tab; $$('.tabs button').forEach(x => x.classList.toggle('on', x === b)); $$('.tabpane').forEach(p => { p.hidden = p.id !== 'tab-' + leftTab; }); renderLayers(); });

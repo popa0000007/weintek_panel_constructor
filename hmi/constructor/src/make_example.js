@@ -215,7 +215,22 @@ const project = {
   ],
   pops: [{ id: 'pm', name: 'Мотор (окно управления)', ti: 'Мотор # — управление', w: 420, h: 320, els: PM }]
 };
+// ================================================================ остальные окна проекта (make_<окно>.js) и пример своего символа
+project.panel = { model: 'cMT2158X', w: 1024, h: 768, top: 48, bot: 56 };
+project.lib = [{ id: 'sym_agit', name: 'Мешалка (пример символа)', w: 80, h: 80,
+  sts: [{ v: 0, tx: 'СТОИТ', f: C.stop, s: C.text, c: C.text }, { v: 1, tx: 'РАБОТА', f: C.run, s: C.text, c: C.white }, { v: 2, tx: 'АВАРИЯ', f: C.alarm, s: C.text, c: C.white, bl: true }],
+  df: { tx: '', f: C.stop, s: C.text, c: C.text }, nd: { tx: '—', f: '#E3E4E1', s: C.text2, c: C.text2 },
+  shapes: [{ k: 'rect', x: 8, y: 20, w: 64, h: 52, r: 4, fill: C.white, stroke: '@s', lw: 2 },
+    { k: 'line', pt: '40 4 40 52', stroke: '@s', lw: 3 }, { k: 'poly', pt: '14 52 66 52 60 62 20 62', fill: '@f', stroke: '@s', lw: 1.5 },
+    { k: 'ell', x: 34, y: 46, w: 12, h: 12, fill: '@f', stroke: '@s', lw: 1.5 }, { k: 'text', x: 40, y: 38, tx: '@lb', size: 14, bold: true, color: C.text }] }];
+project.screens[1].els.push(el('sym', { x: 900, y: 200, w: 80, h: 80, lib: 'sym_agit', tag: 'MY_DB.Motor[1].Run', lb: 'М1', nm: 'Мешалка (свой символ)' }));
+['pump', 'settings', 'alarms', 'trends', 'io', 'pd'].forEach(function (nm) {
+  const f = require('./make_' + nm + '.js')(require('./make_lib.js')('x_' + nm + '_'));
+  f.screens.forEach(s => project.screens.push(s));
+  (f.pops || []).forEach(s => project.pops.push(s));
+  (f.dbs || []).forEach(d => { if (!project.dbs.some(x => x.name === d.name)) project.dbs.push(d); });
+});
 const out = path.join(__dirname, '..', 'examples', 'gcu.json');
 fs.mkdirSync(path.dirname(out), { recursive: true });
 fs.writeFileSync(out, JSON.stringify(project, null, 1));
-console.log('examples/gcu.json', fs.statSync(out).size, 'элементов', M.length, E.length, PM.length);
+console.log('examples/gcu.json', fs.statSync(out).size, 'окон', project.screens.length, 'окон-pops', project.pops.length, 'DB', project.dbs.length);

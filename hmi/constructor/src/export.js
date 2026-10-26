@@ -121,6 +121,22 @@ function planPolls(project, used) {
 }
 
 // ---------------------------------------------------------------- экспорт одного окна
+// символ библиотеки -> компактное описание для кода панели (строки «показывать при» и «точки» разбираются в числа)
+function libOut(d) {
+  const num = function (t) { return String(t).split(/[\s,;]+/).filter(Boolean).map(Number).filter(isFinite); };
+  const o = { w: +d.w || 60, h: +d.h || 60, sts: (d.sts || []).map(clone), shapes: [] };
+  if (d.df) o.df = clone(d.df);
+  if (d.nd) o.nd = clone(d.nd);
+  (d.shapes || []).forEach(function (h) {
+    if (h.off) return;
+    const s = {};
+    Object.keys(h).forEach(function (k) { if (k !== 'svs' && k !== 'pt' && k !== 'off' && h[k] !== '' && h[k] !== undefined && h[k] !== null) s[k] = h[k]; });
+    if (h.svs) s.sv = num(h.svs);
+    if (h.pt) s.pts = num(h.pt);
+    o.shapes.push(s);
+  });
+  return o;
+}
 function exportScreen(project, screenId, engine, opts) {
   opts = opts || {};
   const scr = (project.screens || []).find(function (s) { return s.id === screenId; });
@@ -208,6 +224,13 @@ function exportScreen(project, screenId, engine, opts) {
   if (scr.pin) cfg.pin = String(scr.pin);
   const screen = { w: +scr.w, h: +scr.h, ox: +scr.ox || 0, oy: +scr.oy || 0, els: els, pops: popsOut, tags: tags, polls: polls };
   if (scr.bg) screen.bg = scr.bg;
+  const libIds = {};
+  walkObj(everything, function (k, v, o) { if (k === 't' && v === 'sym') libIds[o.lib] = 1; });
+  Object.keys(libIds).forEach(function (lid) {
+    const d = (project.lib || []).find(function (q) { return q.id === lid; });
+    if (!d) { warn.push('Символ «' + lid + '» не найден в библиотеке'); return; }
+    (screen.lib = screen.lib || {})[lid] = libOut(d);
+  });
   screen.opt = {};
   if (scr.diag) screen.opt.diag = [+scr.diag[0], +scr.diag[1]];
   if (scr.demoChip) screen.opt.demoChip = [+scr.demoChip[0], +scr.demoChip[1]];
@@ -219,7 +242,7 @@ function exportScreen(project, screenId, engine, opts) {
     const head = '// =====================================================================\n' +
       '//  ' + (project.name || 'Проект') + ' · ' + (scr.name || scr.id) + '\n' +
       '//  JS Object для Weintek cMT X (EasyBuilder Pro >= 6.09). Сделано в конструкторе панели ' + (engine.ver || '') + '\n' +
-      '//  Объект: X' + (scr.ox || 0) + ' Y' + (scr.oy || 0) + ' ' + scr.w + '×' + scr.h + '. Вставлять целиком; конфигурация — «Шаблон…».\n' +
+      '//  ' + (project.panel && project.panel.model ? 'Панель ' + project.panel.model + ' ' + project.panel.w + '×' + project.panel.h + ' · ' : '') + 'Объект: X' + (scr.ox || 0) + ' Y' + (scr.oy || 0) + ' ' + scr.w + '×' + scr.h + '. Вставлять целиком; конфигурация — «Шаблон…».\n' +
       '//  Не правьте этот текст вручную: меняйте окно в конструкторе и вставляйте заново.\n' +
       '// =====================================================================\n';
     code = head + 'const SCREEN=' + JSON.stringify(screen) + ';\n' + engine.core + engine.head +
@@ -317,7 +340,7 @@ function layoutFields(fields, types, errors) {
     }
     if (f.kind === 'string') { alignWord(); off += (f.len + 2) * (f.wide ? 2 : 1); return; }
     let fl = f.fields;
-    if (f.kind === 'udt') { fl = types[f.udt]; if (!fl) { errors.push('Тип «' + f.udt + '» не найден — вставьте и его описание (TYPE … END_TYPE)'); return; } }
+    if (f.kind === 'udt') { fl = types[f.udt]; if (!fl) { errors.push('Тип «' + f.udt + '» не найден в вставленном тексте — сгенерируйте исходник и для этого типа (UDT → Generate source from blocks) и вставьте его в то же поле, порядок не важен'); return; } }
     alignWord();
     place(fl, path + '.', cm, dry);
     alignWord();
@@ -441,5 +464,5 @@ function overlaps(db) {
 const EXPORT_API = { TYPES: TYPES, ENGINE_LIMIT: ENGINE_LIMIT, encodeAddress: encodeAddress, allTags: allTags, tagName: tagName,
   walkEls: walkEls, walkObj: walkObj, refsOf: refsOf, exportScreen: exportScreen, planPolls: planPolls, sclToDbs: sclToDbs,
   tableToFields: tableToFields, ebCsvToDbs: ebCsvToDbs, autoOffsets: autoOffsets, dbSize: dbSize, overlaps: overlaps, clone: clone,
-  typesOf: typesOf, popupRefs: popupRefs };
+  typesOf: typesOf, popupRefs: popupRefs, libOut: libOut };
 if (typeof module !== 'undefined') module.exports = EXPORT_API;

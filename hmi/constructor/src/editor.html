@@ -41,6 +41,8 @@
       <button id="mRun" title="Просмотр: элементы нажимаются, значения ПЛК имитируются">▶ Просмотр</button>
     </div>
     <div class="tb">
+      <button id="bPanel" title="Модель панели Weintek и размер экрана">Панель</button>
+      <button id="bLib" title="Свои технологические элементы: фигуры, состояния, импорт SVG">Символы</button>
       <button id="bData" class="accent2" title="Блоки данных ПЛК, теги, опросы">Данные ПЛК</button>
       <button id="bExport" class="accent" title="Получить код и конфигурацию для EasyBuilder">Экспорт в панель</button>
       <button id="bHelp" title="Как пользоваться">?</button>
@@ -81,6 +83,7 @@
 <div id="ctx" class="ctx" hidden></div>
 <div id="toast" class="toast" hidden></div>
 <datalist id="dlTags"></datalist>
+<datalist id="symTok"><option value="@f">заливка состояния</option><option value="@s">контур состояния</option><option value="@c">цвет текста состояния</option></datalist>
 <script>
 /*@@ENGINE@@*/
 /*@@EXAMPLES@@*/
