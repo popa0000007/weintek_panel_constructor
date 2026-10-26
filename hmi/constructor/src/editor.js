@@ -178,6 +178,7 @@ const F = {
     ['ms', 'Период, мс', 'num'], ['alive', 'Счётчик жизни', 'tagw', null, 'Необязательно: Int, растёт каждую отправку (ПЛК снимает команду, если он не меняется)'],
     ['en', 'Доступна, если', 'cond'], ['why', 'Почему недоступна', 'text']],
   input: [['tag', 'Тег', 'tagw'], ['dec', 'Знаков после ,', 'num'], ['unit', 'Ед. изм.', 'text'], ['min', 'Минимум', 'num'], ['max', 'Максимум', 'num'],
+    ['minT', 'Минимум из тега', 'tag', null, 'Необязательно: предел берётся из значения тега (например уставка другого параметра)'], ['maxT', 'Максимум из тега', 'tag'],
     ['ti', 'Заголовок клавиатуры', 'text'], ['pin', 'Пароль инженера', 'bool', null, 'Пароль задаётся в свойствах окна'], ['cf', 'Подтверждение', 'text', null, 'Пусто — без вопроса'],
     ['en', 'Доступно, если', 'cond'], ['size', 'Шрифт', 'num']],
   alarmline: [],
@@ -203,7 +204,7 @@ const KEY_KIND = { fill: 'color', stroke: 'color', color: 'color', on: 'color', 
 const KEY_NAME = { fill: 'Заливка', stroke: 'Рамка', color: 'Цвет', on: 'Цвет при 1', off: 'Цвет при 0', lw: 'Толщина', size: 'Шрифт', tx: 'Текст', lb: 'Подпись', unit: 'Ед. изм.', ti: 'Заголовок', bold: 'Жирный', dash: 'Пунктир', style: 'Цвет кнопки', hide: 'Скрыть' };
 const OPS = [['1', '= 1 (вкл)'], ['0', '= 0 (выкл)'], ['=', 'равно'], ['!=', 'не равно'], ['>', 'больше'], ['<', 'меньше'], ['>=', '≥'], ['<=', '≤'], ['bit', 'бит № = 1'], ['ok', 'есть данные'], ['nd', 'нет данных']];
 const OPV = { '=': 1, '!=': 1, '>': 1, '<': 1, '>=': 1, '<=': 1, bit: 1 };
-const ACTS = [['', '— нет —'], ['write', 'Записать значение в тег'], ['toggle', 'Переключить бит (0↔1)'], ['keypad', 'Ввести число с клавиатуры'], ['popup', 'Открыть своё окно'],
+const ACTS = [['', '— нет —'], ['write', 'Записать значение в тег'], ['multi', 'Записать несколько значений'], ['toggle', 'Переключить бит (0↔1)'], ['keypad', 'Ввести число с клавиатуры'], ['popup', 'Открыть своё окно'],
   ['close', 'Закрыть окно'], ['gcu', 'Команда ГЦУ'], ['pump', 'Команда насосу ГЦУ'], ['valvecmd', 'Команда задвижке ГЦУ'], ['valvewin', 'Окно задвижки ГЦУ'], ['pumpwin', 'Окно насоса ГЦУ'],
   ['resetall', 'Сброс всех аварий ГЦУ'], ['win', 'Перейти в базовое окно EasyBuilder']];
 const GCU_CMDS = [[1, '1 — ПУСК программы'], [2, '2 — СТОП программы'], [4, '4 — СБРОС аварий'], [8, '8 — Квитировать (звук)'], [10, '10 — АВТОМАТ'], [11, '11 — РУЧНОЙ']];
@@ -385,10 +386,10 @@ function simScreen() {
 }
 function rtSync(force) {
   const { scr, r } = simScreen();
-  const key = JSON.stringify([scr.id, scr.w, scr.h, scr.ox, scr.oy, scr.bg, scr.pin, r.screen.tags, r.screen.polls, r.screen.opt, proj.conn]);
+  const key = JSON.stringify([scr.id, scr.w, scr.h, scr.ox, scr.oy, scr.bg, scr.pin, r.screen.tags, r.screen.polls, r.screen.opt, proj.conn, mode]);
   RT.screen = r.screen;
   if (!force && RT.running && key === RT.key && RT.api) {
-    RT.api.setScreen({ els: r.screen.els, pops: r.screen.pops });
+    RT.api.setScreen({ els: r.screen.els, pops: r.screen.pops, lib: r.screen.lib });
   } else {
     RT.key = key;
     rtStart(scr, r);
@@ -423,7 +424,9 @@ function rtStart(scr, r) {
   RT.host = host;
   try { window.memoryStorage = window.memoryStorage || (() => { const m = {}; return { getItem: k2 => (k2 in m ? m[k2] : null), setItem: (k2, v) => { m[k2] = String(v); }, removeItem: k2 => { delete m[k2]; } }; })(); } catch (e) { }
   const all = Object.keys(ENGINE.r);
-  const code = 'const SCREEN=' + JSON.stringify(r.screen) + ';\n' + ENGINE.core + ENGINE.head + 'const RENDER={\n' + all.map(t => ENGINE.r[t]).join(',\n') + '\n};\n' + ENGINE.tail + 'start();\n';
+  // в режиме «Просмотр» окно запускается в том же сжатом виде, в каком уйдёт на панель (короткие id, таблица строк)
+  const scrSrc = mode === 'run' ? (() => { const c = clone(r.screen); compactScreen(c); return screenSrc(c); })() : 'const SCREEN=' + JSON.stringify(r.screen);
+  const code = scrSrc + ';\n' + ENGINE.core + ENGINE.head + 'const RENDER={\n' + all.map(t => ENGINE.r[t]).join(',\n') + '\n};\n' + ENGINE.tail + 'start();\n';
   const AsyncFunction = Object.getPrototypeOf(async function () { }).constructor;
   const con = { log: (...a) => { console.log('[панель]', ...a); } };
   try {
@@ -698,7 +701,7 @@ function rtMouse(type, ev) {
   try { RT.mouse.h[type]({ x: sp[0] * k, y: sp[1] * k }); } catch (e) { console.error(e); }
 }
 let softT = 0;
-function rtSoft() { if (softT) return; softT = requestAnimationFrame(() => { softT = 0; if (RT.api && RT.running) { const { r } = simScreen(); RT.api.setScreen({ els: r.screen.els, pops: r.screen.pops }); } }); }
+function rtSoft() { if (softT) return; softT = requestAnimationFrame(() => { softT = 0; if (RT.api && RT.running) { const { r } = simScreen(); RT.api.setScreen({ els: r.screen.els, pops: r.screen.pops, lib: r.screen.lib }); } }); }
 
 // ---------------------------------------------------------------- изменение модели
 function changed(rebuildInsp) {
@@ -1080,6 +1083,7 @@ function actEd(obj, k) {
   switch (a.a) {
     case 'write': R('Тег', tagIn(a, 'tag', true)); R('Значение', textIn(a, 'v', { empty: false })); break;
     case 'toggle': R('Тег (бит)', tagIn(a, 'tag', true)); break;
+    case 'multi': box.append(h('div', { style: 'font-size:12px;color:var(--fg2);margin-top:6px' }, 'Записи выполняются по порядку: тег ← значение')); box.append(listEd(a, 'l', [['tag', 'tag', '1.4fr'], ['v', 'text', '70px', 'знач.']], () => ({ tag: '', v: '1' }), 'запись')); break;
     case 'keypad': R('Тег', tagIn(a, 'tag', true)); R('Заголовок', textIn(a, 'ti')); R('Минимум', numIn(a, 'min')); R('Максимум', numIn(a, 'max')); R('Знаков после ,', numIn(a, 'dec')); break;
     case 'popup': R('Окно', selIn(a, 'id', [['', '— выберите —']].concat(proj.pops.map(p => [p.id, p.name || p.id])))); R('Номер (#)', textIn(a, 'p', { ph: 'напр. 1' }), 'Подставится вместо # в тегах и текстах окна'); break;
     case 'gcu': R('Команда', selIn(a, 'v', GCU_CMDS)); break;
@@ -1612,6 +1616,12 @@ async function newProject() {
   loadProject({ name: 'Новый проект', dbs: [{ id: 'db1', name: 'MY_DB', num: 200, ms: 500, fields: autoOffsets([{ n: 'Level', t: 'real', cm: 'уровень, %', d: 50, ds: 'sin', da: 20 }, { n: 'Run', t: 'bool', cm: 'работает', d: 1 }, { n: 'Cmd', t: 'int', cm: 'команда', wr: true }]) }],
     screens: [{ id: 's1', name: 'Окно 1', w: 1024, h: 664, ox: 0, oy: 48, bg: CL.bg, demoChip: [860, 60], els: [] }], pops: [], lib: [] }, 'Новый проект. Добавьте блоки данных в «Данные ПЛК» и перетащите элементы.');
 }
+function openDlg() {
+  let bk = null; try { bk = localStorage.getItem(LS_KEY + '_backup'); } catch (e) { }
+  const rows = [h('button', { class: 'accent', onclick: () => { closeModal(); $('#fOpen').click(); } }, 'Открыть файл проекта (.constructor.json)…')];
+  if (bk) rows.push(h('button', { onclick: () => { try { loadProject(JSON.parse(bk), 'Загружен запасной проект'); closeModal(); } catch (e) { toast('Запасной проект повреждён'); } } }, 'Запасной проект (сохранён при обновлении примера)'));
+  openModal('Открыть', [h('div', { class: 'btnrow', style: 'flex-direction:column;align-items:stretch;gap:8px' }, ...rows)], true);
+}
 function saveProject() {
   const txt = JSON.stringify(proj, null, 1);
   const name = (proj.name || 'проект').replace(/[^\wА-Яа-яЁё]+/g, '_') + '.constructor.json';
@@ -1707,9 +1717,9 @@ function initKeys() {
 
 // ---------------------------------------------------------------- запуск
 function init() {
-  $('#bNew').onclick = newProject; $('#bOpen').onclick = () => $('#fOpen').click(); $('#fOpen').onchange = ev => { const f = ev.target.files[0]; if (f) openFile(f); ev.target.value = ''; };
+  $('#bNew').onclick = newProject; $('#bOpen').onclick = openDlg; $('#fOpen').onchange = ev => { const f = ev.target.files[0]; if (f) openFile(f); ev.target.value = ''; };
   $('#bSave').onclick = saveDialog;
-  $('#bExample').onclick = async () => { if (await ask('Загрузить пример?', 'Мнемосхема ГЦУ (перенос окна 10/16) и образец со своим DB. Текущий проект в браузере будет заменён.', 'Загрузить')) loadProject(JSON.parse(JSON.stringify(EXAMPLES.gcu)), 'Загружен пример: мнемосхема ГЦУ'); };
+  $('#bExample').onclick = async () => { if (await ask('Загрузить пример?', 'Мнемосхема ГЦУ (перенос окна 10/16) и образец со своим DB. Текущий проект в браузере будет заменён.', 'Загрузить')) loadProject(JSON.parse(JSON.stringify(EXAMPLES.gcu)), 'Загружен пример: мнемосхема и окна ГЦУ'); };
   $('#bUndo').onclick = undo; $('#bRedo').onclick = redo; $('#bCopy').onclick = copySel; $('#bPaste').onclick = paste; $('#bDup').onclick = dupSel; $('#bDel').onclick = delSel;
   $('#bGroup').onclick = groupSel; $('#bUngroup').onclick = ungroupSel; $('#bFront').onclick = () => order('front'); $('#bBack').onclick = () => order('back');
   $('#cGrid').onchange = ev => { grid.on = ev.target.checked; drawOv(); };
@@ -1717,15 +1727,20 @@ function init() {
   $('#cSnap').onchange = ev => { grid.snap = ev.target.checked; };
   $('#sZoom').onchange = ev => { if (ev.target.value === 'fit') { zoomMode = 'fit'; layoutStage(); } else setZoom(+ev.target.value); };
   $('#mEdit').onclick = () => setMode('edit'); $('#mRun').onclick = () => setMode('run');
-  $('#bPanel').onclick = openPanel; $('#bLib').onclick = () => openLib(); $('#bData').onclick = openData; $('#bExport').onclick = openExport; $('#bHelp').onclick = help;
+  $('#bCheck').onclick = () => openCheck(); $('#bPanel').onclick = openPanel; $('#bLib').onclick = () => openLib(); $('#bData').onclick = openData; $('#bExport').onclick = openExport; $('#bHelp').onclick = help;
   $('#mClose').onclick = closeModal;
   $('#modal').addEventListener('mousedown', ev => { if (ev.target.id === 'modal') closeModal(); });
   $$('.tabs button').forEach(b => b.onclick = () => { leftTab = b.dataset.tab; $$('.tabs button').forEach(x => x.classList.toggle('on', x === b)); $$('.tabpane').forEach(p => { p.hidden = p.id !== 'tab-' + leftTab; }); renderLayers(); });
   $$('#alignbar button').forEach(b => b.onclick = () => align(b.dataset.al));
   document.addEventListener('mousedown', ev => { if (!ev.target.closest('#ctx')) hideCtx(); });
   initStage(); initKeys();
-  let p = null;
+  let p = null, note = '';
   try { const s = localStorage.getItem(LS_KEY); if (s) p = JSON.parse(s); } catch (e) { }
-  loadProject(p || JSON.parse(JSON.stringify(EXAMPLES.gcu)), p ? 'Восстановлен проект из браузера' : 'Открыт пример: мнемосхема ГЦУ. «Новый» — начать с чистого листа.');
+  // в браузере мог остаться проект от старой версии примера: меняем его на новый пример, а старый сохраняем в запасной ключ
+  if (p && ((p.ex && p.ex.id === 'gcu' && (+p.ex.v || 0) < EXAMPLES.gcu.ex.v) || (!p.ex && p.name === 'ГЦУ-1' && (p.screens || []).length <= 2))) {
+    try { localStorage.setItem(LS_KEY + '_backup', JSON.stringify(p)); } catch (e) { }
+    p = null; note = 'Пример обновлён до новой версии (' + EXAMPLES.gcu.screens.length + ' окон). Прежний проект сохранён в браузере как запасной — «Открыть» → «Запасной проект».';
+  }
+  loadProject(p || JSON.parse(JSON.stringify(EXAMPLES.gcu)), note || (p ? 'Восстановлен проект из браузера' : 'Открыт пример: мнемосхема и окна ГЦУ. «Новый» — начать с чистого листа.'));
 }
 init();

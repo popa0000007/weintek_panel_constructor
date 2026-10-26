@@ -238,9 +238,11 @@ function runAction(a, pp) {          // pp — номер своего окна 
     switch (a.a) {
       case 'write': writeTag(a.tag, num(a.v)); break;
       case 'toggle': writeTag(a.tag, tagVal(a.tag) ? 0 : 1); break;
+      case 'multi': (async function () { const l = a.l || []; for (let i = 0; i < l.length; i++) await writeTag(l[i].tag, num(l[i].v)); })(); break;
       case 'keypad': {
         const tg = subst(a.tag), cur = tagVal(a.tag);
-        keypad(subst(a.ti || a.tag), ndv(cur) ? 0 : cur, num(a.min || 0), num(a.max || 100), num(a.dec || 0),
+        const lo = a.minT ? tagVal(a.minT) : ((a.min === undefined || a.min === '') ? 0 : num(a.min)), hi = a.maxT ? tagVal(a.maxT) : ((a.max === undefined || a.max === '') ? 100 : num(a.max));
+        keypad(subst(a.ti || a.tag), ndv(cur) ? 0 : cur, ndv(lo) ? 0 : lo, ndv(hi) ? 100 : hi, num(a.dec || 0),
           function (v) { writeTag(tg, v); });
         break;
       }
@@ -507,7 +509,7 @@ const RENDER = {
   },
   input: function (e, x, y) {
     const v = tagVal(e.tag), on = !ndv(v) && cond(e.en);
-    const a = { a: 'keypad', tag: e.tag, min: e.min, max: e.max, dec: e.dec, ti: e.ti || e.tag, pin: e.pin, cf: e.cf, cm: e.cm };
+    const a = { a: 'keypad', tag: e.tag, min: e.min, max: e.max, minT: e.minT, maxT: e.maxT, dec: e.dec, ti: e.ti || e.tag, pin: e.pin, cf: e.cf, cm: e.cm };
     const pp = P;
     myEdit(e.id + (P !== null ? '_' + P : ''), x, y, e.w, e.h, ndv(v) ? '—' : (+v).toFixed(+e.dec || 0), subst(e.unit || ''), function () { runAction(a, pp); }, on, +e.size || 16);
   },

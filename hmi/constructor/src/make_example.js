@@ -216,6 +216,7 @@ const project = {
   pops: [{ id: 'pm', name: 'Мотор (окно управления)', ti: 'Мотор # — управление', w: 420, h: 320, els: PM }]
 };
 // ================================================================ остальные окна проекта (make_<окно>.js) и пример своего символа
+project.ex = { id: 'gcu', v: 2 };
 project.panel = { model: 'cMT2158X', w: 1024, h: 768, top: 48, bot: 56 };
 project.lib = [{ id: 'sym_agit', name: 'Мешалка (пример символа)', w: 80, h: 80,
   sts: [{ v: 0, tx: 'СТОИТ', f: C.stop, s: C.text, c: C.text }, { v: 1, tx: 'РАБОТА', f: C.run, s: C.text, c: C.white }, { v: 2, tx: 'АВАРИЯ', f: C.alarm, s: C.text, c: C.white, bl: true }],

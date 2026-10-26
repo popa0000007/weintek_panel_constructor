@@ -6,7 +6,7 @@ const TYPES = {           // тип поля: [размер в байтах, н�
   dint: [4, 'DInt'], udint: [4, 'UDInt'], dword: [4, 'DWord'], real: [4, 'Real']
 };
 const ENGINE_LIMIT = 100000;          // лимит исходного кода JS-объекта EasyBuilder (~100 КБ)
-const TAG_KEYS = { tag: 1, ok: 1, sp: 1, vt: 1, lt: 1, rt: 1, alive: 1 };
+const TAG_KEYS = { tag: 1, ok: 1, sp: 1, vt: 1, lt: 1, rt: 1, alive: 1, minT: 1, maxT: 1 };
 const GCU_TYPES = { pumpcard: 1, alarmline: 1 };
 const GCU_ACTS = { gcu: 1, pump: 1, valvecmd: 1, valvewin: 1, pumpwin: 1, resetall: 1 };
 const GCU_ADDR = { cmdAddr: [100, 0], speedAddr: [100, 42], selAddr: [100, 174], setAddr: [101, 0], extAddr: [100, 188] };
@@ -80,6 +80,41 @@ function cleanEls(list, edit) {     // убрать служебные поля 
     if (o.t === 'group') o.els = cleanEls(o.els, edit);
     return o;
   });
+}
+// сжатие данных окна для кода панели: короткие id, условия из одного пункта без обёртки {m, l}
+function compactScreen(screen) {
+  let n = 0;
+  const cond = function (o) {
+    if (Array.isArray(o)) { o.forEach(cond); return; }
+    if (!o || typeof o !== 'object') return;
+    Object.keys(o).forEach(function (k) {
+      const v = o[k];
+      if (v && typeof v === 'object' && !Array.isArray(v) && Array.isArray(v.l) && typeof v.m === 'string' && v.l.length === 1) o[k] = v.l[0];
+      else cond(v);
+    });
+  };
+  const ids = function (list) {
+    (list || []).forEach(function (e) { e.id = (++n).toString(36); if (e.els) ids(e.els); });
+  };
+  cond(screen.els); ids(screen.els);
+  Object.keys(screen.pops).forEach(function (k) { cond(screen.pops[k].els); ids(screen.pops[k].els); });
+}
+// текст окна для кода панели: повторяющиеся строки-значения (теги, цвета, подписи) выносятся в таблицу _S — это JS, не JSON
+function screenSrc(screen) {
+  const js = JSON.stringify(screen), cnt = {};
+  const re = /"(?:[^"\\]|\\.)*"/g;
+  let m;
+  while ((m = re.exec(js))) { if (js.charAt(re.lastIndex) !== ':') cnt[m[0]] = (cnt[m[0]] || 0) + 1; }
+  const keys = Object.keys(cnt).filter(function (k) { return cnt[k] > 1 && k.length > 6; })
+    .sort(function (a, b) { return cnt[b] * b.length - cnt[a] * a.length; });
+  const tab = [], idx = {};
+  keys.forEach(function (k) {
+    const ref = '_S[' + tab.length + ']';
+    if ((k.length - ref.length) * cnt[k] - k.length - 1 > 8) { idx[k] = ref; tab.push(k); }
+  });
+  if (!tab.length) return 'const SCREEN=' + js;
+  const body = js.replace(re, function (t, off) { return (idx[t] && js.charAt(off + t.length) !== ':') ? idx[t] : t; });
+  return 'const _S=[' + tab.join(',') + '];\nconst SCREEN=' + body;
 }
 function reEsc(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
@@ -205,8 +240,8 @@ function exportScreen(project, screenId, engine, opts) {
   });
   // запись в теги без признака «запись»
   walkObj(everything, function (k, v, o) {
-    if ((k === 'a' && (v === 'write' || v === 'toggle' || v === 'keypad')) || (k === 't' && (v === 'input' || v === 'hold'))) {
-      const nm = o.tag, nms = [nm, o.alive].filter(Boolean);
+    if ((k === 'a' && (v === 'write' || v === 'toggle' || v === 'keypad' || v === 'multi')) || (k === 't' && (v === 'input' || v === 'hold'))) {
+      const nm = o.tag, nms = (v === 'multi' ? (o.l || []).map(function (x) { return x.tag; }) : [nm, o.alive]).filter(Boolean);
       nms.forEach(function (n) {
         if (/^gcu:/.test(n)) warn.push('Запись в «' + n + '»: данные ГЦУ только для чтения (для уставок — gcuset:)');
         else if (!/^gcu(set|spd):/.test(n) && all[n] && !all[n].f.wr) warn.push('Тег «' + n + '» используется для записи, но в «Данные ПЛК» не отмечен «Запись»');
@@ -223,6 +258,7 @@ function exportScreen(project, screenId, engine, opts) {
   cfg.realWordSwap = !!conn.realSwap;
   if (scr.pin) cfg.pin = String(scr.pin);
   const screen = { w: +scr.w, h: +scr.h, ox: +scr.ox || 0, oy: +scr.oy || 0, els: els, pops: popsOut, tags: tags, polls: polls };
+  if (!opts.edit) compactScreen(screen);
   if (scr.bg) screen.bg = scr.bg;
   const libIds = {};
   walkObj(everything, function (k, v, o) { if (k === 't' && v === 'sym') libIds[o.lib] = 1; });
@@ -245,7 +281,7 @@ function exportScreen(project, screenId, engine, opts) {
       '//  ' + (project.panel && project.panel.model ? 'Панель ' + project.panel.model + ' ' + project.panel.w + '×' + project.panel.h + ' · ' : '') + 'Объект: X' + (scr.ox || 0) + ' Y' + (scr.oy || 0) + ' ' + scr.w + '×' + scr.h + '. Вставлять целиком; конфигурация — «Шаблон…».\n' +
       '//  Не правьте этот текст вручную: меняйте окно в конструкторе и вставляйте заново.\n' +
       '// =====================================================================\n';
-    code = head + 'const SCREEN=' + JSON.stringify(screen) + ';\n' + engine.core + engine.head +
+    code = head + screenSrc(screen) + ';\n' + engine.core + engine.head +
       'const RENDER={\n' + names.map(function (t) { return engine.r[t]; }).join(',\n') + '\n};\n' + engine.tail + 'start();\n';
     size = utf8(code).length;
     if (size > ENGINE_LIMIT) warn.unshift('Код ' + Math.round(size / 1024) + ' КБ — больше лимита JS-объекта (~100 КБ). Разделите окно на два или упростите.');
@@ -464,5 +500,5 @@ function overlaps(db) {
 const EXPORT_API = { TYPES: TYPES, ENGINE_LIMIT: ENGINE_LIMIT, encodeAddress: encodeAddress, allTags: allTags, tagName: tagName,
   walkEls: walkEls, walkObj: walkObj, refsOf: refsOf, exportScreen: exportScreen, planPolls: planPolls, sclToDbs: sclToDbs,
   tableToFields: tableToFields, ebCsvToDbs: ebCsvToDbs, autoOffsets: autoOffsets, dbSize: dbSize, overlaps: overlaps, clone: clone,
-  typesOf: typesOf, popupRefs: popupRefs, libOut: libOut };
+  typesOf: typesOf, popupRefs: popupRefs, libOut: libOut, compactScreen: compactScreen };
 if (typeof module !== 'undefined') module.exports = EXPORT_API;

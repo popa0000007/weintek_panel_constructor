@@ -31,5 +31,6 @@ python3 hmi/js/src/build.py           # -> hmi/js/gcu_*.js
 - Библиотека своих технологических элементов («Символы»): фигуры, таблица состояний, импорт SVG.
 - Выбор модели панели Weintek («Панель»).
 - Импорт DB и UDT из TIA одним текстом (порядок не важен).
+- «Проверка»: ошибки проекта, таблица тегов (CSV), замена в тегах, zip со всеми окнами. Самопроверка: `node hmi/constructor/tools/selftest.js`.
 
 После правки `src/*` или `hmi/js/src/core.js`: `node hmi/constructor/src/make_example.js && python3 hmi/constructor/build.py`.
