@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Окно задвижки</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=PT+Mono&amp;family=PT+Sans+Narrow:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div role="dialog" aria-label="Н-1, задвижка всаса" style="width: 360px; height: 300px; box-sizing: border-box; display: flex; flex-direction: column; background: #F4F4F1; border: 2px solid #23272B; color: #1D2023; font-family: 'PT Sans Narrow', sans-serif">
+<div style="height: 44px; box-sizing: border-box; padding: 0 0 0 12px; display: flex; align-items: center; background: #23272B; color: #F2F2EF">
+<span style="flex: 1; font-size: 18px; font-weight: 700">Н-1 · Задвижка всаса</span>
+<a href="Main.dc.html" aria-label="Закрыть окно" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #F2F2EF; font-size: 22px; font-weight: 700; text-decoration: none">✕</a>
+</div>
+<div style="flex: 1; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="32" height="22" viewBox="0 0 32 22" aria-hidden="true" style="display: block"><path d="M1.5 1.5 L16 11 L1.5 20.5 Z M30.5 1.5 L16 11 L30.5 20.5 Z" fill="#1E8A3C" stroke="#1D2023" stroke-width="1.5" stroke-linejoin="round"/></svg>
+<span style="flex: 1; padding: 6px; border-radius: 4px; background: #1E8A3C; color: #FFFFFF; font-size: 18px; font-weight: 700; text-align: center">ОТКРЫТА</span>
+</div>
+<div style="display: flex; gap: 12px; font-size: 14px; color: #4B5157">
+<span>Переключатель: <b style="color: #1D2023">дистанция</b> · ГЦУ: <b style="color: #1D2023">автомат</b></span>
+<span style="margin-left: auto">Время хода: <b style="font-family: 'PT Mono', monospace; color: #1D2023">60 с</b></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px; font-size: 14px">
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #C4C7CB"></span>Превышено время хода</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #C4C7CB"></span>Неисправность концевиков</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #C4C7CB"></span>Неисправность переключателя</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #C4C7CB"></span>Недостоверный сигнал</span>
+</div>
+<div style="margin-top: auto; display: flex; gap: 8px">
+<button type="button" disabled style="flex: 1; height: 44px; border: 1px solid #B3B6B0; border-radius: 4px; background: #E4E5E1; color: #7A7F85; font-family: inherit; font-size: 16px; font-weight: 700">ОТКРЫТЬ</button>
+<button type="button" disabled style="flex: 1; height: 44px; border: 1px solid #B3B6B0; border-radius: 4px; background: #E4E5E1; color: #7A7F85; font-family: inherit; font-size: 16px; font-weight: 700">ЗАКРЫТЬ</button>
+<button type="button" style="flex: 1; height: 44px; border: 1px solid #8F949A; border-radius: 4px; background: #E4E5E1; color: #1D2023; font-family: inherit; font-size: 16px; font-weight: 700">СБРОС</button>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":360,"height":300}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<title>Конструктор панели ГЦУ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&display=swap">
+<style>
+/*@@CSS@@*/
+</style>
+<div id="app">
+  <header id="top">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><div><b>Конструктор панели</b><small>Weintek cMT · Siemens S7 · v@@VERSION@@ · @@DATE@@</small></div></div>
+    <div class="tb" role="toolbar" aria-label="Проект">
+      <button id="bNew" title="Новый проект">Новый</button>
+      <button id="bOpen" title="Открыть проект из файла .json">Открыть</button>
+      <button id="bSave" title="Сохранить проект в файл .json (Ctrl+S)">Сохранить</button>
+      <button id="bExample" title="Загрузить пример: мнемосхема ГЦУ">Пример</button>
+      <input type="file" id="fOpen" accept=".json,application/json" hidden>
+    </div>
+    <div class="tb" role="toolbar" aria-label="Правка">
+      <button id="bUndo" title="Отменить (Ctrl+Z)">↶</button>
+      <button id="bRedo" title="Повторить (Ctrl+Y)">↷</button>
+      <span class="sep"></span>
+      <button id="bCopy" title="Копировать (Ctrl+C)">Копир.</button>
+      <button id="bPaste" title="Вставить (Ctrl+V)">Вставить</button>
+      <button id="bDup" title="Дублировать (Ctrl+D)">Дубль</button>
+      <button id="bDel" title="Удалить (Delete)">Удалить</button>
+      <span class="sep"></span>
+      <button id="bGroup" title="Сгруппировать (Ctrl+G)">Группа</button>
+      <button id="bUngroup" title="Разгруппировать (Ctrl+Shift+G)">Разгр.</button>
+      <button id="bFront" title="На передний план">▲ Вперёд</button>
+      <button id="bBack" title="На задний план">▼ Назад</button>
+    </div>
+    <div class="tb" role="toolbar" aria-label="Вид">
+      <label class="chk"><input type="checkbox" id="cGrid" checked> Сетка</label>
+      <select id="sGrid" title="Шаг сетки"><option>4</option><option selected>8</option><option>10</option><option>16</option><option>20</option></select>
+      <label class="chk"><input type="checkbox" id="cSnap" checked> Привязка</label>
+      <select id="sZoom" title="Масштаб"><option value="fit">По окну</option><option value="0.5">50%</option><option value="0.75">75%</option><option value="1">100%</option><option value="1.25">125%</option><option value="1.5">150%</option><option value="2">200%</option></select>
+    </div>
+    <div class="tb grow"></div>
+    <div class="tb mode" role="group" aria-label="Режим">
+      <button id="mEdit" class="on" title="Редактирование">Редактор</button>
+      <button id="mRun" title="Просмотр: элементы нажимаются, значения ПЛК имитируются">▶ Просмотр</button>
+    </div>
+    <div class="tb">
+      <button id="bData" class="accent2" title="Блоки данных ПЛК, теги, опросы">Данные ПЛК</button>
+      <button id="bExport" class="accent" title="Получить код и конфигурацию для EasyBuilder">Экспорт в панель</button>
+      <button id="bHelp" title="Как пользоваться">?</button>
+    </div>
+  </header>
+  <aside id="left">
+    <nav class="tabs" role="tablist">
+      <button class="on" data-tab="pal" role="tab">Элементы</button>
+      <button data-tab="win" role="tab">Окна</button>
+      <button data-tab="lay" role="tab">Слои</button>
+    </nav>
+    <div id="tab-pal" class="tabpane"></div>
+    <div id="tab-win" class="tabpane" hidden></div>
+    <div id="tab-lay" class="tabpane" hidden></div>
+  </aside>
+  <main id="center">
+    <div id="alignbar" class="tb small" hidden>
+      <span class="lbl">Выровнять:</span>
+      <button data-al="l" title="По левому краю">⇤</button><button data-al="hc" title="По центру по горизонтали">↔</button><button data-al="r" title="По правому краю">⇥</button>
+      <button data-al="t" title="По верху">⤒</button><button data-al="vc" title="По центру по вертикали">↕</button><button data-al="b" title="По низу">⤓</button>
+      <span class="sep"></span>
+      <button data-al="dh" title="Распределить по горизонтали">⋯</button><button data-al="dv" title="Распределить по вертикали">⋮</button>
+      <button data-al="sw" title="Одинаковая ширина">=Ш</button><button data-al="sh" title="Одинаковая высота">=В</button>
+    </div>
+    <div id="stageWrap">
+      <div id="stage">
+        <canvas id="cvRt"></canvas>
+        <canvas id="cvOv" tabindex="0" aria-label="Холст окна панели"></canvas>
+      </div>
+    </div>
+    <footer id="status"><span id="stPos">—</span><span id="stSel"></span><span id="stWin"></span><span id="stMsg"></span></footer>
+  </main>
+  <aside id="right">
+    <div id="insp"></div>
+  </aside>
+</div>
+<div id="modal" class="modal" hidden><div class="mbox" role="dialog" aria-modal="true"><header><h2 id="mTitle"></h2><button class="x" id="mClose" aria-label="Закрыть">×</button></header><div id="mBody"></div></div></div>
+<div id="ctx" class="ctx" hidden></div>
+<div id="toast" class="toast" hidden></div>
+<datalist id="dlTags"></datalist>
+<script>
+/*@@ENGINE@@*/
+/*@@EXAMPLES@@*/
+/*@@JS@@*/
+</script>

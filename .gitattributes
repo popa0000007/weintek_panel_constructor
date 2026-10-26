@@ -1,0 +1,8 @@
+# Исходники TIA: не трогать окончания строк (нужны CRLF + BOM)
+*.scl -text
+*.udt -text
+*.db  -text
+*.csv -text
+*.xlsx binary
+*.flbx binary
+*.png binary

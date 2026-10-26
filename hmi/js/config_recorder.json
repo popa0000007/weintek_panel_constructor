@@ -1,0 +1,10 @@
+{
+ "cmdAddr": "Address|AAABFwBTaWVtZW5zIFM3LTEyMDAvUzctMTUwMGgHADEwMDAwMDAAAAAAAAIBAA==",
+ "setAddr": "Address|AAABFwBTaWVtZW5zIFM3LTEyMDAvUzctMTUwMGgHADEwMTAwMDAAAAAAAAIBAA==",
+ "extAddr": "Address|AAABFwBTaWVtZW5zIFM3LTEyMDAvUzctMTUwMGgHADEwMDAxODgAAAAAAAIBAA==",
+ "demo": false,
+ "fontFamily": "Arial",
+ "useBold": true,
+ "boolHighByteFirst": true,
+ "realWordSwap": false
+}

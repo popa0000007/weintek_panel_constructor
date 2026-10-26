@@ -1,0 +1,1994 @@
+﻿// Стандартная обработка сигналов (TDIData/TDOData/TAIData/TAOData, *_HNDL)
+// + DB сигналов ГЦУ. Компилировать ПЕРВЫМ.
+
+TYPE "TDOData"
+TITLE = 'Сигналы дискретного выхода. Данные'
+VERSION : 0.1
+   STRUCT
+      Active : Bool := TRUE;   // Признак активности
+      Value : Bool;   // Значение переменной
+      Quality : Bool;   // Признак достоверности
+      Mask : Bool;   // Признак маскирования сигнала
+      MaskValue : Bool;   // Значение маскирования сигнала
+      Inverse : Bool;   // Признак инверсии
+      RawVal : Bool;   // Значение сигнала
+      StatBit_REV : Bool := TRUE;   // Инверсия статусного бита (1-инверсия)
+      Quality_inv : Bool;   // Признак достоверности инвертированный
+      RES_3 : Bool;   // Резерв
+      RES_4 : Bool;   // Резерв
+      RES_5 : Bool;   // Резерв
+      RES_6 : Bool;   // Резерв
+      RES_7 : Bool;   // Резерв
+      RES_8 : Bool;   // Резерв
+      RES_9 : Bool;   // Резерв
+      RES_10 : Real;   // Резерв
+      RES_11 : Real;   // Резерв
+      StatusBYTE : Int := -1;   // Адрес байта статуса
+      StatusBIT : Int := -1;   // Номер бита качества в статус-байте
+      AdrByte : Int := -1;   // Адрес (байт)
+      AdrBit : Int := -1;   // Адрес (бит)
+      RES_13 : Int;   // Резерв
+   END_STRUCT;
+
+END_TYPE
+
+TYPE "TDIData"
+TITLE = 'Сигналы дискретного входа. Данные'
+VERSION : 0.1
+   STRUCT
+      Active : Bool := TRUE;   // Признак активности
+      Value : Bool;   // Значение переменной
+      Quality : Bool;   // Признак достоверности
+      Mask : Bool;   // Признак маскирования сигнала
+      MaskValue : Bool;   // Значение маскирования сигнала
+      AlmUse : Bool;   // Признак алармирования
+      IsAlarm : Bool;   // Авария (сигнал активен в течение TimeOut)
+      Inverse : Bool;   // Признак инверсии
+      RawVal : Bool;   // Значение сигнала
+      ValuePrev : Bool;   // Значение фильтрованной переменной
+      AlmMode : Bool;   // Режим аларма: 1-Тревога по 1, 0-Тревога по 0
+      AlmDisable : Bool;   // Деактивация алармов
+      StatBit_REV : Bool := TRUE;   // Инверсия статусного бита (1-инверсия)
+      Quality_inv : Bool;   // Признак достоверности инвертированный
+      RES_4 : Bool;   // Резерв
+      RES_5 : Bool;   // Резерв
+      RES_6 : Bool;   // Резерв
+      Tf : Real := 0.1;   // Постоянная фильтра, с
+      Acc : Real;   // Аккумулятор времени фильтрации
+      StatusBYTE : Int := -1;   // Адрес байта статуса
+      StatusBIT : Int := -1;   // Номер бита качества в статус-байте
+      AdrByte : Int := -1;   // Адрес (байт)
+      AdrBit : Int := -1;   // Адрес (бит)
+      Timeout : DInt := DINT#3000;   // Время, в течение которого срабатывает аларм
+      TimeAlarm : DInt := DINT#0;   // Текущее время аварии
+   END_STRUCT;
+
+END_TYPE
+
+TYPE "TAOData"
+TITLE = 'Сигналы аналогового выхода. Данные'
+VERSION : 0.1
+   STRUCT
+      Active : Bool := TRUE;   // Признак активности
+      RES_1 : Bool;   // Резерв
+      RES_2 : Bool;   // Резерв
+      RES_3 : Bool;   // Резерв
+      RES_4 : Bool;   // Резерв
+      RES_5 : Bool;   // Резерв
+      RES_6 : Bool;   // Резерв
+      RES_7 : Bool;   // Резерв
+      RES_8 : Bool;   // Резерв
+      RES_9 : Bool;   // Резерв
+      RES_10 : Bool;   // Резерв
+      RES_11 : Bool;   // Резерв
+      RES_12 : Bool;   // Резерв
+      Quality_inv : Bool;   // Признак достоверности инвертированный
+      Quality : Bool;   // Признак достоверности
+      Mask { S7_SetPoint := 'True'} : Bool;   // Признак маскирования сигнала
+      Value : Real;   // Значение переменной
+      MaskValue { S7_SetPoint := 'True'} : Real;   // Значение маскирования сигнала
+      MinEU { S7_SetPoint := 'True'} : Real := 0.0;   // Мин. значение шкалы
+      MaxEU { S7_SetPoint := 'True'} : Real := 100.0;   // Макс. значение шкалы
+      Current : Real;   // Значение тока, mA
+      RES_14 : Real;   // Резерв
+      AOType { S7_SetPoint := 'True'} : Int := 0;   // Тип сигнала
+      RES_15 : Int;   // Резерв
+      AdrByte { S7_SetPoint := 'True'} : Int := -1;   // Адрес (байт)
+      MinRaw { S7_SetPoint := 'True'} : Int := 0;   // Мин. значение сигнала
+      MaxRaw { S7_SetPoint := 'True'} : Int := 27648;   // Макс. значение сигнала
+      RawVal : Int;   // Первоначальное значение (не масштабированное)
+      RES_16 : Int;   // Резерв
+      RES_17 : Int;   // Резерв
+   END_STRUCT;
+
+END_TYPE
+
+TYPE "TAIData"
+TITLE = 'Сигналы аналогового входа. Данные'
+VERSION : 0.1
+   STRUCT
+      Active : Bool := TRUE;   // Признак активности
+      AlmDisable : Bool;   // Деактивация алармов
+      RES_2 : Bool;   // Резервный бит
+      RES_3 : Bool;   // Резервный бит
+      RES_4 : Bool;   // Резервный бит
+      Quality_inv : Bool;   // Признак достоверности инвертированный
+      Quality : Bool;   // Признак достоверности
+      Mask { S7_SetPoint := 'True'} : Bool;   // Признак маскирования сигнала
+      AlmHiHi : Bool;   // Авария  (сигнал > ВАУ в течение Timeout)
+      AlmHi : Bool;   // Тревога (сигнал > ВПУ в течение Timeout)
+      AlmLo : Bool;   // Тревога (сигнал < НПУ в течение Timeout)
+      AlmLoLo : Bool;   // Авария  (сигнал < НАУ в течение Timeout)
+      HiHiUse { S7_SetPoint := 'True'} : Bool;   // Признак использования ВАУ
+      HiUse { S7_SetPoint := 'True'} : Bool;   // Признак использования ВПУ
+      LoUse { S7_SetPoint := 'True'} : Bool;   // Признак использования НПУ
+      LoLoUse { S7_SetPoint := 'True'} : Bool;   // Признак использования НАУ
+      Value : Real;   // Значение переменной
+      MaskValue { S7_SetPoint := 'True'} : Real;   // Значение маскирования сигнала
+      MinEU { S7_SetPoint := 'True'} : Real;   // Мин. значение шкалы
+      MaxEU { S7_SetPoint := 'True'} : Real;   // Макс. значение шкалы
+      HiHi { S7_SetPoint := 'True'} : Real;   // Значение ВАУ
+      Hi { S7_SetPoint := 'True'} : Real;   // Значение ВПУ
+      Lo { S7_SetPoint := 'True'} : Real;   // Значение НПУ
+      LoLo { S7_SetPoint := 'True'} : Real;   // Значение НАУ
+      Current : Real;   // Значение тока, mA
+      Factor { S7_SetPoint := 'True'} : Real := 1.0;   // Коэф. масштабирования
+      Tf { S7_SetPoint := 'True'} : Real;   // Постоянная фильтра, с
+      ValuePrev : Real;   // Значение переменной на предыдущем такте
+      Threshold { S7_SetPoint := 'True'} : Real := 0.5;   // Величина гистирезиса (в процентах от шкалы сигнала)
+      Timeout { S7_SetPoint := 'True'} : DInt := DINT#3000;   // Задержка срабатывания аларма, мсек
+      TimeLoLo : DInt := DINT#0;   // Текущее время таймера НАУ
+      TimeLo : DInt := DINT#0;   // Текущее время таймера НПУ
+      TimeHi : DInt := DINT#0;   // Текущее время таймера ВПУ
+      TimeHiHi : DInt := DINT#0;   // Текущее время таймера ВАУ
+      AIType { S7_SetPoint := 'True'} : Int := 0;   // Тип сигнала (0:4-20мА, 1:КИП, 2:Температура, 5:ABB WORD)
+      RES_6 : Int;   // Резерв
+      AdrByte { S7_SetPoint := 'True'} : Int := -1;   // Адрес (байт)
+      Overflow : Int := 32766;   // Переполнение
+      Underflow : Int := -32766;   // Переполнение снизу
+      MinRaw { S7_SetPoint := 'True'} : Int := 0;   // Мин. значение сигнала АЦП
+      MaxRaw { S7_SetPoint := 'True'} : Int := 27648;   // Макс. значение сигнала АЦП
+      RawVal : Int;   // Первоначальное значение АЦП (не масштабированное)
+      StatusBYTE { S7_SetPoint := 'True'} : Int := -1;   // Адрес байта статуса (для цифровых сигналов КИП)
+      StatusBIT { S7_SetPoint := 'True'} : Int := -1;   // Номер бита качества в статус-байте (для КИП)
+   END_STRUCT;
+
+END_TYPE
+
+DATA_BLOCK "SystemInfo"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+NON_RETAIN
+   STRUCT 
+      Pulse : Bool;
+      FirstScan : Bool;
+      Cycle : Int;
+      MaxCycle : Int;
+      MinCycle : Int;
+      SysTime : DInt;
+      ModelInit : Bool;
+      PLCInit : Bool;
+      PLCInitTime : DInt;
+      NulINT : Int;
+      NulREAL : Real;
+      NulDINT : DInt;
+      NulBOOL : Bool;
+      sAI : Bool;
+      sAO : Bool;
+      sDI : Bool;
+      sDO : Bool;
+      sAM : Bool;
+      sDM : Bool;
+      Model_Enable : Bool;
+      Motor_Enable : Bool;
+      Valve_Enable { ExternalVisible := 'False'} : Bool;
+      ValveReg_Enable : Bool;
+      Conv_Enable : Bool;
+      PS_Enable : Bool;
+      PID_Enable : Bool;
+      ARS_Enable : Bool;
+      LOCK_Enable : Bool;
+      LOCK_Init : Bool;
+      EPS_Enable : Bool;
+      Alarm_Enable : Bool;
+      Auto_Enable : Bool;
+      Cnt_Enable : Bool;
+      CALIBR_Enable : Bool;
+      Weigher_Enable : Bool;
+      DIAGDP_Enable : Bool;
+      CALC_Enable : Bool;
+      Mill_Enable : Bool;
+      ApFeeder_Enable : Bool;
+      Grinder_Enable : Bool;
+      Thickener_Enable : Bool;
+      Panel_Enable : Bool;
+      DEXCH_Enable : Bool;
+   END_STRUCT;
+
+
+BEGIN
+   FirstScan := TRUE;
+   PLCInitTime := DINT#1000;
+   NulINT := 0;
+   NulREAL := 0.0;
+   NulDINT := DINT#0;
+   NulBOOL := FALSE;
+   sAI := TRUE;
+   sAO := TRUE;
+   sDI := TRUE;
+   sDO := TRUE;
+   sAM := TRUE;
+   sDM := TRUE;
+   Model_Enable := FALSE;
+   Motor_Enable := TRUE;
+   Valve_Enable := TRUE;
+   ValveReg_Enable := TRUE;
+   Conv_Enable := FALSE;
+   PS_Enable := TRUE;
+   PID_Enable := TRUE;
+   ARS_Enable := TRUE;
+   LOCK_Enable := TRUE;
+   LOCK_Init := FALSE;
+   EPS_Enable := TRUE;
+   Alarm_Enable := TRUE;
+   Auto_Enable := TRUE;
+   Cnt_Enable := TRUE;
+   CALIBR_Enable := FALSE;
+   Weigher_Enable := FALSE;
+   DIAGDP_Enable := TRUE;
+   CALC_Enable := TRUE;
+   Mill_Enable := FALSE;
+   ApFeeder_Enable := FALSE;
+   Grinder_Enable := FALSE;
+   Thickener_Enable := FALSE;
+   Panel_Enable := FALSE;
+   DEXCH_Enable := FALSE;
+
+END_DATA_BLOCK
+
+DATA_BLOCK "DI"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+   STRUCT 
+      Count : Int;
+      Item : Array[1..99] of "TDIData";
+   END_STRUCT;
+
+
+BEGIN
+   Count := 99;
+   // Item[1]  %I32.4  Н1 гидроподпор: концевик ОТКРЫТА (34.4)
+   Item[1].Tf := 0.1;
+   Item[1].AdrByte := 32;
+   Item[1].AdrBit := 4;
+   Item[1].StatusBYTE := -1;
+   Item[1].StatusBIT := -1;
+   // Item[2]  %I32.5  Н1 гидроподпор: концевик ЗАКРЫТА (34.4)
+   Item[2].Tf := 0.1;
+   Item[2].AdrByte := 32;
+   Item[2].AdrBit := 5;
+   Item[2].StatusBYTE := -1;
+   Item[2].StatusBIT := -1;
+   // Item[3]  %I36.4  Н1 гидроподпор: ключ ОТКРЫТЬ
+   Item[3].Tf := 0.1;
+   Item[3].AdrByte := 36;
+   Item[3].AdrBit := 4;
+   Item[3].StatusBYTE := -1;
+   Item[3].StatusBIT := -1;
+   // Item[4]  %I36.5  Н1 гидроподпор: ключ ЗАКРЫТЬ
+   Item[4].Tf := 0.1;
+   Item[4].AdrByte := 36;
+   Item[4].AdrBit := 5;
+   Item[4].StatusBYTE := -1;
+   Item[4].StatusBIT := -1;
+   // Item[5]  %I31.4  Н1 всас: концевик ОТКРЫТА (34.4)
+   Item[5].Tf := 0.1;
+   Item[5].AdrByte := 31;
+   Item[5].AdrBit := 4;
+   Item[5].StatusBYTE := -1;
+   Item[5].StatusBIT := -1;
+   // Item[6]  %I31.5  Н1 всас: концевик ЗАКРЫТА (34.4)
+   Item[6].Tf := 0.1;
+   Item[6].AdrByte := 31;
+   Item[6].AdrBit := 5;
+   Item[6].StatusBYTE := -1;
+   Item[6].StatusBIT := -1;
+   // Item[7]  %I35.4  Н1 всас: ключ ОТКРЫТЬ
+   Item[7].Tf := 0.1;
+   Item[7].AdrByte := 35;
+   Item[7].AdrBit := 4;
+   Item[7].StatusBYTE := -1;
+   Item[7].StatusBIT := -1;
+   // Item[8]  %I35.5  Н1 всас: ключ ЗАКРЫТЬ
+   Item[8].Tf := 0.1;
+   Item[8].AdrByte := 35;
+   Item[8].AdrBit := 5;
+   Item[8].StatusBYTE := -1;
+   Item[8].StatusBIT := -1;
+   // Item[9]  %I32.0  Н1 нагнетание: концевик ОТКРЫТА (34.4)
+   Item[9].Tf := 0.1;
+   Item[9].AdrByte := 32;
+   Item[9].AdrBit := 0;
+   Item[9].StatusBYTE := -1;
+   Item[9].StatusBIT := -1;
+   // Item[10]  %I32.1  Н1 нагнетание: концевик ЗАКРЫТА (34.4)
+   Item[10].Tf := 0.1;
+   Item[10].AdrByte := 32;
+   Item[10].AdrBit := 1;
+   Item[10].StatusBYTE := -1;
+   Item[10].StatusBIT := -1;
+   // Item[11]  %I36.0  Н1 нагнетание: ключ ОТКРЫТЬ
+   Item[11].Tf := 0.1;
+   Item[11].AdrByte := 36;
+   Item[11].AdrBit := 0;
+   Item[11].StatusBYTE := -1;
+   Item[11].StatusBIT := -1;
+   // Item[12]  %I36.1  Н1 нагнетание: ключ ЗАКРЫТЬ
+   Item[12].Tf := 0.1;
+   Item[12].AdrByte := 36;
+   Item[12].AdrBit := 1;
+   Item[12].StatusBYTE := -1;
+   Item[12].StatusBIT := -1;
+   // Item[13]  %I30.4  Н1 промывка: концевик ОТКРЫТА (34.4)
+   Item[13].Tf := 0.1;
+   Item[13].AdrByte := 30;
+   Item[13].AdrBit := 4;
+   Item[13].StatusBYTE := -1;
+   Item[13].StatusBIT := -1;
+   // Item[14]  %I30.5  Н1 промывка: концевик ЗАКРЫТА (34.4)
+   Item[14].Tf := 0.1;
+   Item[14].AdrByte := 30;
+   Item[14].AdrBit := 5;
+   Item[14].StatusBYTE := -1;
+   Item[14].StatusBIT := -1;
+   // Item[15]  %I34.4  Н1 промывка: ключ ОТКРЫТЬ
+   Item[15].Tf := 0.1;
+   Item[15].AdrByte := 34;
+   Item[15].AdrBit := 4;
+   Item[15].StatusBYTE := -1;
+   Item[15].StatusBIT := -1;
+   // Item[16]  %I34.5  Н1 промывка: ключ ЗАКРЫТЬ
+   Item[16].Tf := 0.1;
+   Item[16].AdrByte := 34;
+   Item[16].AdrBit := 5;
+   Item[16].StatusBYTE := -1;
+   Item[16].StatusBIT := -1;
+   // Item[17]  %I31.0  Н1 размывка: концевик ОТКРЫТА (34.4)
+   Item[17].Tf := 0.1;
+   Item[17].AdrByte := 31;
+   Item[17].AdrBit := 0;
+   Item[17].StatusBYTE := -1;
+   Item[17].StatusBIT := -1;
+   // Item[18]  %I31.1  Н1 размывка: концевик ЗАКРЫТА (34.4)
+   Item[18].Tf := 0.1;
+   Item[18].AdrByte := 31;
+   Item[18].AdrBit := 1;
+   Item[18].StatusBYTE := -1;
+   Item[18].StatusBIT := -1;
+   // Item[19]  %I35.0  Н1 размывка: ключ ОТКРЫТЬ
+   Item[19].Tf := 0.1;
+   Item[19].AdrByte := 35;
+   Item[19].AdrBit := 0;
+   Item[19].StatusBYTE := -1;
+   Item[19].StatusBIT := -1;
+   // Item[20]  %I35.1  Н1 размывка: ключ ЗАКРЫТЬ
+   Item[20].Tf := 0.1;
+   Item[20].AdrByte := 35;
+   Item[20].AdrBit := 1;
+   Item[20].StatusBYTE := -1;
+   Item[20].StatusBIT := -1;
+   // Item[21]  %I30.0  Н1 дренаж: концевик ОТКРЫТА (34.4)
+   Item[21].Tf := 0.1;
+   Item[21].AdrByte := 30;
+   Item[21].AdrBit := 0;
+   Item[21].StatusBYTE := -1;
+   Item[21].StatusBIT := -1;
+   // Item[22]  %I30.1  Н1 дренаж: концевик ЗАКРЫТА (34.4)
+   Item[22].Tf := 0.1;
+   Item[22].AdrByte := 30;
+   Item[22].AdrBit := 1;
+   Item[22].StatusBYTE := -1;
+   Item[22].StatusBIT := -1;
+   // Item[23]  %I34.0  Н1 дренаж: ключ ОТКРЫТЬ
+   Item[23].Tf := 0.1;
+   Item[23].AdrByte := 34;
+   Item[23].AdrBit := 0;
+   Item[23].StatusBYTE := -1;
+   Item[23].StatusBIT := -1;
+   // Item[24]  %I34.1  Н1 дренаж: ключ ЗАКРЫТЬ
+   Item[24].Tf := 0.1;
+   Item[24].AdrByte := 34;
+   Item[24].AdrBit := 1;
+   Item[24].StatusBYTE := -1;
+   Item[24].StatusBIT := -1;
+   // Item[25]  %I32.6  Н2 гидроподпор: концевик ОТКРЫТА (34.5)
+   Item[25].Tf := 0.1;
+   Item[25].AdrByte := 32;
+   Item[25].AdrBit := 6;
+   Item[25].StatusBYTE := -1;
+   Item[25].StatusBIT := -1;
+   // Item[26]  %I32.7  Н2 гидроподпор: концевик ЗАКРЫТА (34.5)
+   Item[26].Tf := 0.1;
+   Item[26].AdrByte := 32;
+   Item[26].AdrBit := 7;
+   Item[26].StatusBYTE := -1;
+   Item[26].StatusBIT := -1;
+   // Item[27]  %I36.6  Н2 гидроподпор: ключ ОТКРЫТЬ
+   Item[27].Tf := 0.1;
+   Item[27].AdrByte := 36;
+   Item[27].AdrBit := 6;
+   Item[27].StatusBYTE := -1;
+   Item[27].StatusBIT := -1;
+   // Item[28]  %I36.7  Н2 гидроподпор: ключ ЗАКРЫТЬ
+   Item[28].Tf := 0.1;
+   Item[28].AdrByte := 36;
+   Item[28].AdrBit := 7;
+   Item[28].StatusBYTE := -1;
+   Item[28].StatusBIT := -1;
+   // Item[29]  %I31.6  Н2 всас: концевик ОТКРЫТА (34.5)
+   Item[29].Tf := 0.1;
+   Item[29].AdrByte := 31;
+   Item[29].AdrBit := 6;
+   Item[29].StatusBYTE := -1;
+   Item[29].StatusBIT := -1;
+   // Item[30]  %I31.7  Н2 всас: концевик ЗАКРЫТА (34.5)
+   Item[30].Tf := 0.1;
+   Item[30].AdrByte := 31;
+   Item[30].AdrBit := 7;
+   Item[30].StatusBYTE := -1;
+   Item[30].StatusBIT := -1;
+   // Item[31]  %I35.6  Н2 всас: ключ ОТКРЫТЬ
+   Item[31].Tf := 0.1;
+   Item[31].AdrByte := 35;
+   Item[31].AdrBit := 6;
+   Item[31].StatusBYTE := -1;
+   Item[31].StatusBIT := -1;
+   // Item[32]  %I35.7  Н2 всас: ключ ЗАКРЫТЬ
+   Item[32].Tf := 0.1;
+   Item[32].AdrByte := 35;
+   Item[32].AdrBit := 7;
+   Item[32].StatusBYTE := -1;
+   Item[32].StatusBIT := -1;
+   // Item[33]  %I32.2  Н2 нагнетание: концевик ОТКРЫТА (34.5)
+   Item[33].Tf := 0.1;
+   Item[33].AdrByte := 32;
+   Item[33].AdrBit := 2;
+   Item[33].StatusBYTE := -1;
+   Item[33].StatusBIT := -1;
+   // Item[34]  %I32.3  Н2 нагнетание: концевик ЗАКРЫТА (34.5)
+   Item[34].Tf := 0.1;
+   Item[34].AdrByte := 32;
+   Item[34].AdrBit := 3;
+   Item[34].StatusBYTE := -1;
+   Item[34].StatusBIT := -1;
+   // Item[35]  %I36.2  Н2 нагнетание: ключ ОТКРЫТЬ
+   Item[35].Tf := 0.1;
+   Item[35].AdrByte := 36;
+   Item[35].AdrBit := 2;
+   Item[35].StatusBYTE := -1;
+   Item[35].StatusBIT := -1;
+   // Item[36]  %I36.3  Н2 нагнетание: ключ ЗАКРЫТЬ
+   Item[36].Tf := 0.1;
+   Item[36].AdrByte := 36;
+   Item[36].AdrBit := 3;
+   Item[36].StatusBYTE := -1;
+   Item[36].StatusBIT := -1;
+   // Item[37]  %I30.6  Н2 промывка: концевик ОТКРЫТА (34.5)
+   Item[37].Tf := 0.1;
+   Item[37].AdrByte := 30;
+   Item[37].AdrBit := 6;
+   Item[37].StatusBYTE := -1;
+   Item[37].StatusBIT := -1;
+   // Item[38]  %I30.7  Н2 промывка: концевик ЗАКРЫТА (34.5)
+   Item[38].Tf := 0.1;
+   Item[38].AdrByte := 30;
+   Item[38].AdrBit := 7;
+   Item[38].StatusBYTE := -1;
+   Item[38].StatusBIT := -1;
+   // Item[39]  %I34.6  Н2 промывка: ключ ОТКРЫТЬ
+   Item[39].Tf := 0.1;
+   Item[39].AdrByte := 34;
+   Item[39].AdrBit := 6;
+   Item[39].StatusBYTE := -1;
+   Item[39].StatusBIT := -1;
+   // Item[40]  %I34.7  Н2 промывка: ключ ЗАКРЫТЬ
+   Item[40].Tf := 0.1;
+   Item[40].AdrByte := 34;
+   Item[40].AdrBit := 7;
+   Item[40].StatusBYTE := -1;
+   Item[40].StatusBIT := -1;
+   // Item[41]  %I31.2  Н2 размывка: концевик ОТКРЫТА (34.5)
+   Item[41].Tf := 0.1;
+   Item[41].AdrByte := 31;
+   Item[41].AdrBit := 2;
+   Item[41].StatusBYTE := -1;
+   Item[41].StatusBIT := -1;
+   // Item[42]  %I31.3  Н2 размывка: концевик ЗАКРЫТА (34.5)
+   Item[42].Tf := 0.1;
+   Item[42].AdrByte := 31;
+   Item[42].AdrBit := 3;
+   Item[42].StatusBYTE := -1;
+   Item[42].StatusBIT := -1;
+   // Item[43]  %I35.2  Н2 размывка: ключ ОТКРЫТЬ
+   Item[43].Tf := 0.1;
+   Item[43].AdrByte := 35;
+   Item[43].AdrBit := 2;
+   Item[43].StatusBYTE := -1;
+   Item[43].StatusBIT := -1;
+   // Item[44]  %I35.3  Н2 размывка: ключ ЗАКРЫТЬ
+   Item[44].Tf := 0.1;
+   Item[44].AdrByte := 35;
+   Item[44].AdrBit := 3;
+   Item[44].StatusBYTE := -1;
+   Item[44].StatusBIT := -1;
+   // Item[45]  %I30.2  Н2 дренаж: концевик ОТКРЫТА (34.5)
+   Item[45].Tf := 0.1;
+   Item[45].AdrByte := 30;
+   Item[45].AdrBit := 2;
+   Item[45].StatusBYTE := -1;
+   Item[45].StatusBIT := -1;
+   // Item[46]  %I30.3  Н2 дренаж: концевик ЗАКРЫТА (34.5)
+   Item[46].Tf := 0.1;
+   Item[46].AdrByte := 30;
+   Item[46].AdrBit := 3;
+   Item[46].StatusBYTE := -1;
+   Item[46].StatusBIT := -1;
+   // Item[47]  %I34.2  Н2 дренаж: ключ ОТКРЫТЬ
+   Item[47].Tf := 0.1;
+   Item[47].AdrByte := 34;
+   Item[47].AdrBit := 2;
+   Item[47].StatusBYTE := -1;
+   Item[47].StatusBIT := -1;
+   // Item[48]  %I34.3  Н2 дренаж: ключ ЗАКРЫТЬ
+   Item[48].Tf := 0.1;
+   Item[48].AdrByte := 34;
+   Item[48].AdrBit := 3;
+   Item[48].StatusBYTE := -1;
+   Item[48].StatusBIT := -1;
+   // Item[49]  %I71.0  ГЦ1 (задв. №1 ГЦ-28-4): концевик ОТКРЫТА
+   Item[49].Tf := 0.1;
+   Item[49].AdrByte := 71;
+   Item[49].AdrBit := 0;
+   Item[49].StatusBYTE := -1;
+   Item[49].StatusBIT := -1;
+   // Item[50]  %I71.1  ГЦ1: концевик ЗАКРЫТА
+   Item[50].Tf := 0.1;
+   Item[50].AdrByte := 71;
+   Item[50].AdrBit := 1;
+   Item[50].StatusBYTE := -1;
+   Item[50].StatusBIT := -1;
+   // Item[51]  %I73.0  ГЦ1: ключ ОТКРЫТЬ
+   Item[51].Tf := 0.1;
+   Item[51].AdrByte := 73;
+   Item[51].AdrBit := 0;
+   Item[51].StatusBYTE := -1;
+   Item[51].StatusBIT := -1;
+   // Item[52]  %I73.1  ГЦ1: ключ ЗАКРЫТЬ
+   Item[52].Tf := 0.1;
+   Item[52].AdrByte := 73;
+   Item[52].AdrBit := 1;
+   Item[52].StatusBYTE := -1;
+   Item[52].StatusBIT := -1;
+   // Item[53]  %I71.2  ГЦ2 (задв. №2 ГЦ-28-4): концевик ОТКРЫТА
+   Item[53].Tf := 0.1;
+   Item[53].AdrByte := 71;
+   Item[53].AdrBit := 2;
+   Item[53].StatusBYTE := -1;
+   Item[53].StatusBIT := -1;
+   // Item[54]  %I71.3  ГЦ2: концевик ЗАКРЫТА
+   Item[54].Tf := 0.1;
+   Item[54].AdrByte := 71;
+   Item[54].AdrBit := 3;
+   Item[54].StatusBYTE := -1;
+   Item[54].StatusBIT := -1;
+   // Item[55]  %I73.2  ГЦ2: ключ ОТКРЫТЬ
+   Item[55].Tf := 0.1;
+   Item[55].AdrByte := 73;
+   Item[55].AdrBit := 2;
+   Item[55].StatusBYTE := -1;
+   Item[55].StatusBIT := -1;
+   // Item[56]  %I73.3  ГЦ2: ключ ЗАКРЫТЬ
+   Item[56].Tf := 0.1;
+   Item[56].AdrByte := 73;
+   Item[56].AdrBit := 3;
+   Item[56].StatusBYTE := -1;
+   Item[56].StatusBIT := -1;
+   // Item[57]  %I71.4  ГЦ3 (задв. №3 ГЦ-28-4): концевик ОТКРЫТА
+   Item[57].Tf := 0.1;
+   Item[57].AdrByte := 71;
+   Item[57].AdrBit := 4;
+   Item[57].StatusBYTE := -1;
+   Item[57].StatusBIT := -1;
+   // Item[58]  %I71.5  ГЦ3: концевик ЗАКРЫТА
+   Item[58].Tf := 0.1;
+   Item[58].AdrByte := 71;
+   Item[58].AdrBit := 5;
+   Item[58].StatusBYTE := -1;
+   Item[58].StatusBIT := -1;
+   // Item[59]  %I73.4  ГЦ3: ключ ОТКРЫТЬ
+   Item[59].Tf := 0.1;
+   Item[59].AdrByte := 73;
+   Item[59].AdrBit := 4;
+   Item[59].StatusBYTE := -1;
+   Item[59].StatusBIT := -1;
+   // Item[60]  %I73.5  ГЦ3: ключ ЗАКРЫТЬ
+   Item[60].Tf := 0.1;
+   Item[60].AdrByte := 73;
+   Item[60].AdrBit := 5;
+   Item[60].StatusBYTE := -1;
+   Item[60].StatusBIT := -1;
+   // Item[61]  %I71.6  ГЦ4 (задв. №4 ГЦ-28-4): концевик ОТКРЫТА
+   Item[61].Tf := 0.1;
+   Item[61].AdrByte := 71;
+   Item[61].AdrBit := 6;
+   Item[61].StatusBYTE := -1;
+   Item[61].StatusBIT := -1;
+   // Item[62]  %I71.7  ГЦ4: концевик ЗАКРЫТА
+   Item[62].Tf := 0.1;
+   Item[62].AdrByte := 71;
+   Item[62].AdrBit := 7;
+   Item[62].StatusBYTE := -1;
+   Item[62].StatusBIT := -1;
+   // Item[63]  %I73.6  ГЦ4: ключ ОТКРЫТЬ
+   Item[63].Tf := 0.1;
+   Item[63].AdrByte := 73;
+   Item[63].AdrBit := 6;
+   Item[63].StatusBYTE := -1;
+   Item[63].StatusBIT := -1;
+   // Item[64]  %I73.7  ГЦ4: ключ ЗАКРЫТЬ
+   Item[64].Tf := 0.1;
+   Item[64].AdrByte := 73;
+   Item[64].AdrBit := 7;
+   Item[64].StatusBYTE := -1;
+   Item[64].StatusBIT := -1;
+   // Item[65]  %I72.0  ГЦ5 (задв. №5 ГЦ-28-4): концевик ОТКРЫТА
+   Item[65].Tf := 0.1;
+   Item[65].AdrByte := 72;
+   Item[65].AdrBit := 0;
+   Item[65].StatusBYTE := -1;
+   Item[65].StatusBIT := -1;
+   // Item[66]  %I72.1  ГЦ5: концевик ЗАКРЫТА
+   Item[66].Tf := 0.1;
+   Item[66].AdrByte := 72;
+   Item[66].AdrBit := 1;
+   Item[66].StatusBYTE := -1;
+   Item[66].StatusBIT := -1;
+   // Item[67]  %I74.0  ГЦ5: ключ ОТКРЫТЬ
+   Item[67].Tf := 0.1;
+   Item[67].AdrByte := 74;
+   Item[67].AdrBit := 0;
+   Item[67].StatusBYTE := -1;
+   Item[67].StatusBIT := -1;
+   // Item[68]  %I74.1  ГЦ5: ключ ЗАКРЫТЬ
+   Item[68].Tf := 0.1;
+   Item[68].AdrByte := 74;
+   Item[68].AdrBit := 1;
+   Item[68].StatusBYTE := -1;
+   Item[68].StatusBIT := -1;
+   // Item[69]  %I72.2  ГЦ6 (задв. №6 ГЦ-28-4): концевик ОТКРЫТА
+   Item[69].Tf := 0.1;
+   Item[69].AdrByte := 72;
+   Item[69].AdrBit := 2;
+   Item[69].StatusBYTE := -1;
+   Item[69].StatusBIT := -1;
+   // Item[70]  %I72.3  ГЦ6: концевик ЗАКРЫТА
+   Item[70].Tf := 0.1;
+   Item[70].AdrByte := 72;
+   Item[70].AdrBit := 3;
+   Item[70].StatusBYTE := -1;
+   Item[70].StatusBIT := -1;
+   // Item[71]  %I74.2  ГЦ6: ключ ОТКРЫТЬ
+   Item[71].Tf := 0.1;
+   Item[71].AdrByte := 74;
+   Item[71].AdrBit := 2;
+   Item[71].StatusBYTE := -1;
+   Item[71].StatusBIT := -1;
+   // Item[72]  %I74.3  ГЦ6: ключ ЗАКРЫТЬ
+   Item[72].Tf := 0.1;
+   Item[72].AdrByte := 74;
+   Item[72].AdrBit := 3;
+   Item[72].StatusBYTE := -1;
+   Item[72].StatusBIT := -1;
+   // Item[73]  %I37.4  Аварийный стоп (пульт ГЦУ) — НО-контакт: 1 = нажата
+   Item[73].Tf := 0.1;
+   Item[73].AdrByte := 37;
+   Item[73].AdrBit := 4;
+   Item[73].StatusBYTE := -1;
+   Item[73].StatusBIT := -1;
+   // Item[74]  %I74.7  Аварийный стоп(1) (шкаф гидроциклонов) — НО-контакт: 1 = нажата
+   Item[74].Tf := 0.1;
+   Item[74].AdrByte := 74;
+   Item[74].AdrBit := 7;
+   Item[74].StatusBYTE := -1;
+   Item[74].StatusBIT := -1;
+   // Item[75]  %I4.0  Пульподелитель задвижка №1: концевик ОТКРЫТА
+   Item[75].Tf := 0.1;
+   Item[75].AdrByte := 4;
+   Item[75].AdrBit := 0;
+   Item[75].StatusBYTE := -1;
+   Item[75].StatusBIT := -1;
+   // Item[76]  %I4.1  Пульподелитель задвижка №1: концевик ЗАКРЫТА
+   Item[76].Tf := 0.1;
+   Item[76].AdrByte := 4;
+   Item[76].AdrBit := 1;
+   Item[76].StatusBYTE := -1;
+   Item[76].StatusBIT := -1;
+   // Item[77]  %I4.2  Пульподелитель задвижка №2: концевик ОТКРЫТА
+   Item[77].Tf := 0.1;
+   Item[77].AdrByte := 4;
+   Item[77].AdrBit := 2;
+   Item[77].StatusBYTE := -1;
+   Item[77].StatusBIT := -1;
+   // Item[78]  %I4.3  Пульподелитель задвижка №2: концевик ЗАКРЫТА
+   Item[78].Tf := 0.1;
+   Item[78].AdrByte := 4;
+   Item[78].AdrBit := 3;
+   Item[78].StatusBYTE := -1;
+   Item[78].StatusBIT := -1;
+   // Item[79]  %I4.4  Пульподелитель задвижка №3: концевик ОТКРЫТА
+   Item[79].Tf := 0.1;
+   Item[79].AdrByte := 4;
+   Item[79].AdrBit := 4;
+   Item[79].StatusBYTE := -1;
+   Item[79].StatusBIT := -1;
+   // Item[80]  %I4.5  Пульподелитель задвижка №3: концевик ЗАКРЫТА
+   Item[80].Tf := 0.1;
+   Item[80].AdrByte := 4;
+   Item[80].AdrBit := 5;
+   Item[80].StatusBYTE := -1;
+   Item[80].StatusBIT := -1;
+   // Item[81]  %I37.0  Пульт ГЦУ: ИБП включено
+   Item[81].Tf := 0.1;
+   Item[81].AdrByte := 37;
+   Item[81].AdrBit := 0;
+   Item[81].StatusBYTE := -1;
+   Item[81].StatusBIT := -1;
+   // Item[82]  %I37.1  Пульт ГЦУ: дверь закрыта (0 = открыта, предупреждение)
+   Item[82].Tf := 0.1;
+   Item[82].AdrByte := 37;
+   Item[82].AdrBit := 1;
+   Item[82].StatusBYTE := -1;
+   Item[82].StatusBIT := -1;
+   // Item[83]  %I37.2  Пульт ГЦУ: реле давления воздуха (0 = нет давления, предупреждение)
+   Item[83].Tf := 0.1;
+   Item[83].AdrByte := 37;
+   Item[83].AdrBit := 2;
+   Item[83].StatusBYTE := -1;
+   Item[83].StatusBIT := -1;
+   // Item[84]  %I37.3  Пульт ГЦУ: дистанционный режим
+   Item[84].Tf := 0.1;
+   Item[84].AdrByte := 37;
+   Item[84].AdrBit := 3;
+   Item[84].StatusBYTE := -1;
+   Item[84].StatusBIT := -1;
+   // Item[85]  %I74.4  Шкаф гидроциклонов: ИБП включено(1)
+   Item[85].Tf := 0.1;
+   Item[85].AdrByte := 74;
+   Item[85].AdrBit := 4;
+   Item[85].StatusBYTE := -1;
+   Item[85].StatusBIT := -1;
+   // Item[86]  %I74.5  Шкаф гидроциклонов: дверь закрыта(1) (0 = открыта, предупреждение)
+   Item[86].Tf := 0.1;
+   Item[86].AdrByte := 74;
+   Item[86].AdrBit := 5;
+   Item[86].StatusBYTE := -1;
+   Item[86].StatusBIT := -1;
+   // Item[87]  %I74.6  Шкаф гидроциклонов: реле давления пульта(1) (0 = нет давления, предупреждение)
+   Item[87].Tf := 0.1;
+   Item[87].AdrByte := 74;
+   Item[87].AdrBit := 6;
+   Item[87].StatusBYTE := -1;
+   Item[87].StatusBIT := -1;
+   // Item[88]  %I0.0  Шкаф ПЛК: R3 от ИБП
+   Item[88].Tf := 0.1;
+   Item[88].AdrByte := 0;
+   Item[88].AdrBit := 0;
+   Item[88].StatusBYTE := -1;
+   Item[88].StatusBIT := -1;
+   // Item[89]  %I0.1  Шкаф ПЛК: R2 от ИБП
+   Item[89].Tf := 0.1;
+   Item[89].AdrByte := 0;
+   Item[89].AdrBit := 1;
+   Item[89].StatusBYTE := -1;
+   Item[89].StatusBIT := -1;
+   // Item[90]  %I0.2  Шкаф ПЛК: от ИБП, работа от батареи
+   Item[90].Tf := 0.1;
+   Item[90].AdrByte := 0;
+   Item[90].AdrBit := 2;
+   Item[90].StatusBYTE := -1;
+   Item[90].StatusBIT := -1;
+   // Item[91]  %I0.3  Шкаф ПЛК: от ИБП, работа от батареи(1)
+   Item[91].Tf := 0.1;
+   Item[91].AdrByte := 0;
+   Item[91].AdrBit := 3;
+   Item[91].StatusBYTE := -1;
+   Item[91].StatusBIT := -1;
+   // Item[92]  %I0.4  Шкаф ПЛК: R4 от ИБП
+   Item[92].Tf := 0.1;
+   Item[92].AdrByte := 0;
+   Item[92].AdrBit := 4;
+   Item[92].StatusBYTE := -1;
+   Item[92].StatusBIT := -1;
+   // Item[93]  %I0.5  Шкаф ПЛК: I/P2 от ИБП
+   Item[93].Tf := 0.1;
+   Item[93].AdrByte := 0;
+   Item[93].AdrBit := 5;
+   Item[93].StatusBYTE := -1;
+   Item[93].StatusBIT := -1;
+   // Item[94]  %I0.6  Шкаф ПЛК: дверь открыта (1 = открыта, предупреждение)
+   Item[94].Tf := 0.1;
+   Item[94].AdrByte := 0;
+   Item[94].AdrBit := 6;
+   Item[94].StatusBYTE := -1;
+   Item[94].StatusBIT := -1;
+   // Item[95]  %I0.7  Шкаф ПЛК: включение общего +24В на клеммнике ХТ4.1
+   Item[95].Tf := 0.1;
+   Item[95].AdrByte := 0;
+   Item[95].AdrBit := 7;
+   Item[95].StatusBYTE := -1;
+   Item[95].StatusBIT := -1;
+   // Item[96]  %I1.0  Аварийный стоп шкаф PLC — НО-контакт: 1 = нажата
+   Item[96].Tf := 0.1;
+   Item[96].AdrByte := 1;
+   Item[96].AdrBit := 0;
+   Item[96].StatusBYTE := -1;
+   Item[96].StatusBIT := -1;
+   // Item[97]  %I1.1  Аварийный стоп панель HMI — НО-контакт: 1 = нажата
+   Item[97].Tf := 0.1;
+   Item[97].AdrByte := 1;
+   Item[97].AdrBit := 1;
+   Item[97].StatusBYTE := -1;
+   Item[97].StatusBIT := -1;
+   // Item[98]  %I1.2  Система густой смазки М-2
+   Item[98].Tf := 0.1;
+   Item[98].AdrByte := 1;
+   Item[98].AdrBit := 2;
+   Item[98].StatusBYTE := -1;
+   Item[98].StatusBIT := -1;
+   // Item[99]  %I1.3  Система густой смазки М-3
+   Item[99].Tf := 0.1;
+   Item[99].AdrByte := 1;
+   Item[99].AdrBit := 3;
+   Item[99].StatusBYTE := -1;
+   Item[99].StatusBIT := -1;
+
+END_DATA_BLOCK
+
+DATA_BLOCK "DO"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+   STRUCT 
+      Count : Int;
+      Item : Array[1..44] of "TDOData";
+   END_STRUCT;
+
+
+BEGIN
+   Count := 44;
+   // Item[1]  %Q13.4  Н1 гидроподпор: ОТКРЫТЬ
+   Item[1].AdrByte := 13;
+   Item[1].AdrBit := 4;
+   Item[1].StatusBYTE := -1;
+   Item[1].StatusBIT := -1;
+   // Item[2]  %Q13.5  Н1 гидроподпор: ЗАКРЫТЬ
+   Item[2].AdrByte := 13;
+   Item[2].AdrBit := 5;
+   Item[2].StatusBYTE := -1;
+   Item[2].StatusBIT := -1;
+   // Item[3]  %Q12.4  Н1 всас: ОТКРЫТЬ
+   Item[3].AdrByte := 12;
+   Item[3].AdrBit := 4;
+   Item[3].StatusBYTE := -1;
+   Item[3].StatusBIT := -1;
+   // Item[4]  %Q12.5  Н1 всас: ЗАКРЫТЬ
+   Item[4].AdrByte := 12;
+   Item[4].AdrBit := 5;
+   Item[4].StatusBYTE := -1;
+   Item[4].StatusBIT := -1;
+   // Item[5]  %Q13.0  Н1 нагнетание: ОТКРЫТЬ
+   Item[5].AdrByte := 13;
+   Item[5].AdrBit := 0;
+   Item[5].StatusBYTE := -1;
+   Item[5].StatusBIT := -1;
+   // Item[6]  %Q13.1  Н1 нагнетание: ЗАКРЫТЬ
+   Item[6].AdrByte := 13;
+   Item[6].AdrBit := 1;
+   Item[6].StatusBYTE := -1;
+   Item[6].StatusBIT := -1;
+   // Item[7]  %Q11.4  Н1 промывка: ОТКРЫТЬ
+   Item[7].AdrByte := 11;
+   Item[7].AdrBit := 4;
+   Item[7].StatusBYTE := -1;
+   Item[7].StatusBIT := -1;
+   // Item[8]  %Q11.5  Н1 промывка: ЗАКРЫТЬ
+   Item[8].AdrByte := 11;
+   Item[8].AdrBit := 5;
+   Item[8].StatusBYTE := -1;
+   Item[8].StatusBIT := -1;
+   // Item[9]  %Q12.0  Н1 размывка: ОТКРЫТЬ
+   Item[9].AdrByte := 12;
+   Item[9].AdrBit := 0;
+   Item[9].StatusBYTE := -1;
+   Item[9].StatusBIT := -1;
+   // Item[10]  %Q12.1  Н1 размывка: ЗАКРЫТЬ
+   Item[10].AdrByte := 12;
+   Item[10].AdrBit := 1;
+   Item[10].StatusBYTE := -1;
+   Item[10].StatusBIT := -1;
+   // Item[11]  %Q11.0  Н1 дренаж: ОТКРЫТЬ
+   Item[11].AdrByte := 11;
+   Item[11].AdrBit := 0;
+   Item[11].StatusBYTE := -1;
+   Item[11].StatusBIT := -1;
+   // Item[12]  %Q11.1  Н1 дренаж: ЗАКРЫТЬ
+   Item[12].AdrByte := 11;
+   Item[12].AdrBit := 1;
+   Item[12].StatusBYTE := -1;
+   Item[12].StatusBIT := -1;
+   // Item[13]  %Q13.6  Н2 гидроподпор: ОТКРЫТЬ
+   Item[13].AdrByte := 13;
+   Item[13].AdrBit := 6;
+   Item[13].StatusBYTE := -1;
+   Item[13].StatusBIT := -1;
+   // Item[14]  %Q13.7  Н2 гидроподпор: ЗАКРЫТЬ
+   Item[14].AdrByte := 13;
+   Item[14].AdrBit := 7;
+   Item[14].StatusBYTE := -1;
+   Item[14].StatusBIT := -1;
+   // Item[15]  %Q12.6  Н2 всас: ОТКРЫТЬ
+   Item[15].AdrByte := 12;
+   Item[15].AdrBit := 6;
+   Item[15].StatusBYTE := -1;
+   Item[15].StatusBIT := -1;
+   // Item[16]  %Q12.7  Н2 всас: ЗАКРЫТЬ
+   Item[16].AdrByte := 12;
+   Item[16].AdrBit := 7;
+   Item[16].StatusBYTE := -1;
+   Item[16].StatusBIT := -1;
+   // Item[17]  %Q13.2  Н2 нагнетание: ОТКРЫТЬ
+   Item[17].AdrByte := 13;
+   Item[17].AdrBit := 2;
+   Item[17].StatusBYTE := -1;
+   Item[17].StatusBIT := -1;
+   // Item[18]  %Q13.3  Н2 нагнетание: ЗАКРЫТЬ
+   Item[18].AdrByte := 13;
+   Item[18].AdrBit := 3;
+   Item[18].StatusBYTE := -1;
+   Item[18].StatusBIT := -1;
+   // Item[19]  %Q11.6  Н2 промывка: ОТКРЫТЬ
+   Item[19].AdrByte := 11;
+   Item[19].AdrBit := 6;
+   Item[19].StatusBYTE := -1;
+   Item[19].StatusBIT := -1;
+   // Item[20]  %Q11.7  Н2 промывка: ЗАКРЫТЬ
+   Item[20].AdrByte := 11;
+   Item[20].AdrBit := 7;
+   Item[20].StatusBYTE := -1;
+   Item[20].StatusBIT := -1;
+   // Item[21]  %Q12.2  Н2 размывка: ОТКРЫТЬ
+   Item[21].AdrByte := 12;
+   Item[21].AdrBit := 2;
+   Item[21].StatusBYTE := -1;
+   Item[21].StatusBIT := -1;
+   // Item[22]  %Q12.3  Н2 размывка: ЗАКРЫТЬ
+   Item[22].AdrByte := 12;
+   Item[22].AdrBit := 3;
+   Item[22].StatusBYTE := -1;
+   Item[22].StatusBIT := -1;
+   // Item[23]  %Q11.2  Н2 дренаж: ОТКРЫТЬ
+   Item[23].AdrByte := 11;
+   Item[23].AdrBit := 2;
+   Item[23].StatusBYTE := -1;
+   Item[23].StatusBIT := -1;
+   // Item[24]  %Q11.3  Н2 дренаж: ЗАКРЫТЬ
+   Item[24].AdrByte := 11;
+   Item[24].AdrBit := 3;
+   Item[24].StatusBYTE := -1;
+   Item[24].StatusBIT := -1;
+   // Item[25]  %Q24.0  ГЦ1: ОТКРЫТЬ
+   Item[25].AdrByte := 24;
+   Item[25].AdrBit := 0;
+   Item[25].StatusBYTE := -1;
+   Item[25].StatusBIT := -1;
+   // Item[26]  %Q24.1  ГЦ1: ЗАКРЫТЬ
+   Item[26].AdrByte := 24;
+   Item[26].AdrBit := 1;
+   Item[26].StatusBYTE := -1;
+   Item[26].StatusBIT := -1;
+   // Item[27]  %Q24.2  ГЦ2: ОТКРЫТЬ
+   Item[27].AdrByte := 24;
+   Item[27].AdrBit := 2;
+   Item[27].StatusBYTE := -1;
+   Item[27].StatusBIT := -1;
+   // Item[28]  %Q24.3  ГЦ2: ЗАКРЫТЬ
+   Item[28].AdrByte := 24;
+   Item[28].AdrBit := 3;
+   Item[28].StatusBYTE := -1;
+   Item[28].StatusBIT := -1;
+   // Item[29]  %Q24.4  ГЦ3: ОТКРЫТЬ
+   Item[29].AdrByte := 24;
+   Item[29].AdrBit := 4;
+   Item[29].StatusBYTE := -1;
+   Item[29].StatusBIT := -1;
+   // Item[30]  %Q24.5  ГЦ3: ЗАКРЫТЬ
+   Item[30].AdrByte := 24;
+   Item[30].AdrBit := 5;
+   Item[30].StatusBYTE := -1;
+   Item[30].StatusBIT := -1;
+   // Item[31]  %Q24.6  ГЦ4: ОТКРЫТЬ
+   Item[31].AdrByte := 24;
+   Item[31].AdrBit := 6;
+   Item[31].StatusBYTE := -1;
+   Item[31].StatusBIT := -1;
+   // Item[32]  %Q24.7  ГЦ4: ЗАКРЫТЬ
+   Item[32].AdrByte := 24;
+   Item[32].AdrBit := 7;
+   Item[32].StatusBYTE := -1;
+   Item[32].StatusBIT := -1;
+   // Item[33]  %Q25.0  ГЦ5: ОТКРЫТЬ
+   Item[33].AdrByte := 25;
+   Item[33].AdrBit := 0;
+   Item[33].StatusBYTE := -1;
+   Item[33].StatusBIT := -1;
+   // Item[34]  %Q25.1  ГЦ5: ЗАКРЫТЬ
+   Item[34].AdrByte := 25;
+   Item[34].AdrBit := 1;
+   Item[34].StatusBYTE := -1;
+   Item[34].StatusBIT := -1;
+   // Item[35]  %Q25.2  ГЦ6: ОТКРЫТЬ
+   Item[35].AdrByte := 25;
+   Item[35].AdrBit := 2;
+   Item[35].StatusBYTE := -1;
+   Item[35].StatusBIT := -1;
+   // Item[36]  %Q25.3  ГЦ6: ЗАКРЫТЬ
+   Item[36].AdrByte := 25;
+   Item[36].AdrBit := 3;
+   Item[36].StatusBYTE := -1;
+   Item[36].StatusBIT := -1;
+   // Item[37]  %Q2.0  Пульподелитель задвижка №1: ОТКРЫТЬ
+   Item[37].AdrByte := 2;
+   Item[37].AdrBit := 0;
+   Item[37].StatusBYTE := -1;
+   Item[37].StatusBIT := -1;
+   // Item[38]  %Q2.1  Пульподелитель задвижка №1: ЗАКРЫТЬ
+   Item[38].AdrByte := 2;
+   Item[38].AdrBit := 1;
+   Item[38].StatusBYTE := -1;
+   Item[38].StatusBIT := -1;
+   // Item[39]  %Q2.2  Пульподелитель задвижка №2: ОТКРЫТЬ
+   Item[39].AdrByte := 2;
+   Item[39].AdrBit := 2;
+   Item[39].StatusBYTE := -1;
+   Item[39].StatusBIT := -1;
+   // Item[40]  %Q2.3  Пульподелитель задвижка №2: ЗАКРЫТЬ
+   Item[40].AdrByte := 2;
+   Item[40].AdrBit := 3;
+   Item[40].StatusBYTE := -1;
+   Item[40].StatusBIT := -1;
+   // Item[41]  %Q2.4  Пульподелитель задвижка №3: ОТКРЫТЬ
+   Item[41].AdrByte := 2;
+   Item[41].AdrBit := 4;
+   Item[41].StatusBYTE := -1;
+   Item[41].StatusBIT := -1;
+   // Item[42]  %Q2.5  Пульподелитель задвижка №3: ЗАКРЫТЬ
+   Item[42].AdrByte := 2;
+   Item[42].AdrBit := 5;
+   Item[42].StatusBYTE := -1;
+   Item[42].StatusBIT := -1;
+   // Item[43]  %Q0.0  Световая сигнализация (общая авария ГЦУ)
+   Item[43].AdrByte := 0;
+   Item[43].AdrBit := 0;
+   Item[43].StatusBYTE := -1;
+   Item[43].StatusBIT := -1;
+   // Item[44]  %Q0.1  Звуковая сигнализация (новая авария, до квитирования/сброса)
+   Item[44].AdrByte := 0;
+   Item[44].AdrBit := 1;
+   Item[44].StatusBYTE := -1;
+   Item[44].StatusBIT := -1;
+
+END_DATA_BLOCK
+
+// DB AI — блок пользователя (выгрузка из TIA 2026-10-24); добавлены только комментарии и исправление Item[4]
+DATA_BLOCK "AI"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+   STRUCT 
+      Count : Int;
+      Item : Array[1..18] of "TAIData";
+   END_STRUCT;
+
+
+BEGIN
+   Count := 18;
+   // Item[1]  %IW47  Уровень зумпфа, %
+   Item[1].HiHiUse := TRUE;
+   Item[1].HiUse := TRUE;
+   Item[1].LoUse := TRUE;
+   Item[1].LoLoUse := TRUE;
+   Item[1].MaxEU := 100.0;
+   Item[1].HiHi := 95.0;
+   Item[1].Hi := 85.0;
+   Item[1].Lo := 20.0;
+   Item[1].LoLo := 10.0;
+   Item[1].Tf := 2.0;
+   Item[1].AdrByte := 47;
+   Item[1].StatusBYTE := -1;
+   Item[1].StatusBIT := -1;
+   // Item[2]  %IW81  Давление на входе гидроциклонов, бар
+   Item[2].HiUse := TRUE;
+   Item[2].LoUse := TRUE;
+   Item[2].MaxEU := 2.5;
+   Item[2].Hi := 2.0;
+   Item[2].Lo := 0.3;
+   Item[2].Tf := 1.0;
+   Item[2].AdrByte := 81;
+   Item[2].StatusBYTE := -1;
+   Item[2].StatusBIT := -1;
+   // Item[3]  %IW1002  Производительность Н1 (ПЧ, Profibus), %
+   Item[3].AlmDisable := TRUE;
+   Item[3].MaxEU := 100.0;
+   Item[3].Tf := 1.0;
+   Item[3].AdrByte := 1002;
+   Item[3].MaxRaw := 16384;
+   Item[3].StatusBYTE := -1;
+   Item[3].StatusBIT := -1;
+   // Item[4]  %IW1052  Производительность Н2 (ПЧ, Profibus), %
+   Item[4].AlmDisable := TRUE;
+   Item[4].MaxEU := 100.0;
+   Item[4].Tf := 1.0;
+   Item[4].AdrByte := 1052;
+   Item[4].MaxRaw := 16384;   // в выгрузке было Underflow := 16384 (опечатка: при этом всё ниже 100 % — недостоверно)
+   Item[4].StatusBYTE := -1;
+   Item[4].StatusBIT := -1;
+   // Item[5]  %IW1006  Ток Н1 (ПЧ, Profibus), %
+   Item[5].AlmDisable := TRUE;
+   Item[5].MaxEU := 100.0;
+   Item[5].Tf := 1.0;
+   Item[5].AdrByte := 1006;
+   Item[5].MaxRaw := 16384;
+   Item[5].StatusBYTE := -1;
+   Item[5].StatusBIT := -1;
+   // Item[6]  %IW1056  Ток Н2 (ПЧ, Profibus), %
+   Item[6].AlmDisable := TRUE;
+   Item[6].MaxEU := 100.0;
+   Item[6].Tf := 1.0;
+   Item[6].AdrByte := 1056;
+   Item[6].MaxRaw := 16384;
+   Item[6].StatusBYTE := -1;
+   Item[6].StatusBIT := -1;
+   // Item[7]  %IW6  Датчик давления гидроподпора 36.4 (Н-1) — защита HH/LL в автомате
+   Item[7].AlmDisable := TRUE;
+   Item[7].MaxEU := 100.0;
+   Item[7].Tf := 1.0;
+   Item[7].AdrByte := 6;
+   Item[7].StatusBYTE := -1;
+   Item[7].StatusBIT := -1;
+   // Item[8]  %IW8  Датчик давления гидроподпора 36.5 (Н-2) — защита HH/LL в автомате
+   Item[8].AlmDisable := TRUE;
+   Item[8].MaxEU := 100.0;
+   Item[8].Tf := 1.0;
+   Item[8].AdrByte := 8;
+   Item[8].StatusBYTE := -1;
+   Item[8].StatusBIT := -1;
+   // Item[9]  %IW10  Датчик расхода гидроподпора 36.4 (Н-1)
+   Item[9].AlmDisable := TRUE;
+   Item[9].MaxEU := 100.0;
+   Item[9].Tf := 1.0;
+   Item[9].AdrByte := 10;
+   Item[9].StatusBYTE := -1;
+   Item[9].StatusBIT := -1;
+   // Item[10]  %IW12  Датчик расхода гидроподпора 36.5 (Н-2)
+   Item[10].AlmDisable := TRUE;
+   Item[10].MaxEU := 100.0;
+   Item[10].Tf := 1.0;
+   Item[10].AdrByte := 12;
+   Item[10].StatusBYTE := -1;
+   Item[10].StatusBIT := -1;
+   // Item[11]  %IW14  Плотномер питания сгустителей Насоса №1(1)
+   Item[11].AlmDisable := TRUE;
+   Item[11].MaxEU := 100.0;
+   Item[11].Tf := 1.0;
+   Item[11].AdrByte := 14;
+   Item[11].StatusBYTE := -1;
+   Item[11].StatusBIT := -1;
+   // Item[12]  %IW16  Плотномер питания сгустителей Насоса №3(1)
+   Item[12].AlmDisable := TRUE;
+   Item[12].MaxEU := 100.0;
+   Item[12].Tf := 1.0;
+   Item[12].AdrByte := 16;
+   Item[12].StatusBYTE := -1;
+   Item[12].StatusBIT := -1;
+   // Item[13]  %IW18  Газоанализатор HCN МЛГ-20М (3 стадия)
+   Item[13].AlmDisable := TRUE;
+   Item[13].MaxEU := 100.0;
+   Item[13].Tf := 1.0;
+   Item[13].AdrByte := 18;
+   Item[13].StatusBYTE := -1;
+   Item[13].StatusBIT := -1;
+   // Item[14]  %IW20  Резерв AI
+   Item[14].AlmDisable := TRUE;
+   Item[14].MaxEU := 100.0;
+   Item[14].Tf := 1.0;
+   Item[14].AdrByte := 20;
+   Item[14].StatusBYTE := -1;
+   Item[14].StatusBIT := -1;
+   // Item[15]  %IW43  Давление линии нагнетания Н-1 (36.4), бар
+   Item[15].AlmDisable := TRUE;
+   Item[15].MaxEU := 4.0;
+   Item[15].Tf := 1.0;
+   Item[15].AdrByte := 43;
+   Item[15].StatusBYTE := -1;
+   Item[15].StatusBIT := -1;
+   // Item[16]  %IW45  Давление линии нагнетания Н-2 (36.5), бар
+   Item[16].AlmDisable := TRUE;
+   Item[16].MaxEU := 4.0;
+   Item[16].Tf := 1.0;
+   Item[16].AdrByte := 45;
+   Item[16].StatusBYTE := -1;
+   Item[16].StatusBIT := -1;
+   // Item[17]  %IW39  Давление воздуха (датчик давления пульта), бар
+   Item[17].AlmDisable := TRUE;
+   Item[17].MaxEU := 10.0;
+   Item[17].Tf := 1.0;
+   Item[17].AdrByte := 39;
+   Item[17].StatusBYTE := -1;
+   Item[17].StatusBIT := -1;
+   // Item[18]  %IW77  Давление воздуха (датчик давления пульта(1)), бар
+   Item[18].AlmDisable := TRUE;
+   Item[18].MaxEU := 10.0;
+   Item[18].Tf := 1.0;
+   Item[18].AdrByte := 77;
+   Item[18].StatusBYTE := -1;
+   Item[18].StatusBIT := -1;
+
+END_DATA_BLOCK
+
+DATA_BLOCK "AO"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+   STRUCT 
+      Count : Int;
+      Item : Array[1..2] of "TAOData";
+   END_STRUCT;
+
+
+BEGIN
+   Count := 2;
+   // Item[1]  %QW1002  Н-1: задание скорости ПЧ (Slave_1, PPO6 PCD2 = MRV, 16384 = 100 %)
+   Item[1].MaxEU := 100.0;
+   Item[1].AdrByte := 1002;
+   Item[1].MaxRaw := 16384;
+   // Item[2]  %QW1052  Н-2: задание скорости ПЧ (Slave_2, PPO6 PCD2 = MRV, 16384 = 100 %)
+   Item[2].MaxEU := 100.0;
+   Item[2].AdrByte := 1052;
+   Item[2].MaxRaw := 16384;
+
+END_DATA_BLOCK
+
+DATA_BLOCK "GCU_Sys"
+TITLE = 'Служебные данные: измерение времени цикла'
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+NON_RETAIN
+   STRUCT 
+      LastRT : LReal;   // память для RUNTIME
+   END_STRUCT;
+
+
+BEGIN
+
+END_DATA_BLOCK
+
+FUNCTION "SYS_Cycle" : Void
+TITLE = 'Время цикла в SystemInfo.Cycle (мс) для обработчиков DI/AI'
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_TEMP 
+      CycleMs : Real;
+   END_VAR
+
+
+BEGIN
+	// На S7-1500 нет OB1_PREV_CYCLE, поэтому время цикла меряем через RUNTIME
+	#CycleMs := LREAL_TO_REAL(RUNTIME("GCU_Sys".LastRT)) * 1000.0;
+	#CycleMs := LIMIT(MN := 1.0, IN := #CycleMs, MX := 1000.0);
+	"SystemInfo".Cycle := REAL_TO_INT(#CycleMs);
+	"SystemInfo".FirstScan := FALSE;
+	
+END_FUNCTION
+
+FUNCTION "DIAlm_HNDL" : Void
+{ S7_Optimized_Access := 'FALSE' }
+AUTHOR : Ким
+FAMILY : ГОК
+VERSION : 0.1
+   VAR_IN_OUT 
+      Signal : "TDIData";
+   END_VAR
+
+   VAR_TEMP 
+      Sample_T : Int;
+   END_VAR
+
+
+BEGIN
+	
+	#Sample_T := 0;
+	
+	// Инициализация данных
+	#Sample_T := "SystemInfo".Cycle;
+	
+	// Алармы отключены или нет качества сигнала
+	IF #Signal.AlmDisable OR NOT #Signal.Quality THEN
+	  #Signal.IsAlarm := false;
+	  
+	  // Алармы включены
+	ELSE
+	  
+	  IF #Signal.AlmUse THEN
+	    // При появлении тревожного сигнала запускается таймер    
+	    IF #Signal.Value = #Signal.AlmMode THEN
+	      IF #Signal.TimeAlarm < #Signal.Timeout THEN
+	        #Signal.TimeAlarm := #Signal.TimeAlarm + #Sample_T;
+	      ELSE
+	        #Signal.IsAlarm := true;        // Выставление аварии по истечению таймера
+	      END_IF;
+	      // Сброс аварии и таймера
+	    ELSE
+	      #Signal.IsAlarm := false;
+	      #Signal.TimeAlarm := 0;
+	    END_IF;
+	  ELSE
+	    #Signal.IsAlarm := false;
+	    #Signal.TimeAlarm := 0;
+	  END_IF;
+	  
+	END_IF;
+	
+END_FUNCTION
+
+FUNCTION "AIAlm_HNDL" : Void
+{ S7_Optimized_Access := 'FALSE' }
+AUTHOR : Ким
+FAMILY : ГОК
+VERSION : 0.1
+   VAR_IN_OUT 
+      Signal : "TAIData";
+   END_VAR
+
+   VAR_TEMP 
+      Threshold : Real;
+      Sample_T : Int;
+   END_VAR
+
+
+BEGIN
+	  // Инициализация данных
+	  #Sample_T := "SystemInfo".Cycle;
+	  #Threshold := 0.0;
+	  
+	  // Алармы отключены или нет качества сигнала
+	  IF #Signal.AlmDisable OR NOT #Signal.Quality THEN
+	    #Signal.AlmLoLo := false;
+	    #Signal.AlmLo := false;
+	    #Signal.AlmHiHi := false;
+	    #Signal.AlmHi := false;
+	    
+	    // Алармы включены
+	  ELSE
+	    
+	    // Вычисление величины гистерезиса
+	    #Threshold := #Signal.Threshold * (#Signal.MaxEU - #Signal.MinEU) / 100;
+	    
+	    // Гистерезис используется для того чтобы избежать постоянных изменений аларма при колебаниях сигнала возле границы.
+	    
+	    // --- Нижняя аварийная граница ---
+	    IF #Signal.LoLoUse THEN
+	      // Определение момента пересечения границы (возврат реализован с гистерезисом)
+	      IF #Signal.Value <= #Signal.LoLo THEN
+	        // Запуск таймера при пересечении границы
+	        IF #Signal.TimeLoLo < #Signal.Timeout THEN
+	          #Signal.TimeLoLo := #Signal.TimeLoLo + #Sample_T;
+	        ELSE
+	          #Signal.AlmLoLo := true;        // Выставление аварии по истечению таймера
+	        END_IF;
+	        
+	        // Сброс аварии и таймера    
+	      ELSIF #Signal.Value >= #Signal.LoLo + #Threshold THEN
+	        #Signal.AlmLoLo := false;
+	        #Signal.TimeLoLo := 0;
+	      END_IF;
+	      
+	    ELSE
+	      #Signal.AlmLoLo := false;
+	      #Signal.TimeLoLo := 0;
+	    END_IF;
+	    
+	    // --- Нижняя предупредительная граница ---
+	    IF #Signal.LoUse THEN
+	      // Определение момента пересечения границы (возврат реализован с гистерезисом)
+	      IF #Signal.Value <= #Signal.Lo THEN
+	        // Запуск таймера при пересечении границы
+	        IF #Signal.TimeLo < #Signal.Timeout THEN
+	          #Signal.TimeLo := #Signal.TimeLo + #Sample_T;
+	        ELSE
+	          #Signal.AlmLo := true;        // Выставление аварии по истечению таймера
+	        END_IF;
+	        
+	        // Сброс аварии и таймера    
+	      ELSIF #Signal.Value >= #Signal.Lo + #Threshold THEN
+	        #Signal.AlmLo := false;
+	        #Signal.TimeLo := 0;
+	      END_IF;
+	      
+	    ELSE
+	      #Signal.AlmLo := false;
+	      #Signal.TimeLo := 0;
+	    END_IF;
+	    
+	    // --- Верхняя предупредительная граница ---
+	    IF #Signal.HiUse THEN
+	      // Определение момента пересечения границы (возврат реализован с гистерезисом)
+	      IF #Signal.Value >= #Signal.Hi THEN
+	        // Запуск таймера при пересечении границы
+	        IF #Signal.TimeHi < #Signal.Timeout THEN
+	          #Signal.TimeHi := #Signal.TimeHi + #Sample_T;
+	        ELSE
+	          #Signal.AlmHi := true;        // Выставление аварии по истечению таймера
+	        END_IF;
+	        
+	        // Сброс аварии и таймера    
+	      ELSIF #Signal.Value <= #Signal.Hi - #Threshold THEN
+	        #Signal.AlmHi := false;
+	        #Signal.TimeHi := 0;
+	      END_IF;
+	      
+	    ELSE
+	      #Signal.AlmHi := false;
+	      #Signal.TimeHi := 0;
+	    END_IF;
+	    
+	    
+	    // --- Верхняя аварийная граница ---
+	    IF #Signal.HiHiUse THEN
+	      // Определение момента пересечения границы (возврат реализован с гистерезисом)
+	      IF #Signal.Value >= #Signal.HiHi THEN
+	        // Запуск таймера при пересечении границы
+	        IF #Signal.TimeHiHi < #Signal.Timeout THEN
+	          #Signal.TimeHiHi := #Signal.TimeHiHi + #Sample_T;
+	        ELSE
+	          #Signal.AlmHiHi := true;        // Выставление аварии по истечению таймера
+	        END_IF;
+	        
+	        // Сброс аварии и таймера
+	      ELSIF #Signal.Value <= #Signal.HiHi - #Threshold THEN
+	        #Signal.AlmHiHi := false;
+	        #Signal.TimeHiHi := 0;
+	      END_IF;
+	      
+	    ELSE
+	      #Signal.AlmHiHi := false;
+	      #Signal.TimeHiHi := 0;
+	    END_IF;
+	    
+	  END_IF; // конец алармы включены
+	  
+	  
+END_FUNCTION
+
+FUNCTION "DO_HNDL" : Void
+{ S7_Optimized_Access := 'FALSE' }
+AUTHOR : Шишеня
+FAMILY : ГОК
+VERSION : 0.1
+   VAR_INPUT 
+      ID : Int;
+   END_VAR
+
+   VAR_TEMP 
+      Quality : Bool;
+      RawVal : Bool;
+      Value : Bool;
+      AdrByte : Int;
+      AdrBit : Int;
+      DOVar : "TDOData";
+   END_VAR
+
+
+BEGIN
+	// Сброс L-стека
+	#Quality := false;
+	#RawVal := false;
+	#Value := false;
+	#AdrByte := 0;
+	#AdrBit := 0;
+	
+	
+	// Запись в локальную копию экземпляра переменной DO
+	#DOVar := "DO".Item[#ID];
+	
+	// Обработка переменной если она активна    
+	IF #DOVar.Active THEN
+	  
+	  // Физический адрес сигнала
+	  #AdrByte := #DOVar.AdrByte;
+	  #AdrBit := #DOVar.AdrBit;
+	  
+	  // РУЧНОЕ ЗНАЧЕНИЕ ПЕРЕМЕННОЙ            
+	  // Если сигнал замаскирован, взять замаскированое значение
+	  // и выставить признак достоверности        
+	  IF #DOVar.Mask THEN
+	    #DOVar.Value := #DOVar.MaskValue;
+	    #Quality := TRUE;                            // У замаскированного сигнала качество всегда TRUE
+	    // АВТОМАТИЧЕСКОЕ ЗНАЧЕНИЕ ПЕРЕМЕННОЙ
+	    // Сигнал не замаскирован
+	  ELSE
+	    
+	    // Качество сигнала по статус-байту
+	    IF #DOVar.StatusBYTE >= 0                                    // если указан адрес статусного байта
+	      AND #DOVar.StatusBIT >= 0 AND #DOVar.StatusBIT <= 7 THEN       // и указан номер бита качества в сатусном байте
+	      #Quality := PEEK_BOOL(area := 16#81, dbNumber := 0, byteOffset := #DOVar.StatusBYTE, bitOffset := #DOVar.StatusBIT);       // считывание сигнала качества из соответствующего бита         
+	      // статусный байт не указан
+	    ELSE
+	      #Quality := TRUE;
+	    END_IF;
+	    //Вычисление признака качества по корректности адреса  
+	    #Quality := #Quality AND (#AdrByte >= 0) AND (#AdrBit >= 0) AND (#AdrBit <= 7);
+	    
+	  END_IF;
+	  // КОНЕЦ ручной/автоматической обработки переменной
+	  
+	  
+	  // Обработка RawVal при хорошем качестве
+	  IF #Quality THEN
+	    #DOVar.RawVal := #DOVar.Value XOR #DOVar.Inverse;
+	  ELSE
+	    #DOVar.RawVal := FALSE;
+	  END_IF;
+	  
+	  // Запись в физ. выходной канал значения переменной
+	  IF (#AdrByte >= 0) AND (#AdrBit >= 0) AND (#AdrBit <= 7)
+	  THEN
+	    POKE_BOOL(area := 16#82, dbNumber := 0, byteOffset := #AdrByte, bitOffset := #AdrBit, value := #DOVar.RawVal);
+	  END_IF;
+	  
+	  // Если переменная неактивна, то качество FALSE    
+	ELSE
+	  #Quality := false;
+	  
+	END_IF; // КОНЕЦ определения активности переменной            
+	
+	#DOVar.Quality := #Quality;
+	#DOVar.Quality_inv := NOT #DOVar.Quality;
+	
+	// Запись из локальной копии в DB
+	
+	"DO".Item[#ID] := #DOVar;
+	
+END_FUNCTION
+
+FUNCTION "DI_HNDL" : Void
+{ S7_Optimized_Access := 'FALSE' }
+AUTHOR : Шишеня
+FAMILY : ГОК
+VERSION : 0.1
+   VAR_INPUT 
+      ID : Int;
+   END_VAR
+
+   VAR_TEMP 
+      Value : Bool;
+      Quality : Bool;
+      AdrByte : Int;
+      AdrBit : Int;
+      Sample_T : Real;
+      DIVar : "TDIData";
+   END_VAR
+
+
+BEGIN
+	// Сбрсо L-стека
+	#Value := false;
+	#Quality := false;
+	#AdrByte := 0;
+	#AdrBit := 0;
+	#Sample_T := 0.0;
+	
+	
+	// Запись в локальную копию экземпляра переменной DI
+	#DIVar := "DI".Item[#ID];
+	
+	// Обработка переменной если она активна    
+	IF #DIVar.Active THEN
+	  
+	  // Физический адрес сигнала
+	  #AdrByte := #DIVar.AdrByte;
+	  #AdrBit := #DIVar.AdrBit;
+	  // Чтение из физ. входного канала 
+	  IF (#AdrByte >= 0) AND (#AdrBit >= 0) AND (#AdrBit <= 7)
+	  THEN
+	    #DIVar.RawVal := PEEK_BOOL(area := 16#81, dbNumber := 0, byteOffset := #AdrByte, bitOffset := #AdrBit);
+	  ELSE
+	    #DIVar.RawVal := FALSE;
+	  END_IF;
+	  
+	  
+	  // РУЧНОЕ ЗНАЧЕНИЕ ПЕРЕМЕННОЙ            
+	  // Если сигнал замаскирован, взять замаскированое значение
+	  // и выставить признак достоверности        
+	  IF #DIVar.Mask THEN
+	    #DIVar.Value := #DIVar.MaskValue;                     // Запись в переменную значения маски 
+	    #Quality := TRUE;                                // У замаскированного сигнала качество всегда TRUE
+	    
+	    // АВТОМАТИЧЕСКОЕ ЗНАЧЕНИЕ ПЕРЕМЕННОЙ
+	    // Сигнал не замаскирован
+	  ELSE
+	    
+	    // Качество сигнала по статус-байту
+	    IF #DIVar.StatusBYTE >= 0                                    // если указан адрес статусного байта
+	        AND #DIVar.StatusBIT >= 0 AND #DIVar.StatusBIT <= 7 THEN       // и указан номер бита качества в сатусном байте
+	      #Quality := PEEK_BOOL(area := 16#81, dbNumber := 0, byteOffset := #DIVar.StatusBYTE, bitOffset := #DIVar.StatusBIT);       // считывание сигнала качества из соответствующего бита         
+	      // статусный байт не указан
+	    ELSE
+	      #Quality := true;
+	    END_IF;
+	    //Вычисление признака качества по корректности адреса  
+	    #Quality := #Quality AND (#AdrByte >= 0) AND (#AdrBit >= 0) AND (#AdrBit <= 7);
+	    
+	    // Значение сигнала принимается при хорошем качестве
+	    #Value := false;
+	    IF #Quality THEN
+	      #Value := #DIVar.RawVal XOR #DIVar.Inverse;
+	      ;
+	    END_IF;
+	    
+	    // Фильтрация значения
+	    IF #DIVar.Tf > 0.1 THEN
+	      #Sample_T := INT_TO_REAL("SystemInfo".Cycle) / 1000.0;
+	      IF #Value <> #DIVar.ValuePrev THEN
+	        #DIVar.Acc := #DIVar.Acc + #Sample_T;
+	        IF #DIVar.Acc >= #DIVar.Tf THEN
+	          #DIVar.ValuePrev := #Value;
+	          #DIVar.Acc := 0.0;
+	        END_IF;
+	      ELSE
+	        #DIVar.Acc := 0.0;
+	      END_IF;
+	    ELSE
+	      #DIVar.ValuePrev := #Value;
+	      #DIVar.Acc := 0.0;
+	    END_IF;
+	    #DIVar.Value := #DIVar.ValuePrev;
+	    
+	  END_IF;
+	  // КОНЕЦ ручной/автоматической обработки переменной
+	  
+	  // Если переменная неактивна, то качество FALSE    
+	ELSE
+	  #Quality := FALSE;
+	  
+	END_IF; // КОНЕЦ определения активности переменной            
+	
+	//Запись бита качества 
+	#DIVar.Quality := #Quality;
+	#DIVar.Quality_inv :=NOT #DIVar.Quality;
+	// Алармы
+	"DIAlm_HNDL"(Signal := #DIVar);
+	
+	// Запись из локальной копии в DB
+	
+	"DI".Item[#ID] := #DIVar;
+	
+END_FUNCTION
+
+FUNCTION "AO_HNDL" : Void
+{ S7_Optimized_Access := 'FALSE' }
+AUTHOR : Шишеня
+FAMILY : ГОК
+VERSION : 0.1
+   VAR_INPUT 
+      ID : Int;
+   END_VAR
+
+   VAR_TEMP 
+      RawRange : Real;
+      UnitRange : Real;
+      Quality : Bool;
+      RawVal : Int;
+      Value : Real;
+      AOVar : "TAOData";
+   END_VAR
+
+
+BEGIN
+	// сброс L-стека
+	#RawRange := 0.0;
+	#UnitRange := 0.0;
+	#Quality := false;
+	#RawVal := 0;
+	#Value := 0.0;
+	
+	// Запись в локальную копию экземпляра переменной AO
+	#AOVar := "AO".Item[#ID];
+	
+	IF #AOVar.Active THEN
+	  
+	  // Для переменной обязательно должен быть указан адрес начального байта
+	  #Quality := (#AOVar.AdrByte > -1);
+	  
+	  CASE #AOVar.AOType OF
+	          
+	          //*******ТИП 0. Сигналы 4-20 мА. 
+	          // REAL -> WORD[AdrByte].  Масшабирование по шкале.
+	      0:
+	          // Если сигнал замаскирован, взять замаскированое значение
+	          IF #AOVar.Mask THEN
+	              #AOVar.Value := #AOVar.MaskValue;
+	          END_IF;
+	          
+	          // Заданное значение 
+	          #Value := #AOVar.Value;
+	          // Ограничение по шкале
+	          #Value := LIMIT(MN := #AOVar.MinEU, IN := #Value, MX := #AOVar.MaxEU);
+	          
+	          // Масштабирование
+	          IF #Quality THEN
+	              #RawRange := INT_TO_REAL(#AOVar.MaxRaw - #AOVar.MinRaw);
+	              #UnitRange := #AOVar.MaxEU - #AOVar.MinEU;
+	              
+	              #RawVal := REAL_TO_INT(#RawRange * (#Value - #AOVar.MinEU) / #UnitRange);
+	              #RawVal := #RawVal + #AOVar.MinRaw;
+	              // значение тока
+	              // #AOVar.Current := 4.0 + #AOVar.RawVal * 6.10370e-4;
+	              #AOVar.Current := #AOVar.RawVal * 16.0 / #AOVar.MaxRaw + 4.0;
+	          ELSE
+	              #RawVal := 0;
+	          END_IF;
+	          
+	          //*******ТИП 1. Команды устройствам КИП. 
+	          // WORD -> WORD[AdrByte].  Масшабирования нет.
+	      1:
+	          // Масштабирование и маскирование для данного типа сигнала не используется
+	          #AOVar.Mask := false;
+	          #AOVar.MaskValue := 0.0;
+	          #AOVar.MinEU := 0.0;
+	          #AOVar.MaxEU := 0.0;
+	          #Value := 0.0;        // заданное значение REAL не используется
+	          #AOVar.Current := 0.0; // расчет тока не используется
+	          
+	          // В функциях обработки устройств КИП в поле RawVal записывается код команды (в формате INT)
+	          // далее команда отсылается по адресу AdrByte (см. ниже)
+	          #RawVal := #AOVar.RawVal;
+	          
+	      2:
+	          // Если сигнал замаскирован, взять замаскированое значение
+	          IF #AOVar.Mask THEN
+	              #AOVar.Value := #AOVar.MaskValue;
+	          END_IF;
+	          
+	          // Заданное значение 
+	          #Value := #AOVar.Value;
+	          #AOVar.Current := 0.0; // расчет тока не используется
+	          
+	          //*******ТИП 5. Сигналы ABB WORD. 
+	          // REAL -> WORD[AdrByte].  Масшабирование по шкале.
+	      5:
+	          // Если сигнал замаскирован, взять замаскированое значение
+	          IF #AOVar.Mask THEN
+	              #AOVar.Value := #AOVar.MaskValue;
+	          END_IF;
+	          
+	          #AOVar.MinRaw := 0;      // Мин. значение сигнала АЦП
+	          #AOVar.MaxRaw := 16384;   // Макс. значение сигнала АЦП 
+	          
+	          // Заданное значение 
+	          #Value := #AOVar.Value;
+	          // Ограничение по шкале
+	          #Value := LIMIT(MN := #AOVar.MinEU, IN := #Value, MX := #AOVar.MaxEU);
+	          
+	          // Масштабирование
+	          IF #Quality THEN
+	              #RawRange := INT_TO_REAL(#AOVar.MaxRaw - #AOVar.MinRaw);
+	              #UnitRange := #AOVar.MaxEU - #AOVar.MinEU;
+	              
+	              #RawVal := REAL_TO_INT(#RawRange * (#Value - #AOVar.MinEU) / #UnitRange);
+	              #RawVal := #RawVal + #AOVar.MinRaw;
+	              // значение тока
+	              
+	          ELSE
+	              #RawVal := 0;
+	          END_IF;
+	          
+	  END_CASE;
+	  
+	  // запись кода в образ выходов по указанному адресу
+	  IF #AOVar.AdrByte > -1 THEN
+	    POKE(area := 16#82, dbNumber := 0, byteOffset := #AOVar.AdrByte, value := INT_TO_WORD(#RawVal));
+	  END_IF;
+	  
+	  // синал не активен                    
+	ELSE
+	  #AOVar.Quality := false;
+	END_IF;
+	
+	#AOVar.Value := #Value;
+	#AOVar.Quality := #Quality;
+	#AOVar.RawVal := #RawVal;
+	#AOVar.Quality_inv := NOT #AOVar.Quality;
+	// Запись из локальной копии в DB
+	#AOVar.Quality_inv := NOT #Quality;
+	"AO".Item[#ID] := #AOVar;
+	
+END_FUNCTION
+
+FUNCTION "AI_HNDL" : Void
+TITLE = 'Переменные. Функция обработки AI'
+{ S7_Optimized_Access := 'FALSE' }
+AUTHOR : Шишеня
+FAMILY : ГОК
+VERSION : 0.0
+   VAR_INPUT 
+      ID : Int;   // Индекс переменной AI в VDB
+   END_VAR
+
+   VAR_TEMP 
+      RawRange : Real;
+      UnitRange : Real;
+      Quality : Bool;
+      Value : Real;
+      Cycle : Real;
+      R : Real;
+      AIVar : "TAIData";
+   END_VAR
+
+
+BEGIN
+	
+	// сброс L-стека
+	#RawRange := 0.0;
+	#UnitRange := 0.0;
+	#Quality := false;
+	#Value := 0.0;
+	#Cycle := 0.0;
+	#R := 0.0;
+	
+	
+	// Запись в локальную копию экземпляра переменной AI
+	#AIVar := "AI".Item[#ID];
+	
+	IF #AIVar.Active THEN
+	  
+	  // Для переменной обязательно должен быть указан адрес начального байта
+	  #Quality := (#AIVar.AdrByte > -1);
+	  
+	  IF #AIVar.AdrByte > -1 THEN
+	    CASE #AIVar.AIType OF
+	        //*******ТИП 0. Сигналы 4-20 мА. 
+	        // WORD[AdrByte] -> REAL. Масшабирование по шкале. Качество по диапазону.
+	      0:
+	        // Считывание значения сигнала 
+	        #AIVar.RawVal := WORD_TO_INT(PEEK_WORD(area := 16#81, dbNumber := 0, byteOffset := #AIVar.AdrByte));
+	        // Определение качества по выходу сигнала за допустимый диапазон
+	        #Quality := #Quality AND (#AIVar.RawVal <= #AIVar.Overflow);
+	        #Quality := #Quality AND (#AIVar.RawVal >= #AIVar.Underflow);
+	        // качество сигнала по статус-байту
+	        IF #AIVar.StatusBYTE >= 0                                    // если указан адрес статусного байта
+	            AND #AIVar.StatusBIT >= 0 AND #AIVar.StatusBIT <= 7 THEN       // и указан номер бита качества в сатусном байте
+	            #Quality := #Quality AND  PEEK_BOOL(area := 16#81, dbNumber := 0, byteOffset := #AIVar.StatusBYTE, bitOffset := #AIVar.StatusBIT);       // считывание сигнала качества из соответствующего бита   
+	        END_IF;
+	        
+	        // Если сигнал достоверен, производим масштабирование        
+	        IF #Quality THEN
+	          #RawRange := INT_TO_REAL(#AIVar.MaxRaw - #AIVar.MinRaw);
+	          #UnitRange := #AIVar.MaxEU - #AIVar.MinEU;
+	          
+	          #Value := #UnitRange * INT_TO_REAL(#AIVar.RawVal - #AIVar.MinRaw) / #RawRange;
+	          #Value := (#Value + #AIVar.MinEU) * #AIVar.Factor;
+	          // Вычисление значения тока, mA
+	          //#AIVar.Current:= #AIVar.RawVal*6.10370e-4 + 4.0;
+	          #AIVar.Current := #AIVar.RawVal * 16.0 / #AIVar.MaxRaw + 4.0;
+	        END_IF;
+	        
+	        
+	        //*******ТИП 1. Цифровые сигналы с ЧРП DANFOS. 
+	        // WORD[AdrByte] -> INT. Масшабирование REAL по коэффициенту. Качество по статус-байту (или по диапазону, если адрес статус-байта не указан).
+	    1:
+	        // Считывание значения сигнала 
+	        // Если сигнал достоверен, производим масштабирование
+	        #Value := DINT_TO_REAL(WORD_TO_DINT(PEEK_WORD(area := 16#81, dbNumber := 0, byteOffset := #AIVar.AdrByte))) * #AIVar.Factor;
+	        #AIVar.RawVal := 0;   // код АЦП не используется
+	        #AIVar.Current := 0.0; // расчет тока не используется
+	        
+	        // качество сигнала по статус-байту
+	        IF #AIVar.StatusBYTE >= 0                                    // если указан адрес статусного байта
+	          AND #AIVar.StatusBIT >= 0 AND #AIVar.StatusBIT <= 7 THEN       // и указан номер бита качества в сатусном байте
+	          #Quality := PEEK_BOOL(area := 16#81, dbNumber := 0, byteOffset := #AIVar.StatusBYTE, bitOffset := #AIVar.StatusBIT);       // считывание сигнала качества из соответствующего бита         
+	          
+	          // // статусный байт не указан
+	          // ELSE 
+	          //     // Определение качества по выходу сигнала за заданный диапазон (+10%)
+	          //     #Quality:= #Quality AND (#Value <= 1.1*#AIVar.MaxEU);      
+	          //     #Quality:= #Quality AND (#Value >= 1.1*#AIVar.MinEU);                                          
+	      END_IF;
+	      
+	      
+	        //*******ТИП 2. Сигналы с масштабированием по коэффициенту. 
+	        // WORD[AdrByte] -> REAL. Масшабирование INT по коэффициенту. Качество по диапазону. 
+	      2:
+	        // Считывание кода сигнала 
+	        #AIVar.RawVal := WORD_TO_INT(PEEK_WORD(area := 16#81, dbNumber := 0, byteOffset := #AIVar.AdrByte));
+	        #AIVar.Current := 0.0; // расчет тока не используется
+	        // Определение качества по выходу сигнала за заданный для масштабирования диапазон
+	        #Quality := #Quality AND (#AIVar.RawVal <= #AIVar.MaxRaw);
+	        #Quality := #Quality AND (#AIVar.RawVal >= #AIVar.MinRaw);
+	        
+	        // Если сигнал достоверен, производим масштабирование        
+	        IF #Quality THEN
+	          #Value := #AIVar.RawVal * #AIVar.Factor;
+	        END_IF;
+	        
+	        //*******ТИП 3. Цифровые сигналы с приборов КИП с масштабированием по коэффициенту. 
+	        // DWORD[AdrByte] -> DINT * KOEF -> REAL. Масшабирование DINT по коэффициенту. Качество по диапазону. 
+	      3:
+	        // Считывание значения сигнала 
+	        #Value := DINT_TO_REAL(DWORD_TO_DINT(PEEK_DWORD(area := 16#81, dbNumber := 0, byteOffset := #AIVar.AdrByte))) * #AIVar.Factor;
+	        #AIVar.RawVal := 0;   // код АЦП не используется
+	        #AIVar.Current := 0.0; // расчет тока не используется
+	        
+	        // качество сигнала по статус-байту
+	        IF #AIVar.StatusBYTE >= 0                                    // если указан адрес статусного байта
+	          AND #AIVar.StatusBIT >= 0 AND #AIVar.StatusBIT <= 7 THEN       // и указан номер бита качества в сатусном байте
+	          #Quality := PEEK_BOOL(area := 16#81, dbNumber := 0, byteOffset := #AIVar.StatusBYTE, bitOffset := #AIVar.StatusBIT);       // считывание сигнала качества из соответствующего бита         
+	          
+	          // статусный байт не указан
+	        ELSE
+	          // Определение качества по выходу сигнала за заданный диапазон (+10%)
+	          #Quality := #Quality AND (#Value <= 1.1 * #AIVar.MaxEU);
+	          #Quality := #Quality AND (#Value >= 1.1 * #AIVar.MinEU);
+	        END_IF;
+	        
+	    END_CASE;
+	    
+	    // Фильтрация сигнала (для всех типов)
+	    IF #AIVar.Tf >= 0.1 THEN
+	      #Cycle := INT_TO_REAL("SystemInfo".Cycle) / 1000.0;
+	      #R := #Cycle / #AIVar.Tf;
+	      #Value := #AIVar.ValuePrev * (1.0 - #R) + #Value * #R;
+	      IF ABS(#Value) < 0.001 THEN
+	        #Value := 0.0;
+	      END_IF;
+	    END_IF;
+	    #AIVar.ValuePrev := #Value;
+	    
+	  END_IF; // конец AIVar.AdrByte > -1
+	  
+	  // Сигнал замаскирован -- записать значение и выставить признак достоверности
+	  IF #AIVar.Mask THEN
+	    #Value := #AIVar.MaskValue;
+	    #Quality := true;
+	END_IF;
+	
+	  // Ограничение по шкале
+	  #Value := LIMIT(MN := #AIVar.MinEU, IN := #Value, MX := #AIVar.MaxEU);
+	  
+	  // Запись значений в локальную копию                          
+	  #AIVar.Value := #Value;
+	  #AIVar.Quality := #Quality;
+	  
+	  // синал не активен            
+	ELSE
+	  #AIVar.Quality := false;
+	  #AIVar.Value := 0.0;
+	END_IF; // конец AIVar.Active
+	
+	#AIVar.Quality_inv := NOT #AIVar.Quality;
+	// Алармы
+	"AIAlm_HNDL"(Signal := #AIVar);
+	
+	// Запись из локальной копии в DB
+	"AI".Item[#ID] := #AIVar;
+	
+	
+	
+END_FUNCTION
+

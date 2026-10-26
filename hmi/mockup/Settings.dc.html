@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ГЦУ-1 — регуляторы и уставки</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=PT+Mono&amp;family=PT+Sans+Narrow:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="position: relative; width: 1024px; height: 600px; overflow: hidden; background: #DFE0DC; color: #1D2023; font-family: 'PT Sans Narrow', sans-serif">
+
+<div style="position: absolute; left: 0; top: 0; width: 1024px; height: 48px; box-sizing: border-box; padding: 0 16px; display: flex; align-items: center; gap: 12px; background: #23272B; color: #F2F2EF">
+<div style="display: flex; flex-direction: column; line-height: 1.1"><span style="font-size: 20px; font-weight: 700">ГЦУ-1</span><span style="font-size: 12px; color: #B9BDC1">Мельница 1 · гидроциклонирование</span></div>
+<span style="margin-left: 16px; padding: 4px 10px; border-radius: 4px; background: #1E8A3C; color: #FFFFFF; font-size: 15px; font-weight: 700">АВТОМАТ</span>
+<span style="padding: 3px 10px; border-radius: 4px; border: 1px solid #6F757B; font-size: 15px">Программа: РАБОТА</span>
+<span style="padding: 4px 10px; border-radius: 4px; background: #E0A100; color: #1D2023; font-size: 15px; font-weight: 700">ПРЕДУПР. 1</span>
+<span style="flex: 1; min-width: 0; font-size: 14px; color: #D5D8DB; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Гидроциклон 6 выведен в ремонт</span>
+<span style="font-family: 'PT Mono', monospace; font-size: 14px; color: #D5D8DB">17.10.2026 09:15:42</span>
+</div>
+
+<div style="position: absolute; left: 0; top: 48px; width: 1024px; height: 496px; box-sizing: border-box; padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 10px">
+
+<div style="display: flex; align-items: center; gap: 10px">
+<h1 style="margin: 0; font-size: 20px">Регуляторы и уставки</h1>
+<span style="margin-left: auto; font-size: 14px; color: #4B5157">Изменение — уровень доступа «Инженер»</span>
+<button type="button" style="height: 36px; padding: 0 14px; border: 1px solid #8F949A; border-radius: 4px; background: #E4E5E1; color: #1D2023; font-family: inherit; font-size: 15px; font-weight: 700">ВХОД</button>
+</div>
+
+<div style="flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr; gap: 10px">
+
+<section aria-label="Регулятор давления" style="box-sizing: border-box; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; background: #F4F4F1; border: 1px solid #B3B6B0; border-radius: 6px">
+<h2 style="margin: 0; font-size: 17px">Давление → скорость насоса <span style="font-weight: 400; color: #4B5157">· ПИ</span></h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 16px">
+<div style="display: flex; align-items: center; gap: 6px"><label for="p-sp" style="flex: 1; font-size: 15px">Уставка</label><input id="p-sp" value="1.00" inputmode="decimal" style="width: 72px; height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"><span style="width: 36px; font-size: 14px; color: #4B5157">бар</span></div>
+<div style="display: flex; align-items: center; gap: 6px"><label for="p-kp" style="flex: 1; font-size: 15px">Kp</label><input id="p-kp" value="20.0" inputmode="decimal" style="width: 72px; height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"><span style="width: 36px; font-size: 14px; color: #4B5157">%/бар</span></div>
+<div style="display: flex; align-items: center; gap: 6px"><label for="p-ti" style="flex: 1; font-size: 15px">Ti</label><input id="p-ti" value="10.0" inputmode="decimal" style="width: 72px; height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"><span style="width: 36px; font-size: 14px; color: #4B5157">с</span></div>
+<div style="display: flex; align-items: center; gap: 6px"><label for="p-min" style="flex: 1; font-size: 15px">Скорость мин / макс</label><input id="p-min" value="40" inputmode="decimal" aria-label="Скорость минимум" style="width: 46px; height: 38px; box-sizing: border-box; padding: 0 6px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"><input value="100" inputmode="decimal" aria-label="Скорость максимум" style="width: 52px; height: 38px; box-sizing: border-box; padding: 0 6px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"><span style="font-size: 14px; color: #4B5157">%</span></div>
+</div>
+</section>
+
+<section aria-label="Регулятор уровня" style="box-sizing: border-box; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; background: #F4F4F1; border: 1px solid #B3B6B0; border-radius: 6px">
+<h2 style="margin: 0; font-size: 17px">Уровень → гидроциклоны <span style="font-weight: 400; color: #4B5157">· ступенчатый</span></h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 16px">
+<div style="display: flex; align-items: center; gap: 6px"><label for="l-sp" style="flex: 1; font-size: 15px">Уставка</label><input id="l-sp" value="70.0" inputmode="decimal" style="width: 72px; height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"><span style="width: 28px; font-size: 14px; color: #4B5157">%</span></div>
+<div style="display: flex; align-items: center; gap: 6px"><label for="l-hy" style="flex: 1; font-size: 15px">Зона ±</label><input id="l-hy" value="5.0" inputmode="decimal" style="width: 72px; height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"><span style="width: 28px; font-size: 14px; color: #4B5157">%</span></div>
+<div style="display: flex; align-items: center; gap: 6px"><label for="l-add" style="flex: 1; font-size: 15px">Подключение через</label><input id="l-add" value="30" inputmode="decimal" style="width: 72px; height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"><span style="width: 28px; font-size: 14px; color: #4B5157">с</span></div>
+<div style="display: flex; align-items: center; gap: 6px"><label for="l-rem" style="flex: 1; font-size: 15px">Отключение через</label><input id="l-rem" value="30" inputmode="decimal" style="width: 72px; height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"><span style="width: 28px; font-size: 14px; color: #4B5157">с</span></div>
+</div>
+</section>
+
+<section aria-label="Гидроциклоны" style="box-sizing: border-box; padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; background: #F4F4F1; border: 1px solid #B3B6B0; border-radius: 6px">
+<h2 style="margin: 0; font-size: 17px">Гидроциклоны</h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 12px">
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="c-st" style="font-size: 14px; color: #4B5157">При пуске</label><input id="c-st" value="2" inputmode="numeric" style="height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="c-min" style="font-size: 14px; color: #4B5157">Минимум</label><input id="c-min" value="1" inputmode="numeric" style="height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="c-max" style="font-size: 14px; color: #4B5157">Максимум</label><input id="c-max" value="6" inputmode="numeric" style="height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"></div>
+</div>
+<span style="font-size: 14px; color: #4B5157">Вывод в ремонт (нажатие переключает)</span>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px">
+<button type="button" aria-pressed="false" style="height: 52px; border: 1px solid #8F949A; border-radius: 4px; background: #E4E5E1; color: #1D2023; font-family: inherit; font-size: 15px; font-weight: 700; line-height: 1.1">ГЦ1<br><span style="font-size: 12px; font-weight: 400">в работе</span></button>
+<button type="button" aria-pressed="false" style="height: 52px; border: 1px solid #8F949A; border-radius: 4px; background: #E4E5E1; color: #1D2023; font-family: inherit; font-size: 15px; font-weight: 700; line-height: 1.1">ГЦ2<br><span style="font-size: 12px; font-weight: 400">в работе</span></button>
+<button type="button" aria-pressed="false" style="height: 52px; border: 1px solid #8F949A; border-radius: 4px; background: #E4E5E1; color: #1D2023; font-family: inherit; font-size: 15px; font-weight: 700; line-height: 1.1">ГЦ3<br><span style="font-size: 12px; font-weight: 400">в работе</span></button>
+<button type="button" aria-pressed="false" style="height: 52px; border: 1px solid #8F949A; border-radius: 4px; background: #E4E5E1; color: #1D2023; font-family: inherit; font-size: 15px; font-weight: 700; line-height: 1.1">ГЦ4<br><span style="font-size: 12px; font-weight: 400">в работе</span></button>
+<button type="button" aria-pressed="false" style="height: 52px; border: 1px solid #8F949A; border-radius: 4px; background: #E4E5E1; color: #1D2023; font-family: inherit; font-size: 15px; font-weight: 700; line-height: 1.1">ГЦ5<br><span style="font-size: 12px; font-weight: 400">в работе</span></button>
+<button type="button" aria-pressed="true" style="height: 52px; border: 2px dashed #6F757B; border-radius: 4px; background: #FFFFFF; color: #1D2023; font-family: inherit; font-size: 15px; font-weight: 700; line-height: 1.1">ГЦ6<br><span style="font-size: 12px; font-weight: 700; color: #8A5A00">РЕМОНТ</span></button>
+</div>
+</section>
+
+<section aria-label="Насосы" style="box-sizing: border-box; padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; background: #F4F4F1; border: 1px solid #B3B6B0; border-radius: 6px">
+<h2 style="margin: 0; font-size: 17px">Насосы</h2>
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="flex: 1; font-size: 15px">Основной насос</span>
+<button type="button" aria-pressed="true" style="width: 70px; height: 40px; border: 2px solid #1F4F87; border-radius: 4px; background: #2F6FB8; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 700">Н-1</button>
+<button type="button" aria-pressed="false" style="width: 70px; height: 40px; border: 1px solid #8F949A; border-radius: 4px; background: #E4E5E1; color: #1D2023; font-family: inherit; font-size: 16px; font-weight: 700">Н-2</button>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="flex: 1; font-size: 15px">Вывод в ремонт</span>
+<button type="button" aria-pressed="false" style="width: 70px; height: 40px; border: 1px solid #8F949A; border-radius: 4px; background: #E4E5E1; color: #1D2023; font-family: inherit; font-size: 16px; font-weight: 700">Н-1</button>
+<button type="button" aria-pressed="false" style="width: 70px; height: 40px; border: 1px solid #8F949A; border-radius: 4px; background: #E4E5E1; color: #1D2023; font-family: inherit; font-size: 16px; font-weight: 700">Н-2</button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 16px">
+<div style="display: flex; align-items: center; gap: 6px"><label for="t-sc" style="flex: 1; font-size: 15px">Размыв при пуске</label><input id="t-sc" value="10" inputmode="numeric" style="width: 56px; height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"><span style="font-size: 14px; color: #4B5157">с</span></div>
+<div style="display: flex; align-items: center; gap: 6px"><label for="t-fs" style="flex: 1; font-size: 15px">Промывка при пуске</label><input id="t-fs" value="20" inputmode="numeric" style="width: 56px; height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"><span style="font-size: 14px; color: #4B5157">с</span></div>
+<div style="display: flex; align-items: center; gap: 6px"><label for="t-ft" style="flex: 1; font-size: 15px">Промывка при стопе</label><input id="t-ft" value="30" inputmode="numeric" style="width: 56px; height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"><span style="font-size: 14px; color: #4B5157">с</span></div>
+<div style="display: flex; align-items: center; gap: 6px"><label for="t-dr" style="flex: 1; font-size: 15px">Дренаж</label><input id="t-dr" value="60" inputmode="numeric" style="width: 56px; height: 38px; box-sizing: border-box; padding: 0 8px; border: 1px solid #8F949A; border-radius: 4px; background: #FFFFFF; font-family: 'PT Mono', monospace; font-size: 16px; text-align: right"><span style="font-size: 14px; color: #4B5157">с</span></div>
+</div>
+</section>
+
+</div>
+</div>
+
+<nav aria-label="Экраны" style="position: absolute; left: 0; top: 544px; width: 1024px; height: 56px; display: flex; background: #2E3338">
+<a href="Main.dc.html" style="flex: 1; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-top: 4px solid transparent; border-right: 1px solid #454B51; color: #E8E9E6; font-size: 17px; font-weight: 700; text-decoration: none">Мнемосхема</a>
+<a href="Pump.dc.html" style="flex: 1; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-top: 4px solid transparent; border-right: 1px solid #454B51; color: #E8E9E6; font-size: 17px; font-weight: 700; text-decoration: none">Насос 1</a>
+<a href="Pump.dc.html" style="flex: 1; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-top: 4px solid transparent; border-right: 1px solid #454B51; color: #E8E9E6; font-size: 17px; font-weight: 700; text-decoration: none">Насос 2</a>
+<a href="Settings.dc.html" aria-current="page" style="flex: 1; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-top: 4px solid #2F6FB8; background: #F4F4F1; color: #1D2023; font-size: 17px; font-weight: 700; text-decoration: none">Регуляторы</a>
+<a href="Alarms.dc.html" style="flex: 1; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-top: 4px solid transparent; border-right: 1px solid #454B51; color: #E8E9E6; font-size: 17px; font-weight: 700; text-decoration: none">Аварии</a>
+<a href="Trends.dc.html" style="flex: 1; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-top: 4px solid transparent; color: #E8E9E6; font-size: 17px; font-weight: 700; text-decoration: none">Тренды</a>
+</nav>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1024,"height":600}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "v": 3,
+  "createdOnFiles": {"v": 1, "at": "2026-10-17T00:15:00Z"},
+  "title": "Мнемосхема ГЦУ — панель Weintek",
+  "launch": {"view": "canvas"},
+  "pages": [],
+  "boards": {
+    "Main.dc.html": {"x": 0, "y": 0, "w": 1024, "h": 600, "title": "1 · Мнемосхема", "is_interactive": true},
+    "Pump.dc.html": {"x": 1104, "y": 0, "w": 1024, "h": 600, "title": "2 · Насос (шаблон для Н-1 и Н-2)", "is_interactive": true},
+    "Settings.dc.html": {"x": 2208, "y": 0, "w": 1024, "h": 600, "title": "3 · Регуляторы и уставки", "is_interactive": true},
+    "Alarms.dc.html": {"x": 0, "y": 720, "w": 1024, "h": 600, "title": "4 · Аварии", "is_interactive": true},
+    "Trends.dc.html": {"x": 1104, "y": 720, "w": 1024, "h": 600, "title": "5 · Тренды", "is_interactive": true},
+    "ValvePopup.dc.html": {"x": 2208, "y": 720, "w": 360, "h": 300, "title": "Окно · задвижка", "is_interactive": true},
+    "VfdPopup.dc.html": {"x": 2648, "y": 720, "w": 400, "h": 380, "title": "Окно · частотник", "is_interactive": true}
+  },
+  "order": ["Main.dc.html", "Pump.dc.html", "Settings.dc.html", "Alarms.dc.html", "Trends.dc.html", "ValvePopup.dc.html", "VfdPopup.dc.html"],
+  "notes": {
+    "title": {"x": 0, "y": -260, "text": "ГЦУ-1 · панель Weintek 10\" (1024×600)", "kind": "title1", "maxW": 3232},
+    "legend": {"x": 3312, "y": 0, "w": 320, "maxH": 600, "fill": "gray", "text": "Цвета состояний\n• зелёный — работа / открыта\n• синий — готов к пуску\n• серый — стоит / закрыта\n• жёлтый — в движении\n• красный — авария\n• пунктир — выведен в ремонт\n• «М» рядом с задвижкой — местный переключатель отклонён, задвижкой управляют по месту\n\nТрубы: тёмные — пульпа, синие — техническая вода.\n\nВерхняя строка и нижнее меню — одно общее окно (Common Window) на все экраны.\n\nКлик по задвижке открывает окно задвижки, по насосу — окно частотника. Команды на задвижки и ПЧ активны только в режиме РУЧНОЙ."}
+  },
+  "designSystems": []
+}

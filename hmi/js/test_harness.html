@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#888}canvas{display:block}</style></head>
+<body><canvas id="c" width="1024" height="664"></canvas>
+<script>
+window.__writes=[]; window.__logs=[];
+window.memoryStorage=(function(){const m={};return {getItem:k=>k in m?m[k]:null,setItem:(k,v)=>{m[k]=String(v)},removeItem:k=>{delete m[k]},clear:()=>{for(const k in m)delete m[k]},get length(){return Object.keys(m).length},key:i=>Object.keys(m)[i]||null};})();
+const el=document.getElementById('c'); const ctx=el.getContext('2d');
+function Canvas(){ return new Proxy({}, {get(t,k){ if(k==='width')return el.width; if(k==='height')return el.height; const v=ctx[k]; return typeof v==='function'?v.bind(ctx):v;}, set(t,k,v){ if(k==='width'||k==='height'){return true;} ctx[k]=v; return true;}}); }
+function MouseArea(){ this.h={}; this.on=(n,f)=>{this.h[n]=f;}; window.__mouse=this; }
+const console2={log:(...a)=>window.__logs.push(a.join(' '))};
+window.__polls={};
+window.driver={promises:{getData: async (a,n)=>{ const w=window.__polls[a&&a.name]; if(!w) throw new Error('no response'); return {values:w.slice(0,n)}; }, setData: async (a,v)=>{ window.__writes.push({addr:a&&a.name, v:Array.isArray(v)?v.slice():v}); if(window.__onWrite) window.__onWrite(a&&a.name, v); }}};
+function sub(name, words){ return {name, cb:null, onResponse(cb){this.cb=cb;}, latestData: words?{values:words, timestamp:Date.now()}:undefined, push(w){ this.latestData={values:w}; this.cb&&this.cb(undefined,{values:w}); }, fail(m){ this.cb&&this.cb(new Error(m)); } }; }
+window.run = async function(src, cfg){
+  const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+  const fn = new AsyncFunction('Canvas','MouseArea','driver','console', src);
+  await fn.call({config:cfg, widget:{width:1024,height:664,add(){return true;}}}, Canvas, MouseArea, window.driver, console2);
+};
+window.click = (x,y)=>{ const m=window.__mouse; const e={x:x, y:y-48}; m.h.mousedown&&m.h.mousedown(e); m.h.mouseup&&m.h.mouseup(e); m.h.click&&m.h.click(e); };
+window.sub=sub;
+</script></body></html>

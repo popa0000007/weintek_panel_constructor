@@ -1,0 +1,6954 @@
+{
+ "v": 1,
+ "name": "ГЦУ-1",
+ "nextId": 2000,
+ "conn": {
+  "dev": "Siemens S7-1200/S7-1500",
+  "hiFirst": true,
+  "realSwap": false,
+  "maxWords": 90,
+  "font": "Arial",
+  "bold": true
+ },
+ "dbs": [
+  {
+   "id": "db1",
+   "name": "HMI_GCU",
+   "num": 100,
+   "ms": 500,
+   "fields": [
+    {
+     "n": "Cmd",
+     "t": "int",
+     "o": 0,
+     "cm": "0    ГЦУ: 1 пуск, 2 стоп, 4 сброс, 10 автомат, 11 ручной",
+     "wr": true
+    },
+    {
+     "n": "PumpCmd[1]",
+     "t": "int",
+     "o": 2,
+     "cm": "2    насос: 1 пуск, 2 стоп, 4 сброс (пуск/стоп — только РУЧНОЙ)",
+     "wr": true
+    },
+    {
+     "n": "PumpCmd[2]",
+     "t": "int",
+     "o": 4,
+     "cm": "2    насос: 1 пуск, 2 стоп, 4 сброс (пуск/стоп — только РУЧНОЙ)",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[1]",
+     "t": "int",
+     "o": 6,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[2]",
+     "t": "int",
+     "o": 8,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[3]",
+     "t": "int",
+     "o": 10,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[4]",
+     "t": "int",
+     "o": 12,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[5]",
+     "t": "int",
+     "o": 14,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[6]",
+     "t": "int",
+     "o": 16,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[7]",
+     "t": "int",
+     "o": 18,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[8]",
+     "t": "int",
+     "o": 20,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[9]",
+     "t": "int",
+     "o": 22,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[10]",
+     "t": "int",
+     "o": 24,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[11]",
+     "t": "int",
+     "o": 26,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[12]",
+     "t": "int",
+     "o": 28,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[13]",
+     "t": "int",
+     "o": 30,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[14]",
+     "t": "int",
+     "o": 32,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[15]",
+     "t": "int",
+     "o": 34,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[16]",
+     "t": "int",
+     "o": 36,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[17]",
+     "t": "int",
+     "o": 38,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ValveCmd[18]",
+     "t": "int",
+     "o": 40,
+     "cm": "6    задвижка: 1 открыть, 2 закрыть, 4 сброс",
+     "wr": true
+    },
+    {
+     "n": "ManSpeed[1]",
+     "t": "real",
+     "o": 42,
+     "cm": "42   ручное задание скорости, %",
+     "wr": true
+    },
+    {
+     "n": "ManSpeed[2]",
+     "t": "real",
+     "o": 46,
+     "cm": "42   ручное задание скорости, %",
+     "wr": true
+    },
+    {
+     "n": "St.AutoMode",
+     "t": "bool",
+     "o": 50,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.ProgRun",
+     "t": "bool",
+     "o": 50,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.ReadyAuto",
+     "t": "bool",
+     "o": 50,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.CanSwitchAuto",
+     "t": "bool",
+     "o": 50,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.SystemRun",
+     "t": "bool",
+     "o": 50,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.PermitMill",
+     "t": "bool",
+     "o": 50,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.LevelOk",
+     "t": "bool",
+     "o": 50,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.PressOk",
+     "t": "bool",
+     "o": 50,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.Res8",
+     "t": "bool",
+     "o": 51,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.Res9",
+     "t": "bool",
+     "o": 51,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.Res10",
+     "t": "bool",
+     "o": 51,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.Res11",
+     "t": "bool",
+     "o": 51,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.Res12",
+     "t": "bool",
+     "o": 51,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.Res13",
+     "t": "bool",
+     "o": 51,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.Res14",
+     "t": "bool",
+     "o": 51,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "St.Res15",
+     "t": "bool",
+     "o": 51,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.LevelBad",
+     "t": "bool",
+     "o": 52,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.PressBad",
+     "t": "bool",
+     "o": 52,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.LevelHH",
+     "t": "bool",
+     "o": 52,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.LevelH",
+     "t": "bool",
+     "o": 52,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.LevelL",
+     "t": "bool",
+     "o": 52,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.LevelLL",
+     "t": "bool",
+     "o": 52,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.LvlHiMaxCyc",
+     "t": "bool",
+     "o": 52,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.LvlLoMinCyc",
+     "t": "bool",
+     "o": 52,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.Pump1Fault",
+     "t": "bool",
+     "o": 53,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.Pump2Fault",
+     "t": "bool",
+     "o": 53,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.ABP",
+     "t": "bool",
+     "o": 53,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.NoPump",
+     "t": "bool",
+     "o": 53,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.CycFault",
+     "t": "bool",
+     "o": 53,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.LevelStop",
+     "t": "bool",
+     "o": 53,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm.EStop",
+     "t": "bool",
+     "o": 53,
+     "b": 6,
+     "cm": "53.6 аварийный стоп",
+     "wr": false
+    },
+    {
+     "n": "Alm.Res15",
+     "t": "bool",
+     "o": 53,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "ActivePump",
+     "t": "int",
+     "o": 54,
+     "cm": "54",
+     "wr": false
+    },
+    {
+     "n": "NCycOpen",
+     "t": "int",
+     "o": 56,
+     "cm": "56",
+     "wr": false
+    },
+    {
+     "n": "Level",
+     "t": "real",
+     "o": 58,
+     "cm": "58   уровень зумпфа, %",
+     "wr": false
+    },
+    {
+     "n": "Press",
+     "t": "real",
+     "o": 62,
+     "cm": "62   давление, бар",
+     "wr": false
+    },
+    {
+     "n": "SpeedOut",
+     "t": "real",
+     "o": 66,
+     "cm": "66   задание от регулятора давления, %",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].Step",
+     "t": "int",
+     "o": 70,
+     "cm": "+0  шаг последовательности (0, 10..100, 200..280, 900..920)",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].FaultCode",
+     "t": "int",
+     "o": 72,
+     "cm": "+2  код аварии линии",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].Speed",
+     "t": "real",
+     "o": 74,
+     "cm": "+4  задание скорости, %",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.Running",
+     "t": "bool",
+     "o": 78,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.Ready",
+     "t": "bool",
+     "o": 78,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.Fault",
+     "t": "bool",
+     "o": 78,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.InRun",
+     "t": "bool",
+     "o": 78,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.Starting",
+     "t": "bool",
+     "o": 78,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.Stopping",
+     "t": "bool",
+     "o": 78,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.Remote",
+     "t": "bool",
+     "o": 78,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.FltDrive",
+     "t": "bool",
+     "o": 78,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.FltComm",
+     "t": "bool",
+     "o": 79,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.FltStart",
+     "t": "bool",
+     "o": 79,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.FltStop",
+     "t": "bool",
+     "o": 79,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.FltUnxStart",
+     "t": "bool",
+     "o": 79,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.FltUnxStop",
+     "t": "bool",
+     "o": 79,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.IsDuty",
+     "t": "bool",
+     "o": 79,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.Selected",
+     "t": "bool",
+     "o": 79,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].F.Repair",
+     "t": "bool",
+     "o": 79,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].DrvState",
+     "t": "int",
+     "o": 80,
+     "cm": "+10 состояние ПЧ: 1 не готов, 2 запрет вкл., 3 готов к вкл., 4 готов, 5 работа, 8 авария",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].Starts",
+     "t": "int",
+     "o": 82,
+     "cm": "+12 счётчик пусков",
+     "wr": false
+    },
+    {
+     "n": "Pump[1].View",
+     "t": "int",
+     "o": 84,
+     "cm": "+14 0 стоит, 1 готов, 2 работа, 3 авария, 4 ремонт, 5 пуск/останов",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].Step",
+     "t": "int",
+     "o": 86,
+     "cm": "+0  шаг последовательности (0, 10..100, 200..280, 900..920)",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].FaultCode",
+     "t": "int",
+     "o": 88,
+     "cm": "+2  код аварии линии",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].Speed",
+     "t": "real",
+     "o": 90,
+     "cm": "+4  задание скорости, %",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.Running",
+     "t": "bool",
+     "o": 94,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.Ready",
+     "t": "bool",
+     "o": 94,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.Fault",
+     "t": "bool",
+     "o": 94,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.InRun",
+     "t": "bool",
+     "o": 94,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.Starting",
+     "t": "bool",
+     "o": 94,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.Stopping",
+     "t": "bool",
+     "o": 94,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.Remote",
+     "t": "bool",
+     "o": 94,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.FltDrive",
+     "t": "bool",
+     "o": 94,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.FltComm",
+     "t": "bool",
+     "o": 95,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.FltStart",
+     "t": "bool",
+     "o": 95,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.FltStop",
+     "t": "bool",
+     "o": 95,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.FltUnxStart",
+     "t": "bool",
+     "o": 95,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.FltUnxStop",
+     "t": "bool",
+     "o": 95,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.IsDuty",
+     "t": "bool",
+     "o": 95,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.Selected",
+     "t": "bool",
+     "o": 95,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].F.Repair",
+     "t": "bool",
+     "o": 95,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].DrvState",
+     "t": "int",
+     "o": 96,
+     "cm": "+10 состояние ПЧ: 1 не готов, 2 запрет вкл., 3 готов к вкл., 4 готов, 5 работа, 8 авария",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].Starts",
+     "t": "int",
+     "o": 98,
+     "cm": "+12 счётчик пусков",
+     "wr": false
+    },
+    {
+     "n": "Pump[2].View",
+     "t": "int",
+     "o": 100,
+     "cm": "+14 0 стоит, 1 готов, 2 работа, 3 авария, 4 ремонт, 5 пуск/останов",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.Opened",
+     "t": "bool",
+     "o": 102,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.Closed",
+     "t": "bool",
+     "o": 102,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.Moving",
+     "t": "bool",
+     "o": 102,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.Fault",
+     "t": "bool",
+     "o": 102,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.Auto",
+     "t": "bool",
+     "o": 102,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.FltTravel",
+     "t": "bool",
+     "o": 102,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.FltLimits",
+     "t": "bool",
+     "o": 102,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.FltSwitch",
+     "t": "bool",
+     "o": 102,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.Target",
+     "t": "bool",
+     "o": 103,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.Local",
+     "t": "bool",
+     "o": 103,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.FltSignal",
+     "t": "bool",
+     "o": 103,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.Repair",
+     "t": "bool",
+     "o": 103,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.Res12",
+     "t": "bool",
+     "o": 103,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.Res13",
+     "t": "bool",
+     "o": 103,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.Res14",
+     "t": "bool",
+     "o": 103,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].F.Res15",
+     "t": "bool",
+     "o": 103,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[1].View",
+     "t": "int",
+     "o": 104,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.Opened",
+     "t": "bool",
+     "o": 106,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.Closed",
+     "t": "bool",
+     "o": 106,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.Moving",
+     "t": "bool",
+     "o": 106,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.Fault",
+     "t": "bool",
+     "o": 106,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.Auto",
+     "t": "bool",
+     "o": 106,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.FltTravel",
+     "t": "bool",
+     "o": 106,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.FltLimits",
+     "t": "bool",
+     "o": 106,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.FltSwitch",
+     "t": "bool",
+     "o": 106,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.Target",
+     "t": "bool",
+     "o": 107,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.Local",
+     "t": "bool",
+     "o": 107,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.FltSignal",
+     "t": "bool",
+     "o": 107,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.Repair",
+     "t": "bool",
+     "o": 107,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.Res12",
+     "t": "bool",
+     "o": 107,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.Res13",
+     "t": "bool",
+     "o": 107,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.Res14",
+     "t": "bool",
+     "o": 107,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].F.Res15",
+     "t": "bool",
+     "o": 107,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[2].View",
+     "t": "int",
+     "o": 108,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.Opened",
+     "t": "bool",
+     "o": 110,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.Closed",
+     "t": "bool",
+     "o": 110,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.Moving",
+     "t": "bool",
+     "o": 110,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.Fault",
+     "t": "bool",
+     "o": 110,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.Auto",
+     "t": "bool",
+     "o": 110,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.FltTravel",
+     "t": "bool",
+     "o": 110,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.FltLimits",
+     "t": "bool",
+     "o": 110,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.FltSwitch",
+     "t": "bool",
+     "o": 110,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.Target",
+     "t": "bool",
+     "o": 111,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.Local",
+     "t": "bool",
+     "o": 111,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.FltSignal",
+     "t": "bool",
+     "o": 111,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.Repair",
+     "t": "bool",
+     "o": 111,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.Res12",
+     "t": "bool",
+     "o": 111,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.Res13",
+     "t": "bool",
+     "o": 111,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.Res14",
+     "t": "bool",
+     "o": 111,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].F.Res15",
+     "t": "bool",
+     "o": 111,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[3].View",
+     "t": "int",
+     "o": 112,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.Opened",
+     "t": "bool",
+     "o": 114,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.Closed",
+     "t": "bool",
+     "o": 114,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.Moving",
+     "t": "bool",
+     "o": 114,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.Fault",
+     "t": "bool",
+     "o": 114,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.Auto",
+     "t": "bool",
+     "o": 114,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.FltTravel",
+     "t": "bool",
+     "o": 114,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.FltLimits",
+     "t": "bool",
+     "o": 114,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.FltSwitch",
+     "t": "bool",
+     "o": 114,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.Target",
+     "t": "bool",
+     "o": 115,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.Local",
+     "t": "bool",
+     "o": 115,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.FltSignal",
+     "t": "bool",
+     "o": 115,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.Repair",
+     "t": "bool",
+     "o": 115,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.Res12",
+     "t": "bool",
+     "o": 115,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.Res13",
+     "t": "bool",
+     "o": 115,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.Res14",
+     "t": "bool",
+     "o": 115,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].F.Res15",
+     "t": "bool",
+     "o": 115,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[4].View",
+     "t": "int",
+     "o": 116,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.Opened",
+     "t": "bool",
+     "o": 118,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.Closed",
+     "t": "bool",
+     "o": 118,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.Moving",
+     "t": "bool",
+     "o": 118,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.Fault",
+     "t": "bool",
+     "o": 118,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.Auto",
+     "t": "bool",
+     "o": 118,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.FltTravel",
+     "t": "bool",
+     "o": 118,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.FltLimits",
+     "t": "bool",
+     "o": 118,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.FltSwitch",
+     "t": "bool",
+     "o": 118,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.Target",
+     "t": "bool",
+     "o": 119,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.Local",
+     "t": "bool",
+     "o": 119,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.FltSignal",
+     "t": "bool",
+     "o": 119,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.Repair",
+     "t": "bool",
+     "o": 119,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.Res12",
+     "t": "bool",
+     "o": 119,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.Res13",
+     "t": "bool",
+     "o": 119,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.Res14",
+     "t": "bool",
+     "o": 119,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].F.Res15",
+     "t": "bool",
+     "o": 119,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[5].View",
+     "t": "int",
+     "o": 120,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.Opened",
+     "t": "bool",
+     "o": 122,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.Closed",
+     "t": "bool",
+     "o": 122,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.Moving",
+     "t": "bool",
+     "o": 122,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.Fault",
+     "t": "bool",
+     "o": 122,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.Auto",
+     "t": "bool",
+     "o": 122,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.FltTravel",
+     "t": "bool",
+     "o": 122,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.FltLimits",
+     "t": "bool",
+     "o": 122,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.FltSwitch",
+     "t": "bool",
+     "o": 122,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.Target",
+     "t": "bool",
+     "o": 123,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.Local",
+     "t": "bool",
+     "o": 123,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.FltSignal",
+     "t": "bool",
+     "o": 123,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.Repair",
+     "t": "bool",
+     "o": 123,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.Res12",
+     "t": "bool",
+     "o": 123,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.Res13",
+     "t": "bool",
+     "o": 123,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.Res14",
+     "t": "bool",
+     "o": 123,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].F.Res15",
+     "t": "bool",
+     "o": 123,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[6].View",
+     "t": "int",
+     "o": 124,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.Opened",
+     "t": "bool",
+     "o": 126,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.Closed",
+     "t": "bool",
+     "o": 126,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.Moving",
+     "t": "bool",
+     "o": 126,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.Fault",
+     "t": "bool",
+     "o": 126,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.Auto",
+     "t": "bool",
+     "o": 126,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.FltTravel",
+     "t": "bool",
+     "o": 126,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.FltLimits",
+     "t": "bool",
+     "o": 126,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.FltSwitch",
+     "t": "bool",
+     "o": 126,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.Target",
+     "t": "bool",
+     "o": 127,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.Local",
+     "t": "bool",
+     "o": 127,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.FltSignal",
+     "t": "bool",
+     "o": 127,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.Repair",
+     "t": "bool",
+     "o": 127,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.Res12",
+     "t": "bool",
+     "o": 127,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.Res13",
+     "t": "bool",
+     "o": 127,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.Res14",
+     "t": "bool",
+     "o": 127,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].F.Res15",
+     "t": "bool",
+     "o": 127,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[7].View",
+     "t": "int",
+     "o": 128,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.Opened",
+     "t": "bool",
+     "o": 130,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.Closed",
+     "t": "bool",
+     "o": 130,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.Moving",
+     "t": "bool",
+     "o": 130,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.Fault",
+     "t": "bool",
+     "o": 130,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.Auto",
+     "t": "bool",
+     "o": 130,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.FltTravel",
+     "t": "bool",
+     "o": 130,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.FltLimits",
+     "t": "bool",
+     "o": 130,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.FltSwitch",
+     "t": "bool",
+     "o": 130,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.Target",
+     "t": "bool",
+     "o": 131,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.Local",
+     "t": "bool",
+     "o": 131,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.FltSignal",
+     "t": "bool",
+     "o": 131,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.Repair",
+     "t": "bool",
+     "o": 131,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.Res12",
+     "t": "bool",
+     "o": 131,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.Res13",
+     "t": "bool",
+     "o": 131,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.Res14",
+     "t": "bool",
+     "o": 131,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].F.Res15",
+     "t": "bool",
+     "o": 131,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[8].View",
+     "t": "int",
+     "o": 132,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.Opened",
+     "t": "bool",
+     "o": 134,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.Closed",
+     "t": "bool",
+     "o": 134,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.Moving",
+     "t": "bool",
+     "o": 134,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.Fault",
+     "t": "bool",
+     "o": 134,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.Auto",
+     "t": "bool",
+     "o": 134,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.FltTravel",
+     "t": "bool",
+     "o": 134,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.FltLimits",
+     "t": "bool",
+     "o": 134,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.FltSwitch",
+     "t": "bool",
+     "o": 134,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.Target",
+     "t": "bool",
+     "o": 135,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.Local",
+     "t": "bool",
+     "o": 135,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.FltSignal",
+     "t": "bool",
+     "o": 135,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.Repair",
+     "t": "bool",
+     "o": 135,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.Res12",
+     "t": "bool",
+     "o": 135,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.Res13",
+     "t": "bool",
+     "o": 135,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.Res14",
+     "t": "bool",
+     "o": 135,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].F.Res15",
+     "t": "bool",
+     "o": 135,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[9].View",
+     "t": "int",
+     "o": 136,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.Opened",
+     "t": "bool",
+     "o": 138,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.Closed",
+     "t": "bool",
+     "o": 138,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.Moving",
+     "t": "bool",
+     "o": 138,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.Fault",
+     "t": "bool",
+     "o": 138,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.Auto",
+     "t": "bool",
+     "o": 138,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.FltTravel",
+     "t": "bool",
+     "o": 138,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.FltLimits",
+     "t": "bool",
+     "o": 138,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.FltSwitch",
+     "t": "bool",
+     "o": 138,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.Target",
+     "t": "bool",
+     "o": 139,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.Local",
+     "t": "bool",
+     "o": 139,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.FltSignal",
+     "t": "bool",
+     "o": 139,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.Repair",
+     "t": "bool",
+     "o": 139,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.Res12",
+     "t": "bool",
+     "o": 139,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.Res13",
+     "t": "bool",
+     "o": 139,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.Res14",
+     "t": "bool",
+     "o": 139,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].F.Res15",
+     "t": "bool",
+     "o": 139,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[10].View",
+     "t": "int",
+     "o": 140,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.Opened",
+     "t": "bool",
+     "o": 142,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.Closed",
+     "t": "bool",
+     "o": 142,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.Moving",
+     "t": "bool",
+     "o": 142,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.Fault",
+     "t": "bool",
+     "o": 142,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.Auto",
+     "t": "bool",
+     "o": 142,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.FltTravel",
+     "t": "bool",
+     "o": 142,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.FltLimits",
+     "t": "bool",
+     "o": 142,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.FltSwitch",
+     "t": "bool",
+     "o": 142,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.Target",
+     "t": "bool",
+     "o": 143,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.Local",
+     "t": "bool",
+     "o": 143,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.FltSignal",
+     "t": "bool",
+     "o": 143,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.Repair",
+     "t": "bool",
+     "o": 143,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.Res12",
+     "t": "bool",
+     "o": 143,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.Res13",
+     "t": "bool",
+     "o": 143,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.Res14",
+     "t": "bool",
+     "o": 143,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].F.Res15",
+     "t": "bool",
+     "o": 143,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[11].View",
+     "t": "int",
+     "o": 144,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.Opened",
+     "t": "bool",
+     "o": 146,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.Closed",
+     "t": "bool",
+     "o": 146,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.Moving",
+     "t": "bool",
+     "o": 146,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.Fault",
+     "t": "bool",
+     "o": 146,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.Auto",
+     "t": "bool",
+     "o": 146,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.FltTravel",
+     "t": "bool",
+     "o": 146,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.FltLimits",
+     "t": "bool",
+     "o": 146,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.FltSwitch",
+     "t": "bool",
+     "o": 146,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.Target",
+     "t": "bool",
+     "o": 147,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.Local",
+     "t": "bool",
+     "o": 147,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.FltSignal",
+     "t": "bool",
+     "o": 147,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.Repair",
+     "t": "bool",
+     "o": 147,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.Res12",
+     "t": "bool",
+     "o": 147,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.Res13",
+     "t": "bool",
+     "o": 147,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.Res14",
+     "t": "bool",
+     "o": 147,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].F.Res15",
+     "t": "bool",
+     "o": 147,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[12].View",
+     "t": "int",
+     "o": 148,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.Opened",
+     "t": "bool",
+     "o": 150,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.Closed",
+     "t": "bool",
+     "o": 150,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.Moving",
+     "t": "bool",
+     "o": 150,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.Fault",
+     "t": "bool",
+     "o": 150,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.Auto",
+     "t": "bool",
+     "o": 150,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.FltTravel",
+     "t": "bool",
+     "o": 150,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.FltLimits",
+     "t": "bool",
+     "o": 150,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.FltSwitch",
+     "t": "bool",
+     "o": 150,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.Target",
+     "t": "bool",
+     "o": 151,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.Local",
+     "t": "bool",
+     "o": 151,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.FltSignal",
+     "t": "bool",
+     "o": 151,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.Repair",
+     "t": "bool",
+     "o": 151,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.Res12",
+     "t": "bool",
+     "o": 151,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.Res13",
+     "t": "bool",
+     "o": 151,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.Res14",
+     "t": "bool",
+     "o": 151,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].F.Res15",
+     "t": "bool",
+     "o": 151,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[13].View",
+     "t": "int",
+     "o": 152,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.Opened",
+     "t": "bool",
+     "o": 154,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.Closed",
+     "t": "bool",
+     "o": 154,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.Moving",
+     "t": "bool",
+     "o": 154,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.Fault",
+     "t": "bool",
+     "o": 154,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.Auto",
+     "t": "bool",
+     "o": 154,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.FltTravel",
+     "t": "bool",
+     "o": 154,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.FltLimits",
+     "t": "bool",
+     "o": 154,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.FltSwitch",
+     "t": "bool",
+     "o": 154,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.Target",
+     "t": "bool",
+     "o": 155,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.Local",
+     "t": "bool",
+     "o": 155,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.FltSignal",
+     "t": "bool",
+     "o": 155,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.Repair",
+     "t": "bool",
+     "o": 155,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.Res12",
+     "t": "bool",
+     "o": 155,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.Res13",
+     "t": "bool",
+     "o": 155,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.Res14",
+     "t": "bool",
+     "o": 155,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].F.Res15",
+     "t": "bool",
+     "o": 155,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[14].View",
+     "t": "int",
+     "o": 156,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.Opened",
+     "t": "bool",
+     "o": 158,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.Closed",
+     "t": "bool",
+     "o": 158,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.Moving",
+     "t": "bool",
+     "o": 158,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.Fault",
+     "t": "bool",
+     "o": 158,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.Auto",
+     "t": "bool",
+     "o": 158,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.FltTravel",
+     "t": "bool",
+     "o": 158,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.FltLimits",
+     "t": "bool",
+     "o": 158,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.FltSwitch",
+     "t": "bool",
+     "o": 158,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.Target",
+     "t": "bool",
+     "o": 159,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.Local",
+     "t": "bool",
+     "o": 159,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.FltSignal",
+     "t": "bool",
+     "o": 159,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.Repair",
+     "t": "bool",
+     "o": 159,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.Res12",
+     "t": "bool",
+     "o": 159,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.Res13",
+     "t": "bool",
+     "o": 159,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.Res14",
+     "t": "bool",
+     "o": 159,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].F.Res15",
+     "t": "bool",
+     "o": 159,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[15].View",
+     "t": "int",
+     "o": 160,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.Opened",
+     "t": "bool",
+     "o": 162,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.Closed",
+     "t": "bool",
+     "o": 162,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.Moving",
+     "t": "bool",
+     "o": 162,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.Fault",
+     "t": "bool",
+     "o": 162,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.Auto",
+     "t": "bool",
+     "o": 162,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.FltTravel",
+     "t": "bool",
+     "o": 162,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.FltLimits",
+     "t": "bool",
+     "o": 162,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.FltSwitch",
+     "t": "bool",
+     "o": 162,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.Target",
+     "t": "bool",
+     "o": 163,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.Local",
+     "t": "bool",
+     "o": 163,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.FltSignal",
+     "t": "bool",
+     "o": 163,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.Repair",
+     "t": "bool",
+     "o": 163,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.Res12",
+     "t": "bool",
+     "o": 163,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.Res13",
+     "t": "bool",
+     "o": 163,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.Res14",
+     "t": "bool",
+     "o": 163,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].F.Res15",
+     "t": "bool",
+     "o": 163,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[16].View",
+     "t": "int",
+     "o": 164,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.Opened",
+     "t": "bool",
+     "o": 166,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.Closed",
+     "t": "bool",
+     "o": 166,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.Moving",
+     "t": "bool",
+     "o": 166,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.Fault",
+     "t": "bool",
+     "o": 166,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.Auto",
+     "t": "bool",
+     "o": 166,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.FltTravel",
+     "t": "bool",
+     "o": 166,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.FltLimits",
+     "t": "bool",
+     "o": 166,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.FltSwitch",
+     "t": "bool",
+     "o": 166,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.Target",
+     "t": "bool",
+     "o": 167,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.Local",
+     "t": "bool",
+     "o": 167,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.FltSignal",
+     "t": "bool",
+     "o": 167,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.Repair",
+     "t": "bool",
+     "o": 167,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.Res12",
+     "t": "bool",
+     "o": 167,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.Res13",
+     "t": "bool",
+     "o": 167,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.Res14",
+     "t": "bool",
+     "o": 167,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].F.Res15",
+     "t": "bool",
+     "o": 167,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[17].View",
+     "t": "int",
+     "o": 168,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.Opened",
+     "t": "bool",
+     "o": 170,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.Closed",
+     "t": "bool",
+     "o": 170,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.Moving",
+     "t": "bool",
+     "o": 170,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.Fault",
+     "t": "bool",
+     "o": 170,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.Auto",
+     "t": "bool",
+     "o": 170,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.FltTravel",
+     "t": "bool",
+     "o": 170,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.FltLimits",
+     "t": "bool",
+     "o": 170,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.FltSwitch",
+     "t": "bool",
+     "o": 170,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.Target",
+     "t": "bool",
+     "o": 171,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.Local",
+     "t": "bool",
+     "o": 171,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.FltSignal",
+     "t": "bool",
+     "o": 171,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.Repair",
+     "t": "bool",
+     "o": 171,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.Res12",
+     "t": "bool",
+     "o": 171,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.Res13",
+     "t": "bool",
+     "o": 171,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.Res14",
+     "t": "bool",
+     "o": 171,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].F.Res15",
+     "t": "bool",
+     "o": 171,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Valve[18].View",
+     "t": "int",
+     "o": 172,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "SelValve",
+     "t": "int",
+     "o": 174,
+     "cm": "174  номер выбранной задвижки 1..18 (пишет панель при открытии окна)",
+     "wr": true
+    },
+    {
+     "n": "SelCmd",
+     "t": "int",
+     "o": 176,
+     "cm": "176  команда выбранной задвижке: 1 открыть, 2 закрыть, 4 сброс; 1001..1600 — время хода (код − 1000) с",
+     "wr": true
+    },
+    {
+     "n": "Sel.F.Opened",
+     "t": "bool",
+     "o": 178,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.Closed",
+     "t": "bool",
+     "o": 178,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.Moving",
+     "t": "bool",
+     "o": 178,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.Fault",
+     "t": "bool",
+     "o": 178,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.Auto",
+     "t": "bool",
+     "o": 178,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.FltTravel",
+     "t": "bool",
+     "o": 178,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.FltLimits",
+     "t": "bool",
+     "o": 178,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.FltSwitch",
+     "t": "bool",
+     "o": 178,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.Target",
+     "t": "bool",
+     "o": 179,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.Local",
+     "t": "bool",
+     "o": 179,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.FltSignal",
+     "t": "bool",
+     "o": 179,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.Repair",
+     "t": "bool",
+     "o": 179,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.Res12",
+     "t": "bool",
+     "o": 179,
+     "b": 4,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.Res13",
+     "t": "bool",
+     "o": 179,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.Res14",
+     "t": "bool",
+     "o": 179,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.F.Res15",
+     "t": "bool",
+     "o": 179,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Sel.View",
+     "t": "int",
+     "o": 180,
+     "cm": "+2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно",
+     "wr": false
+    },
+    {
+     "n": "SelTravel",
+     "t": "int",
+     "o": 182,
+     "cm": "182  допустимое время хода, с",
+     "wr": false
+    },
+    {
+     "n": "SelCycles",
+     "t": "int",
+     "o": 184,
+     "cm": "184  счётчик циклов открытия/закрытия",
+     "wr": false
+    },
+    {
+     "n": "SelCanCmd",
+     "t": "bool",
+     "o": 186,
+     "b": 0,
+     "cm": "186.0  кнопки ОТКРЫТЬ/ЗАКРЫТЬ доступны (ручной, дистанция, нет аварии)",
+     "wr": true
+    },
+    {
+     "n": "LinePress[1]",
+     "t": "real",
+     "o": 188,
+     "cm": "188, 192  бар: [1] линия 36.4 (Н-1, AI 15), [2] линия 36.5 (Н-2, AI 16)",
+     "wr": false
+    },
+    {
+     "n": "LinePress[2]",
+     "t": "real",
+     "o": 192,
+     "cm": "188, 192  бар: [1] линия 36.4 (Н-1, AI 15), [2] линия 36.5 (Н-2, AI 16)",
+     "wr": false
+    },
+    {
+     "n": "LineOk[1]",
+     "t": "bool",
+     "o": 196,
+     "b": 0,
+     "cm": "196.0, 196.1  достоверность",
+     "wr": false
+    },
+    {
+     "n": "LineOk[2]",
+     "t": "bool",
+     "o": 196,
+     "b": 1,
+     "cm": "196.0, 196.1  достоверность",
+     "wr": false
+    },
+    {
+     "n": "AirPress[1]",
+     "t": "real",
+     "o": 198,
+     "cm": "198, 202  бар: [1] AI 17 (%IW39), [2] AI 18 (%IW77); на панели [1] — «ПМУ циклонов», [2] — «ПМУ насосов»",
+     "wr": false
+    },
+    {
+     "n": "AirPress[2]",
+     "t": "real",
+     "o": 202,
+     "cm": "198, 202  бар: [1] AI 17 (%IW39), [2] AI 18 (%IW77); на панели [1] — «ПМУ циклонов», [2] — «ПМУ насосов»",
+     "wr": false
+    },
+    {
+     "n": "AirOk[1]",
+     "t": "bool",
+     "o": 206,
+     "b": 0,
+     "cm": "206.0, 206.1  достоверность",
+     "wr": false
+    },
+    {
+     "n": "AirOk[2]",
+     "t": "bool",
+     "o": 206,
+     "b": 1,
+     "cm": "206.0, 206.1  достоверность",
+     "wr": false
+    },
+    {
+     "n": "SealPress[1]",
+     "t": "real",
+     "o": 208,
+     "cm": "208, 212  давление гидроподпора Н-1 / Н-2 (AI 7 / AI 8)",
+     "wr": false
+    },
+    {
+     "n": "SealPress[2]",
+     "t": "real",
+     "o": 212,
+     "cm": "208, 212  давление гидроподпора Н-1 / Н-2 (AI 7 / AI 8)",
+     "wr": false
+    },
+    {
+     "n": "SealFlow[1]",
+     "t": "real",
+     "o": 216,
+     "cm": "216, 220  расход гидроподпора Н-1 / Н-2 (AI 9 / AI 10)",
+     "wr": false
+    },
+    {
+     "n": "SealFlow[2]",
+     "t": "real",
+     "o": 220,
+     "cm": "216, 220  расход гидроподпора Н-1 / Н-2 (AI 9 / AI 10)",
+     "wr": false
+    },
+    {
+     "n": "SealOk.Press1",
+     "t": "bool",
+     "o": 224,
+     "b": 0,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "SealOk.Press2",
+     "t": "bool",
+     "o": 224,
+     "b": 1,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "SealOk.Flow1",
+     "t": "bool",
+     "o": 224,
+     "b": 2,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "SealOk.Flow2",
+     "t": "bool",
+     "o": 224,
+     "b": 3,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "SealOk.Press1HH",
+     "t": "bool",
+     "o": 224,
+     "b": 4,
+     "cm": "224.4  AlmHiHi давления Н-1",
+     "wr": false
+    },
+    {
+     "n": "SealOk.Press1LL",
+     "t": "bool",
+     "o": 224,
+     "b": 5,
+     "cm": "224.5  AlmLoLo давления Н-1",
+     "wr": false
+    },
+    {
+     "n": "SealOk.Press2HH",
+     "t": "bool",
+     "o": 224,
+     "b": 6,
+     "cm": "224.6",
+     "wr": false
+    },
+    {
+     "n": "SealOk.Press2LL",
+     "t": "bool",
+     "o": 224,
+     "b": 7,
+     "cm": "224.7",
+     "wr": false
+    },
+    {
+     "n": "Alm2.EStopGCU",
+     "t": "bool",
+     "o": 226,
+     "b": 0,
+     "cm": "226.0  нажата кнопка аварийного стопа: пульт ГЦУ (DI 73)",
+     "wr": false
+    },
+    {
+     "n": "Alm2.EStopCyc",
+     "t": "bool",
+     "o": 226,
+     "b": 1,
+     "cm": "226.1  шкаф гидроциклонов (DI 74)",
+     "wr": false
+    },
+    {
+     "n": "Alm2.EStopPLC",
+     "t": "bool",
+     "o": 226,
+     "b": 2,
+     "cm": "226.2  шкаф ПЛК (DI 96)",
+     "wr": false
+    },
+    {
+     "n": "Alm2.EStopHMI",
+     "t": "bool",
+     "o": 226,
+     "b": 3,
+     "cm": "226.3  панель HMI (DI 97)",
+     "wr": false
+    },
+    {
+     "n": "Alm2.SealBad1",
+     "t": "bool",
+     "o": 226,
+     "b": 4,
+     "cm": "226.4  датчик давления гидроподпора Н-1 недостоверен (предупреждение)",
+     "wr": false
+    },
+    {
+     "n": "Alm2.SealBad2",
+     "t": "bool",
+     "o": 226,
+     "b": 5,
+     "cm": "226.5  датчик давления гидроподпора Н-2 недостоверен",
+     "wr": false
+    },
+    {
+     "n": "Alm2.DoorGCU",
+     "t": "bool",
+     "o": 226,
+     "b": 6,
+     "cm": "226.6  пульт ГЦУ: дверь открыта (DI 82 = 0)",
+     "wr": false
+    },
+    {
+     "n": "Alm2.DoorCyc",
+     "t": "bool",
+     "o": 226,
+     "b": 7,
+     "cm": "226.7  шкаф гидроциклонов: дверь открыта (DI 86 = 0)",
+     "wr": false
+    },
+    {
+     "n": "Alm2.DoorPLC",
+     "t": "bool",
+     "o": 227,
+     "b": 0,
+     "cm": "227.0  шкаф ПЛК: дверь открыта (DI 94 = 1)",
+     "wr": false
+    },
+    {
+     "n": "Alm2.AirGCU",
+     "t": "bool",
+     "o": 227,
+     "b": 1,
+     "cm": "227.1  пульт ГЦУ: нет давления воздуха (реле, DI 83 = 0)",
+     "wr": false
+    },
+    {
+     "n": "Alm2.AirCyc",
+     "t": "bool",
+     "o": 227,
+     "b": 2,
+     "cm": "227.2  шкаф гидроциклонов: нет давления воздуха (реле, DI 87 = 0)",
+     "wr": false
+    },
+    {
+     "n": "Alm2.Light",
+     "t": "bool",
+     "o": 227,
+     "b": 3,
+     "cm": "227.3  световая сигнализация включена",
+     "wr": false
+    },
+    {
+     "n": "Alm2.Horn",
+     "t": "bool",
+     "o": 227,
+     "b": 4,
+     "cm": "227.4  звуковая сигнализация включена",
+     "wr": false
+    },
+    {
+     "n": "Alm2.Res13",
+     "t": "bool",
+     "o": 227,
+     "b": 5,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm2.Res14",
+     "t": "bool",
+     "o": 227,
+     "b": 6,
+     "cm": "",
+     "wr": false
+    },
+    {
+     "n": "Alm2.Res15",
+     "t": "bool",
+     "o": 227,
+     "b": 7,
+     "cm": "",
+     "wr": false
+    }
+   ]
+  },
+  {
+   "id": "db2",
+   "name": "HMI_SET",
+   "num": 101,
+   "ms": 2000,
+   "fields": [
+    {
+     "n": "Press_SP",
+     "t": "real",
+     "o": 0,
+     "cm": "0  Уставка давления, бар",
+     "wr": true
+    },
+    {
+     "n": "Press_Kp",
+     "t": "real",
+     "o": 4,
+     "cm": "4  Kp регулятора давления, %/бар",
+     "wr": true
+    },
+    {
+     "n": "Press_Ti",
+     "t": "real",
+     "o": 8,
+     "cm": "8  Ti регулятора давления, с",
+     "wr": true
+    },
+    {
+     "n": "Speed_Min",
+     "t": "real",
+     "o": 12,
+     "cm": "12  Скорость минимум, %",
+     "wr": true
+    },
+    {
+     "n": "Speed_Max",
+     "t": "real",
+     "o": 16,
+     "cm": "16  Скорость максимум, %",
+     "wr": true
+    },
+    {
+     "n": "Level_SP",
+     "t": "real",
+     "o": 20,
+     "cm": "20  Уставка уровня, %",
+     "wr": true
+    },
+    {
+     "n": "Level_Hyst",
+     "t": "real",
+     "o": 24,
+     "cm": "24  Зона нечувствительности уровня ±, %",
+     "wr": true
+    },
+    {
+     "n": "Level_StartMin",
+     "t": "real",
+     "o": 28,
+     "cm": "28  Минимум уровня для пуска, %",
+     "wr": true
+    },
+    {
+     "n": "Cyc_T_Add",
+     "t": "int",
+     "o": 32,
+     "cm": "32  Подключение циклона через, с",
+     "wr": true
+    },
+    {
+     "n": "Cyc_T_Remove",
+     "t": "int",
+     "o": 34,
+     "cm": "34  Отключение циклона через, с",
+     "wr": true
+    },
+    {
+     "n": "Cyc_NStart",
+     "t": "int",
+     "o": 36,
+     "cm": "36  Циклонов при пуске, шт",
+     "wr": true
+    },
+    {
+     "n": "Cyc_NMin",
+     "t": "int",
+     "o": 38,
+     "cm": "38  Циклонов минимум, шт",
+     "wr": true
+    },
+    {
+     "n": "Cyc_NMax",
+     "t": "int",
+     "o": 40,
+     "cm": "40  Циклонов максимум, шт",
+     "wr": true
+    },
+    {
+     "n": "DutyPump",
+     "t": "int",
+     "o": 42,
+     "cm": "42  Основной насос, 1/2",
+     "wr": true
+    },
+    {
+     "n": "Repair.Pump1",
+     "t": "bool",
+     "o": 44,
+     "b": 0,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Pump2",
+     "t": "bool",
+     "o": 44,
+     "b": 1,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Cyc1",
+     "t": "bool",
+     "o": 44,
+     "b": 2,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Cyc2",
+     "t": "bool",
+     "o": 44,
+     "b": 3,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Cyc3",
+     "t": "bool",
+     "o": 44,
+     "b": 4,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Cyc4",
+     "t": "bool",
+     "o": 44,
+     "b": 5,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Cyc5",
+     "t": "bool",
+     "o": 44,
+     "b": 6,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Cyc6",
+     "t": "bool",
+     "o": 44,
+     "b": 7,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Res8",
+     "t": "bool",
+     "o": 45,
+     "b": 0,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Res9",
+     "t": "bool",
+     "o": 45,
+     "b": 1,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Res10",
+     "t": "bool",
+     "o": 45,
+     "b": 2,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Res11",
+     "t": "bool",
+     "o": 45,
+     "b": 3,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Res12",
+     "t": "bool",
+     "o": 45,
+     "b": 4,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Res13",
+     "t": "bool",
+     "o": 45,
+     "b": 5,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Res14",
+     "t": "bool",
+     "o": 45,
+     "b": 6,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "Repair.Res15",
+     "t": "bool",
+     "o": 45,
+     "b": 7,
+     "cm": "",
+     "wr": true
+    },
+    {
+     "n": "T_Scour",
+     "t": "int",
+     "o": 46,
+     "cm": "46  Размыв при пуске, с",
+     "wr": true
+    },
+    {
+     "n": "T_FlushStart",
+     "t": "int",
+     "o": 48,
+     "cm": "48  Промывка при пуске, с",
+     "wr": true
+    },
+    {
+     "n": "T_FlushStop",
+     "t": "int",
+     "o": 50,
+     "cm": "50  Промывка при останове, с",
+     "wr": true
+    },
+    {
+     "n": "T_Drain",
+     "t": "int",
+     "o": 52,
+     "cm": "52  Дренаж, с",
+     "wr": true
+    }
+   ]
+  },
+  {
+   "id": "db9",
+   "name": "MY_DB",
+   "num": 200,
+   "ms": 500,
+   "fields": [
+    {
+     "n": "Motor[1].Cmd",
+     "t": "int",
+     "cm": "команда: 1 пуск, 2 стоп, 4 сброс (ПЛК обнуляет)",
+     "wr": true,
+     "o": 0
+    },
+    {
+     "n": "Motor[1].State",
+     "t": "int",
+     "cm": "0 стоит, 1 готов, 2 работа, 3 авария, 4 ремонт, 5 пуск/останов",
+     "d": 2,
+     "o": 2
+    },
+    {
+     "n": "Motor[1].Speed",
+     "t": "real",
+     "cm": "скорость, %",
+     "d": 72,
+     "ds": "sin",
+     "da": 6,
+     "o": 4
+    },
+    {
+     "n": "Motor[1].SpeedSP",
+     "t": "real",
+     "cm": "задание скорости, %",
+     "wr": true,
+     "d": 75,
+     "o": 8
+    },
+    {
+     "n": "Motor[1].Run",
+     "t": "bool",
+     "cm": "работает",
+     "d": 1,
+     "o": 12,
+     "b": 0
+    },
+    {
+     "n": "Motor[1].Fault",
+     "t": "bool",
+     "cm": "авария",
+     "d": 0,
+     "o": 12,
+     "b": 1
+    },
+    {
+     "n": "Motor[1].Local",
+     "t": "bool",
+     "cm": "местное управление",
+     "o": 12,
+     "b": 2
+    },
+    {
+     "n": "Motor[2].Cmd",
+     "t": "int",
+     "cm": "команда: 1 пуск, 2 стоп, 4 сброс (ПЛК обнуляет)",
+     "wr": true,
+     "o": 14
+    },
+    {
+     "n": "Motor[2].State",
+     "t": "int",
+     "cm": "0 стоит, 1 готов, 2 работа, 3 авария, 4 ремонт, 5 пуск/останов",
+     "d": 1,
+     "o": 16
+    },
+    {
+     "n": "Motor[2].Speed",
+     "t": "real",
+     "cm": "скорость, %",
+     "d": 0,
+     "da": 6,
+     "o": 18
+    },
+    {
+     "n": "Motor[2].SpeedSP",
+     "t": "real",
+     "cm": "задание скорости, %",
+     "wr": true,
+     "d": 50,
+     "o": 22
+    },
+    {
+     "n": "Motor[2].Run",
+     "t": "bool",
+     "cm": "работает",
+     "d": 0,
+     "o": 26,
+     "b": 0
+    },
+    {
+     "n": "Motor[2].Fault",
+     "t": "bool",
+     "cm": "авария",
+     "d": 0,
+     "o": 26,
+     "b": 1
+    },
+    {
+     "n": "Motor[2].Local",
+     "t": "bool",
+     "cm": "местное управление",
+     "o": 26,
+     "b": 2
+    },
+    {
+     "n": "Motor[3].Cmd",
+     "t": "int",
+     "cm": "команда: 1 пуск, 2 стоп, 4 сброс (ПЛК обнуляет)",
+     "wr": true,
+     "o": 28
+    },
+    {
+     "n": "Motor[3].State",
+     "t": "int",
+     "cm": "0 стоит, 1 готов, 2 работа, 3 авария, 4 ремонт, 5 пуск/останов",
+     "d": 3,
+     "o": 30
+    },
+    {
+     "n": "Motor[3].Speed",
+     "t": "real",
+     "cm": "скорость, %",
+     "d": 0,
+     "da": 6,
+     "o": 32
+    },
+    {
+     "n": "Motor[3].SpeedSP",
+     "t": "real",
+     "cm": "задание скорости, %",
+     "wr": true,
+     "d": 50,
+     "o": 36
+    },
+    {
+     "n": "Motor[3].Run",
+     "t": "bool",
+     "cm": "работает",
+     "d": 0,
+     "o": 40,
+     "b": 0
+    },
+    {
+     "n": "Motor[3].Fault",
+     "t": "bool",
+     "cm": "авария",
+     "d": 1,
+     "o": 40,
+     "b": 1
+    },
+    {
+     "n": "Motor[3].Local",
+     "t": "bool",
+     "cm": "местное управление",
+     "o": 40,
+     "b": 2
+    },
+    {
+     "n": "Level",
+     "t": "real",
+     "cm": "уровень в баке, %",
+     "d": 55,
+     "ds": "sin",
+     "da": 20,
+     "o": 42
+    },
+    {
+     "n": "Jog",
+     "t": "int",
+     "cm": "толчок: 1 вперёд, 2 назад (пока нажата кнопка)",
+     "wr": true,
+     "o": 46
+    },
+    {
+     "n": "Alive",
+     "t": "int",
+     "cm": "счётчик жизни панели (для толчка)",
+     "wr": true,
+     "o": 48
+    }
+   ]
+  }
+ ],
+ "screens": [
+  {
+   "id": "s1",
+   "name": "Мнемосхема ГЦУ",
+   "w": 1024,
+   "h": 664,
+   "ox": 0,
+   "oy": 48,
+   "bg": "#DFE0DC",
+   "diag": [
+    14,
+    676
+   ],
+   "demoChip": [
+    140,
+    676
+   ],
+   "noCommBar": true,
+   "els": [
+    {
+     "id": "e1",
+     "t": "alarmline",
+     "x": 14,
+     "y": 56,
+     "w": 600,
+     "h": 28,
+     "nm": "Строка аварий"
+    },
+    {
+     "id": "e2",
+     "t": "text",
+     "x": 100,
+     "y": 98,
+     "w": 120,
+     "h": 20,
+     "tx": "Пульпа с МШР",
+     "size": 13,
+     "color": "#4B5157",
+     "align": "center",
+     "bold": false
+    },
+    {
+     "id": "e3",
+     "t": "line",
+     "x": 160,
+     "y": 120,
+     "x2": 160,
+     "y2": 182,
+     "w": 0,
+     "h": 0,
+     "color": "#5A5F65",
+     "lw": 2
+    },
+    {
+     "id": "e4",
+     "t": "tri",
+     "x": 154,
+     "y": 180,
+     "w": 12,
+     "h": 9,
+     "dir": "down",
+     "fill": "#5A5F65"
+    },
+    {
+     "id": "e5",
+     "t": "tank",
+     "x": 70,
+     "y": 190,
+     "w": 180,
+     "h": 450,
+     "tag": "gcu:level",
+     "min": 0,
+     "max": 100,
+     "sp": "gcu:set.levelSP",
+     "ok": "gcu:st.levelOk",
+     "nm": "Зумпф",
+     "marks": [
+      {
+       "n": "HH",
+       "v": 95,
+       "c": "#A12020"
+      },
+      {
+       "n": "H",
+       "v": 85,
+       "c": "#4B5157"
+      },
+      {
+       "n": "L",
+       "v": 20,
+       "c": "#4B5157"
+      },
+      {
+       "n": "LL",
+       "v": 10,
+       "c": "#A12020"
+      }
+     ]
+    },
+    {
+     "id": "e6",
+     "t": "valuebox",
+     "x": 95,
+     "y": 200,
+     "w": 130,
+     "h": 60,
+     "ti": "LT-1 · уровень",
+     "tag": "gcu:level",
+     "dec": 1,
+     "unit": "%",
+     "ok": "gcu:st.levelOk",
+     "nm": "LT-1"
+    },
+    {
+     "id": "e7",
+     "t": "pipe",
+     "x": 274,
+     "y": 308.5,
+     "w": 148,
+     "h": 3,
+     "fill": "#3F7FB4",
+     "nm": "Тех. вода Н-1"
+    },
+    {
+     "id": "e8",
+     "t": "text",
+     "x": 289,
+     "y": 288,
+     "w": 60,
+     "h": 20,
+     "tx": "тех. вода",
+     "size": 11,
+     "color": "#3F7FB4",
+     "align": "center",
+     "bold": false
+    },
+    {
+     "id": "e9",
+     "t": "pipe",
+     "x": 272.5,
+     "y": 310,
+     "w": 3,
+     "h": 107,
+     "fill": "#3F7FB4"
+    },
+    {
+     "id": "e10",
+     "t": "pipe",
+     "x": 362.5,
+     "y": 310,
+     "w": 3,
+     "h": 107,
+     "fill": "#3F7FB4"
+    },
+    {
+     "id": "e11",
+     "t": "pipe",
+     "x": 418.5,
+     "y": 310,
+     "w": 3,
+     "h": 74,
+     "fill": "#3F7FB4"
+    },
+    {
+     "id": "e12",
+     "t": "pipe",
+     "x": 250,
+     "y": 417,
+     "w": 134,
+     "h": 6,
+     "fill": "#5A5F65",
+     "nm": "Всас Н-1"
+    },
+    {
+     "id": "e13",
+     "t": "pipe",
+     "x": 456,
+     "y": 417,
+     "w": 187,
+     "h": 6,
+     "fill": "#5A5F65",
+     "nm": "Нагнетание Н-1"
+    },
+    {
+     "id": "e14",
+     "t": "pipe",
+     "x": 474.5,
+     "y": 423,
+     "w": 3,
+     "h": 23,
+     "fill": "#5A5F65"
+    },
+    {
+     "id": "e15",
+     "t": "text",
+     "x": 252,
+     "y": 288,
+     "w": 44,
+     "h": 20,
+     "tx": "разм.",
+     "size": 12,
+     "color": "#4B5157",
+     "align": "center",
+     "bold": false
+    },
+    {
+     "id": "e16",
+     "t": "text",
+     "x": 342,
+     "y": 288,
+     "w": 44,
+     "h": 20,
+     "tx": "пром.",
+     "size": 12,
+     "color": "#4B5157",
+     "align": "center",
+     "bold": false
+    },
+    {
+     "id": "e17",
+     "t": "text",
+     "x": 405,
+     "y": 288,
+     "w": 30,
+     "h": 20,
+     "tx": "г/п",
+     "size": 12,
+     "color": "#4B5157",
+     "align": "center",
+     "bold": false
+    },
+    {
+     "id": "e18",
+     "t": "text",
+     "x": 306,
+     "y": 438,
+     "w": 36,
+     "h": 20,
+     "tx": "всас",
+     "size": 12,
+     "color": "#4B5157",
+     "align": "center",
+     "bold": false
+    },
+    {
+     "id": "e19",
+     "t": "text",
+     "x": 518,
+     "y": 384,
+     "w": 44,
+     "h": 20,
+     "tx": "нагн.",
+     "size": 12,
+     "color": "#4B5157",
+     "align": "center",
+     "bold": false
+    },
+    {
+     "id": "e20",
+     "t": "text",
+     "x": 496,
+     "y": 478,
+     "w": 44,
+     "h": 20,
+     "tx": "дрен.",
+     "size": 12,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": false
+    },
+    {
+     "id": "e21",
+     "t": "valve",
+     "x": 258,
+     "y": 336,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 5,
+     "nm": "Размывка Н-1"
+    },
+    {
+     "id": "e22",
+     "t": "valve",
+     "x": 348,
+     "y": 336,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 4,
+     "nm": "Промывка Н-1"
+    },
+    {
+     "id": "e23",
+     "t": "valve",
+     "x": 404,
+     "y": 324,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 1,
+     "nm": "Гидроподпор Н-1"
+    },
+    {
+     "id": "e24",
+     "t": "valve",
+     "x": 300,
+     "y": 404,
+     "w": 48,
+     "h": 32,
+     "dir": "h",
+     "src": "gcu",
+     "n": 2,
+     "nm": "Всас Н-1"
+    },
+    {
+     "id": "e25",
+     "t": "valve",
+     "x": 516,
+     "y": 404,
+     "w": 48,
+     "h": 32,
+     "dir": "h",
+     "src": "gcu",
+     "n": 3,
+     "nm": "Нагнетание Н-1"
+    },
+    {
+     "id": "e26",
+     "t": "valve",
+     "x": 460,
+     "y": 446,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 6,
+     "nm": "Дренаж Н-1"
+    },
+    {
+     "id": "e27",
+     "t": "pump",
+     "x": 384,
+     "y": 384,
+     "w": 72,
+     "h": 72,
+     "src": "gcu",
+     "n": 1,
+     "lb": "Н-1",
+     "nm": "Насос Н-1"
+    },
+    {
+     "id": "e28",
+     "t": "pumpcard",
+     "x": 480,
+     "y": 328,
+     "w": 150,
+     "h": 56,
+     "n": 1,
+     "nm": "Карточка Н-1"
+    },
+    {
+     "id": "e29",
+     "t": "line",
+     "x": 506,
+     "y": 423,
+     "x2": 506,
+     "y2": 438,
+     "w": 0,
+     "h": 0,
+     "color": "#4B5157",
+     "lw": 2
+    },
+    {
+     "id": "e30",
+     "t": "sensor",
+     "x": 493,
+     "y": 438,
+     "w": 26,
+     "h": 26,
+     "tx": "PT",
+     "size": 11
+    },
+    {
+     "id": "e31",
+     "t": "value",
+     "x": 524,
+     "y": 439,
+     "w": 74,
+     "h": 24,
+     "tag": "gcu:line.1.p",
+     "ok": "gcu:line.1.ok",
+     "dec": 2,
+     "unit": "бар",
+     "size": 14,
+     "align": "right",
+     "pad": 4,
+     "fill": "#FFFFFF",
+     "stroke": "#B3B6B0",
+     "r": 3,
+     "nm": "Давление линии Н-1"
+    },
+    {
+     "id": "e32",
+     "t": "pipe",
+     "x": 274,
+     "y": 478.5,
+     "w": 148,
+     "h": 3,
+     "fill": "#3F7FB4",
+     "nm": "Тех. вода Н-2"
+    },
+    {
+     "id": "e33",
+     "t": "text",
+     "x": 289,
+     "y": 458,
+     "w": 60,
+     "h": 20,
+     "tx": "тех. вода",
+     "size": 11,
+     "color": "#3F7FB4",
+     "align": "center",
+     "bold": false
+    },
+    {
+     "id": "e34",
+     "t": "pipe",
+     "x": 272.5,
+     "y": 480,
+     "w": 3,
+     "h": 107,
+     "fill": "#3F7FB4"
+    },
+    {
+     "id": "e35",
+     "t": "pipe",
+     "x": 362.5,
+     "y": 480,
+     "w": 3,
+     "h": 107,
+     "fill": "#3F7FB4"
+    },
+    {
+     "id": "e36",
+     "t": "pipe",
+     "x": 418.5,
+     "y": 480,
+     "w": 3,
+     "h": 74,
+     "fill": "#3F7FB4"
+    },
+    {
+     "id": "e37",
+     "t": "pipe",
+     "x": 250,
+     "y": 587,
+     "w": 134,
+     "h": 6,
+     "fill": "#5A5F65",
+     "nm": "Всас Н-2"
+    },
+    {
+     "id": "e38",
+     "t": "pipe",
+     "x": 456,
+     "y": 587,
+     "w": 187,
+     "h": 6,
+     "fill": "#5A5F65",
+     "nm": "Нагнетание Н-2"
+    },
+    {
+     "id": "e39",
+     "t": "pipe",
+     "x": 474.5,
+     "y": 593,
+     "w": 3,
+     "h": 23,
+     "fill": "#5A5F65"
+    },
+    {
+     "id": "e40",
+     "t": "text",
+     "x": 252,
+     "y": 458,
+     "w": 44,
+     "h": 20,
+     "tx": "разм.",
+     "size": 12,
+     "color": "#4B5157",
+     "align": "center",
+     "bold": false
+    },
+    {
+     "id": "e41",
+     "t": "text",
+     "x": 342,
+     "y": 458,
+     "w": 44,
+     "h": 20,
+     "tx": "пром.",
+     "size": 12,
+     "color": "#4B5157",
+     "align": "center",
+     "bold": false
+    },
+    {
+     "id": "e42",
+     "t": "text",
+     "x": 405,
+     "y": 458,
+     "w": 30,
+     "h": 20,
+     "tx": "г/п",
+     "size": 12,
+     "color": "#4B5157",
+     "align": "center",
+     "bold": false
+    },
+    {
+     "id": "e43",
+     "t": "text",
+     "x": 306,
+     "y": 608,
+     "w": 36,
+     "h": 20,
+     "tx": "всас",
+     "size": 12,
+     "color": "#4B5157",
+     "align": "center",
+     "bold": false
+    },
+    {
+     "id": "e44",
+     "t": "text",
+     "x": 518,
+     "y": 554,
+     "w": 44,
+     "h": 20,
+     "tx": "нагн.",
+     "size": 12,
+     "color": "#4B5157",
+     "align": "center",
+     "bold": false
+    },
+    {
+     "id": "e45",
+     "t": "text",
+     "x": 496,
+     "y": 648,
+     "w": 44,
+     "h": 20,
+     "tx": "дрен.",
+     "size": 12,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": false
+    },
+    {
+     "id": "e46",
+     "t": "valve",
+     "x": 258,
+     "y": 506,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 11,
+     "nm": "Размывка Н-2"
+    },
+    {
+     "id": "e47",
+     "t": "valve",
+     "x": 348,
+     "y": 506,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 10,
+     "nm": "Промывка Н-2"
+    },
+    {
+     "id": "e48",
+     "t": "valve",
+     "x": 404,
+     "y": 494,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 7,
+     "nm": "Гидроподпор Н-2"
+    },
+    {
+     "id": "e49",
+     "t": "valve",
+     "x": 300,
+     "y": 574,
+     "w": 48,
+     "h": 32,
+     "dir": "h",
+     "src": "gcu",
+     "n": 8,
+     "nm": "Всас Н-2"
+    },
+    {
+     "id": "e50",
+     "t": "valve",
+     "x": 516,
+     "y": 574,
+     "w": 48,
+     "h": 32,
+     "dir": "h",
+     "src": "gcu",
+     "n": 9,
+     "nm": "Нагнетание Н-2"
+    },
+    {
+     "id": "e51",
+     "t": "valve",
+     "x": 460,
+     "y": 616,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 12,
+     "nm": "Дренаж Н-2"
+    },
+    {
+     "id": "e52",
+     "t": "pump",
+     "x": 384,
+     "y": 554,
+     "w": 72,
+     "h": 72,
+     "src": "gcu",
+     "n": 2,
+     "lb": "Н-2",
+     "nm": "Насос Н-2"
+    },
+    {
+     "id": "e53",
+     "t": "pumpcard",
+     "x": 480,
+     "y": 498,
+     "w": 150,
+     "h": 56,
+     "n": 2,
+     "nm": "Карточка Н-2"
+    },
+    {
+     "id": "e54",
+     "t": "line",
+     "x": 506,
+     "y": 593,
+     "x2": 506,
+     "y2": 608,
+     "w": 0,
+     "h": 0,
+     "color": "#4B5157",
+     "lw": 2
+    },
+    {
+     "id": "e55",
+     "t": "sensor",
+     "x": 493,
+     "y": 608,
+     "w": 26,
+     "h": 26,
+     "tx": "PT",
+     "size": 11
+    },
+    {
+     "id": "e56",
+     "t": "value",
+     "x": 524,
+     "y": 609,
+     "w": 74,
+     "h": 24,
+     "tag": "gcu:line.2.p",
+     "ok": "gcu:line.2.ok",
+     "dec": 2,
+     "unit": "бар",
+     "size": 14,
+     "align": "right",
+     "pad": 4,
+     "fill": "#FFFFFF",
+     "stroke": "#B3B6B0",
+     "r": 3,
+     "nm": "Давление линии Н-2"
+    },
+    {
+     "id": "e57",
+     "t": "pipe",
+     "x": 646,
+     "y": 90.5,
+     "w": 348,
+     "h": 3,
+     "fill": "#5A5F65",
+     "nm": "Слив"
+    },
+    {
+     "id": "e58",
+     "t": "text",
+     "x": 834,
+     "y": 60,
+     "w": 160,
+     "h": 20,
+     "tx": "Слив → сгущение",
+     "size": 13,
+     "color": "#4B5157",
+     "align": "right",
+     "bold": false
+    },
+    {
+     "id": "e59",
+     "t": "pipe",
+     "x": 637,
+     "y": 297,
+     "w": 6,
+     "h": 296,
+     "fill": "#5A5F65",
+     "nm": "Стояк"
+    },
+    {
+     "id": "e60",
+     "t": "pipe",
+     "x": 637,
+     "y": 297,
+     "w": 363,
+     "h": 6,
+     "fill": "#5A5F65",
+     "nm": "Коллектор"
+    },
+    {
+     "id": "e61",
+     "t": "pipe",
+     "x": 669,
+     "y": 94,
+     "w": 2,
+     "h": 17,
+     "fill": "#5A5F65"
+    },
+    {
+     "id": "e62",
+     "t": "pipe",
+     "x": 696,
+     "y": 119,
+     "w": 4,
+     "h": 178,
+     "fill": "#5A5F65",
+     "nm": "Подвод ГЦ-1",
+     "st": [
+      {
+       "c": {
+        "m": "any",
+        "l": [
+         {
+          "tag": "gcu:valve.13.repair",
+          "op": "1",
+          "v": ""
+         },
+         {
+          "tag": "gcu:set.repair.2",
+          "op": "1",
+          "v": ""
+         }
+        ]
+       },
+       "p": {
+        "fill": "#8F949A"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e63",
+     "t": "pipe",
+     "x": 690,
+     "y": 119,
+     "w": 10,
+     "h": 4,
+     "fill": "#5A5F65",
+     "st": [
+      {
+       "c": {
+        "m": "any",
+        "l": [
+         {
+          "tag": "gcu:valve.13.repair",
+          "op": "1",
+          "v": ""
+         },
+         {
+          "tag": "gcu:set.repair.2",
+          "op": "1",
+          "v": ""
+         }
+        ]
+       },
+       "p": {
+        "fill": "#8F949A"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e64",
+     "t": "cyclone",
+     "x": 646,
+     "y": 111,
+     "w": 48,
+     "h": 89,
+     "src": "gcu",
+     "n": 1,
+     "nm": "ГЦ-1"
+    },
+    {
+     "id": "e65",
+     "t": "valve",
+     "x": 682,
+     "y": 226,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 13,
+     "bp": "left",
+     "nm": "Задвижка ГЦ-1"
+    },
+    {
+     "id": "e66",
+     "t": "pipe",
+     "x": 729,
+     "y": 94,
+     "w": 2,
+     "h": 17,
+     "fill": "#5A5F65"
+    },
+    {
+     "id": "e67",
+     "t": "pipe",
+     "x": 756,
+     "y": 119,
+     "w": 4,
+     "h": 178,
+     "fill": "#5A5F65",
+     "nm": "Подвод ГЦ-2",
+     "st": [
+      {
+       "c": {
+        "m": "any",
+        "l": [
+         {
+          "tag": "gcu:valve.14.repair",
+          "op": "1",
+          "v": ""
+         },
+         {
+          "tag": "gcu:set.repair.3",
+          "op": "1",
+          "v": ""
+         }
+        ]
+       },
+       "p": {
+        "fill": "#8F949A"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e68",
+     "t": "pipe",
+     "x": 750,
+     "y": 119,
+     "w": 10,
+     "h": 4,
+     "fill": "#5A5F65",
+     "st": [
+      {
+       "c": {
+        "m": "any",
+        "l": [
+         {
+          "tag": "gcu:valve.14.repair",
+          "op": "1",
+          "v": ""
+         },
+         {
+          "tag": "gcu:set.repair.3",
+          "op": "1",
+          "v": ""
+         }
+        ]
+       },
+       "p": {
+        "fill": "#8F949A"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e69",
+     "t": "cyclone",
+     "x": 706,
+     "y": 111,
+     "w": 48,
+     "h": 89,
+     "src": "gcu",
+     "n": 2,
+     "nm": "ГЦ-2"
+    },
+    {
+     "id": "e70",
+     "t": "valve",
+     "x": 742,
+     "y": 226,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 14,
+     "bp": "left",
+     "nm": "Задвижка ГЦ-2"
+    },
+    {
+     "id": "e71",
+     "t": "pipe",
+     "x": 789,
+     "y": 94,
+     "w": 2,
+     "h": 17,
+     "fill": "#5A5F65"
+    },
+    {
+     "id": "e72",
+     "t": "pipe",
+     "x": 816,
+     "y": 119,
+     "w": 4,
+     "h": 178,
+     "fill": "#5A5F65",
+     "nm": "Подвод ГЦ-3",
+     "st": [
+      {
+       "c": {
+        "m": "any",
+        "l": [
+         {
+          "tag": "gcu:valve.15.repair",
+          "op": "1",
+          "v": ""
+         },
+         {
+          "tag": "gcu:set.repair.4",
+          "op": "1",
+          "v": ""
+         }
+        ]
+       },
+       "p": {
+        "fill": "#8F949A"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e73",
+     "t": "pipe",
+     "x": 810,
+     "y": 119,
+     "w": 10,
+     "h": 4,
+     "fill": "#5A5F65",
+     "st": [
+      {
+       "c": {
+        "m": "any",
+        "l": [
+         {
+          "tag": "gcu:valve.15.repair",
+          "op": "1",
+          "v": ""
+         },
+         {
+          "tag": "gcu:set.repair.4",
+          "op": "1",
+          "v": ""
+         }
+        ]
+       },
+       "p": {
+        "fill": "#8F949A"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e74",
+     "t": "cyclone",
+     "x": 766,
+     "y": 111,
+     "w": 48,
+     "h": 89,
+     "src": "gcu",
+     "n": 3,
+     "nm": "ГЦ-3"
+    },
+    {
+     "id": "e75",
+     "t": "valve",
+     "x": 802,
+     "y": 226,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 15,
+     "bp": "left",
+     "nm": "Задвижка ГЦ-3"
+    },
+    {
+     "id": "e76",
+     "t": "pipe",
+     "x": 849,
+     "y": 94,
+     "w": 2,
+     "h": 17,
+     "fill": "#5A5F65"
+    },
+    {
+     "id": "e77",
+     "t": "pipe",
+     "x": 876,
+     "y": 119,
+     "w": 4,
+     "h": 178,
+     "fill": "#5A5F65",
+     "nm": "Подвод ГЦ-4",
+     "st": [
+      {
+       "c": {
+        "m": "any",
+        "l": [
+         {
+          "tag": "gcu:valve.16.repair",
+          "op": "1",
+          "v": ""
+         },
+         {
+          "tag": "gcu:set.repair.5",
+          "op": "1",
+          "v": ""
+         }
+        ]
+       },
+       "p": {
+        "fill": "#8F949A"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e78",
+     "t": "pipe",
+     "x": 870,
+     "y": 119,
+     "w": 10,
+     "h": 4,
+     "fill": "#5A5F65",
+     "st": [
+      {
+       "c": {
+        "m": "any",
+        "l": [
+         {
+          "tag": "gcu:valve.16.repair",
+          "op": "1",
+          "v": ""
+         },
+         {
+          "tag": "gcu:set.repair.5",
+          "op": "1",
+          "v": ""
+         }
+        ]
+       },
+       "p": {
+        "fill": "#8F949A"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e79",
+     "t": "cyclone",
+     "x": 826,
+     "y": 111,
+     "w": 48,
+     "h": 89,
+     "src": "gcu",
+     "n": 4,
+     "nm": "ГЦ-4"
+    },
+    {
+     "id": "e80",
+     "t": "valve",
+     "x": 862,
+     "y": 226,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 16,
+     "bp": "left",
+     "nm": "Задвижка ГЦ-4"
+    },
+    {
+     "id": "e81",
+     "t": "pipe",
+     "x": 909,
+     "y": 94,
+     "w": 2,
+     "h": 17,
+     "fill": "#5A5F65"
+    },
+    {
+     "id": "e82",
+     "t": "pipe",
+     "x": 936,
+     "y": 119,
+     "w": 4,
+     "h": 178,
+     "fill": "#5A5F65",
+     "nm": "Подвод ГЦ-5",
+     "st": [
+      {
+       "c": {
+        "m": "any",
+        "l": [
+         {
+          "tag": "gcu:valve.17.repair",
+          "op": "1",
+          "v": ""
+         },
+         {
+          "tag": "gcu:set.repair.6",
+          "op": "1",
+          "v": ""
+         }
+        ]
+       },
+       "p": {
+        "fill": "#8F949A"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e83",
+     "t": "pipe",
+     "x": 930,
+     "y": 119,
+     "w": 10,
+     "h": 4,
+     "fill": "#5A5F65",
+     "st": [
+      {
+       "c": {
+        "m": "any",
+        "l": [
+         {
+          "tag": "gcu:valve.17.repair",
+          "op": "1",
+          "v": ""
+         },
+         {
+          "tag": "gcu:set.repair.6",
+          "op": "1",
+          "v": ""
+         }
+        ]
+       },
+       "p": {
+        "fill": "#8F949A"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e84",
+     "t": "cyclone",
+     "x": 886,
+     "y": 111,
+     "w": 48,
+     "h": 89,
+     "src": "gcu",
+     "n": 5,
+     "nm": "ГЦ-5"
+    },
+    {
+     "id": "e85",
+     "t": "valve",
+     "x": 922,
+     "y": 226,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 17,
+     "bp": "left",
+     "nm": "Задвижка ГЦ-5"
+    },
+    {
+     "id": "e86",
+     "t": "pipe",
+     "x": 969,
+     "y": 94,
+     "w": 2,
+     "h": 17,
+     "fill": "#5A5F65"
+    },
+    {
+     "id": "e87",
+     "t": "pipe",
+     "x": 996,
+     "y": 119,
+     "w": 4,
+     "h": 178,
+     "fill": "#5A5F65",
+     "nm": "Подвод ГЦ-6",
+     "st": [
+      {
+       "c": {
+        "m": "any",
+        "l": [
+         {
+          "tag": "gcu:valve.18.repair",
+          "op": "1",
+          "v": ""
+         },
+         {
+          "tag": "gcu:set.repair.7",
+          "op": "1",
+          "v": ""
+         }
+        ]
+       },
+       "p": {
+        "fill": "#8F949A"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e88",
+     "t": "pipe",
+     "x": 990,
+     "y": 119,
+     "w": 10,
+     "h": 4,
+     "fill": "#5A5F65",
+     "st": [
+      {
+       "c": {
+        "m": "any",
+        "l": [
+         {
+          "tag": "gcu:valve.18.repair",
+          "op": "1",
+          "v": ""
+         },
+         {
+          "tag": "gcu:set.repair.7",
+          "op": "1",
+          "v": ""
+         }
+        ]
+       },
+       "p": {
+        "fill": "#8F949A"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e89",
+     "t": "cyclone",
+     "x": 946,
+     "y": 111,
+     "w": 48,
+     "h": 89,
+     "src": "gcu",
+     "n": 6,
+     "nm": "ГЦ-6"
+    },
+    {
+     "id": "e90",
+     "t": "valve",
+     "x": 982,
+     "y": 226,
+     "w": 32,
+     "h": 48,
+     "dir": "v",
+     "src": "gcu",
+     "n": 18,
+     "bp": "left",
+     "nm": "Задвижка ГЦ-6"
+    },
+    {
+     "id": "e91",
+     "t": "valuebox",
+     "x": 480,
+     "y": 210,
+     "w": 130,
+     "h": 60,
+     "ti": "PT-1 · давление",
+     "tag": "gcu:press",
+     "dec": 2,
+     "unit": "бар",
+     "ok": "gcu:st.pressOk",
+     "nm": "PT-1"
+    },
+    {
+     "id": "e92",
+     "t": "line",
+     "x": 610,
+     "y": 240,
+     "x2": 652,
+     "y2": 240,
+     "w": 0,
+     "h": 0,
+     "color": "#4B5157",
+     "lw": 2
+    },
+    {
+     "id": "e93",
+     "t": "line",
+     "x": 652,
+     "y": 240,
+     "x2": 652,
+     "y2": 297,
+     "w": 0,
+     "h": 0,
+     "color": "#4B5157",
+     "lw": 2
+    },
+    {
+     "id": "e94",
+     "t": "rect",
+     "x": 656,
+     "y": 330,
+     "w": 356,
+     "h": 370,
+     "r": 4,
+     "fill": "#F4F4F1",
+     "stroke": "#B3B6B0",
+     "lw": 1,
+     "nm": "Панель управления"
+    },
+    {
+     "id": "e95",
+     "t": "text",
+     "x": 668,
+     "y": 350,
+     "w": 56,
+     "h": 20,
+     "tx": "Режим",
+     "size": 16,
+     "color": "#1D2023",
+     "align": "left",
+     "bold": true
+    },
+    {
+     "id": "e96",
+     "t": "button",
+     "x": 760,
+     "y": 338,
+     "w": 120,
+     "h": 44,
+     "tx": "РУЧНОЙ",
+     "style": "blue",
+     "ac": {
+      "m": "all",
+      "l": [
+       {
+        "tag": "gcu:st.auto",
+        "op": "0",
+        "v": ""
+       }
+      ]
+     },
+     "en": {
+      "m": "all",
+      "l": [
+       {
+        "tag": "gcu:st.auto",
+        "op": "ok",
+        "v": ""
+       }
+      ]
+     },
+     "act": {
+      "a": "gcu",
+      "v": 11,
+      "cf": "Перевести ГЦУ в РУЧНОЙ режим?",
+      "cm": "Алгоритм перестанет управлять насосами и циклонами."
+     }
+    },
+    {
+     "id": "e97",
+     "t": "button",
+     "x": 884,
+     "y": 338,
+     "w": 120,
+     "h": 44,
+     "tx": "АВТОМАТ",
+     "style": "green",
+     "ac": {
+      "m": "all",
+      "l": [
+       {
+        "tag": "gcu:st.auto",
+        "op": "1",
+        "v": ""
+       }
+      ]
+     },
+     "en": {
+      "m": "any",
+      "l": [
+       {
+        "tag": "gcu:st.auto",
+        "op": "1",
+        "v": ""
+       },
+       {
+        "tag": "gcu:st.canAuto",
+        "op": "1",
+        "v": ""
+       }
+      ]
+     },
+     "why": "Нет условий для перевода в АВТОМАТ (задвижки в дистанции, нет аварий)",
+     "act": {
+      "a": "gcu",
+      "v": 10,
+      "cf": "Перевести ГЦУ в АВТОМАТ?",
+      "cm": "Команды оператора задвижкам и ПЧ будут блокированы."
+     }
+    },
+    {
+     "id": "e98",
+     "t": "text",
+     "x": 668,
+     "y": 402,
+     "w": 96,
+     "h": 20,
+     "tx": "Программа",
+     "size": 16,
+     "color": "#1D2023",
+     "align": "left",
+     "bold": true
+    },
+    {
+     "id": "e99",
+     "t": "button",
+     "x": 762,
+     "y": 390,
+     "w": 76,
+     "h": 44,
+     "tx": "ПУСК",
+     "style": "green",
+     "ac": {
+      "m": "all",
+      "l": [
+       {
+        "tag": "gcu:st.run",
+        "op": "1",
+        "v": ""
+       }
+      ]
+     },
+     "en": {
+      "m": "all",
+      "l": [
+       {
+        "tag": "gcu:st.auto",
+        "op": "1",
+        "v": ""
+       }
+      ]
+     },
+     "why": "Пуск программы — только в АВТОМАТЕ",
+     "act": {
+      "a": "gcu",
+      "v": 1,
+      "cf": "Запустить программу ГЦУ?",
+      "cm": "Насос и гидроциклоны будут включены по алгоритму."
+     }
+    },
+    {
+     "id": "e100",
+     "t": "button",
+     "x": 842,
+     "y": 390,
+     "w": 76,
+     "h": 44,
+     "tx": "СТОП",
+     "en": {
+      "m": "all",
+      "l": [
+       {
+        "tag": "gcu:st.auto",
+        "op": "ok",
+        "v": ""
+       }
+      ]
+     },
+     "act": {
+      "a": "gcu",
+      "v": 2,
+      "cf": "Остановить программу ГЦУ?",
+      "cm": "Насос будет остановлен с промывкой и дренажом."
+     }
+    },
+    {
+     "id": "e101",
+     "t": "button",
+     "x": 922,
+     "y": 390,
+     "w": 82,
+     "h": 44,
+     "tx": "СБРОС",
+     "en": {
+      "m": "all",
+      "l": [
+       {
+        "tag": "gcu:st.auto",
+        "op": "ok",
+        "v": ""
+       }
+      ]
+     },
+     "act": {
+      "a": "gcu",
+      "v": 4,
+      "msg": "Сброс аварий отправлен"
+     }
+    },
+    {
+     "id": "e102",
+     "t": "line",
+     "x": 666,
+     "y": 442,
+     "x2": 1002,
+     "y2": 442,
+     "w": 0,
+     "h": 0,
+     "color": "#D3D5D0",
+     "lw": 1
+    },
+    {
+     "id": "e103",
+     "t": "text",
+     "x": 668,
+     "y": 447,
+     "w": 200,
+     "h": 20,
+     "tx": "Давление → насос",
+     "size": 15,
+     "color": "#1D2023",
+     "align": "left",
+     "bold": true
+    },
+    {
+     "id": "e104",
+     "t": "text",
+     "x": 668,
+     "y": 470,
+     "w": 170,
+     "h": 20,
+     "tx": "Давление",
+     "size": 15,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": false
+    },
+    {
+     "id": "e105",
+     "t": "value",
+     "x": 870,
+     "y": 470,
+     "w": 130,
+     "h": 20,
+     "tag": "gcu:press",
+     "dec": 2,
+     "unit": "бар",
+     "size": 16,
+     "align": "right",
+     "nm": "Давление"
+    },
+    {
+     "id": "e106",
+     "t": "text",
+     "x": 668,
+     "y": 496,
+     "w": 120,
+     "h": 20,
+     "tx": "Задание",
+     "size": 15,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": false
+    },
+    {
+     "id": "e107",
+     "t": "input",
+     "x": 878,
+     "y": 494,
+     "w": 122,
+     "h": 26,
+     "tag": "gcuset:pressSP",
+     "dec": 2,
+     "unit": "бар",
+     "min": 0.1,
+     "max": 2.5,
+     "ti": "Уставка давления, бар",
+     "nm": "Уставка давления, бар"
+    },
+    {
+     "id": "e108",
+     "t": "text",
+     "x": 668,
+     "y": 522,
+     "w": 170,
+     "h": 20,
+     "tx": "Скорость насоса",
+     "size": 15,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": false
+    },
+    {
+     "id": "e109",
+     "t": "value",
+     "x": 870,
+     "y": 522,
+     "w": 130,
+     "h": 20,
+     "tag": "gcu:speedOut",
+     "dec": 1,
+     "unit": "%",
+     "size": 16,
+     "align": "right",
+     "nm": "Скорость насоса"
+    },
+    {
+     "id": "e110",
+     "t": "line",
+     "x": 666,
+     "y": 548,
+     "x2": 1002,
+     "y2": 548,
+     "w": 0,
+     "h": 0,
+     "color": "#D3D5D0",
+     "lw": 1
+    },
+    {
+     "id": "e111",
+     "t": "text",
+     "x": 668,
+     "y": 553,
+     "w": 240,
+     "h": 20,
+     "tx": "Уровень → гидроциклоны",
+     "size": 15,
+     "color": "#1D2023",
+     "align": "left",
+     "bold": true
+    },
+    {
+     "id": "e112",
+     "t": "text",
+     "x": 668,
+     "y": 576,
+     "w": 170,
+     "h": 20,
+     "tx": "Уровень",
+     "size": 15,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": false
+    },
+    {
+     "id": "e113",
+     "t": "value",
+     "x": 870,
+     "y": 576,
+     "w": 130,
+     "h": 20,
+     "tag": "gcu:level",
+     "dec": 1,
+     "unit": "%",
+     "size": 16,
+     "align": "right",
+     "nm": "Уровень"
+    },
+    {
+     "id": "e114",
+     "t": "text",
+     "x": 668,
+     "y": 602,
+     "w": 120,
+     "h": 20,
+     "tx": "Уставка",
+     "size": 15,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": false
+    },
+    {
+     "id": "e115",
+     "t": "input",
+     "x": 878,
+     "y": 600,
+     "w": 122,
+     "h": 26,
+     "tag": "gcuset:levelSP",
+     "dec": 1,
+     "unit": "%",
+     "min": 5,
+     "max": 95,
+     "ti": "Уставка уровня, %",
+     "nm": "Уставка уровня, %"
+    },
+    {
+     "id": "e116",
+     "t": "text",
+     "x": 668,
+     "y": 628,
+     "w": 120,
+     "h": 20,
+     "tx": "Зона ±",
+     "size": 15,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": false
+    },
+    {
+     "id": "e117",
+     "t": "input",
+     "x": 878,
+     "y": 626,
+     "w": 122,
+     "h": 26,
+     "tag": "gcuset:hyst",
+     "dec": 1,
+     "unit": "%",
+     "min": 0.5,
+     "max": 20,
+     "ti": "Зона нечувствительности ±, %",
+     "nm": "Зона нечувствительности ±, %"
+    },
+    {
+     "id": "e118",
+     "t": "text",
+     "x": 668,
+     "y": 654,
+     "w": 170,
+     "h": 20,
+     "tx": "Открыто циклонов",
+     "size": 15,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": false
+    },
+    {
+     "id": "e119",
+     "t": "value",
+     "x": 950,
+     "y": 654,
+     "w": 50,
+     "h": 20,
+     "tag": "gcu:set.nMax",
+     "pre": "из ",
+     "dec": 0,
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "id": "e120",
+     "t": "value",
+     "x": 911,
+     "y": 654,
+     "w": 50,
+     "h": 20,
+     "tag": "gcu:nCyc",
+     "dec": 0,
+     "size": 16,
+     "align": "right"
+    },
+    {
+     "id": "e121",
+     "t": "rect",
+     "x": 664,
+     "y": 676,
+     "w": 340,
+     "h": 20,
+     "r": 3,
+     "fill": "#FFFFFF",
+     "stroke": "#D3D5D0",
+     "lw": 1
+    },
+    {
+     "id": "e122",
+     "t": "value",
+     "x": 672,
+     "y": 677,
+     "w": 150,
+     "h": 20,
+     "tag": "gcu:activePump",
+     "fm": "map",
+     "map": [
+      {
+       "v": 0,
+       "tx": "—"
+      },
+      {
+       "v": 1,
+       "tx": "Н-1"
+      },
+      {
+       "v": 2,
+       "tx": "Н-2"
+      }
+     ],
+     "pre": "Рабочий: ",
+     "size": 13,
+     "align": "left",
+     "nm": "Рабочий насос"
+    },
+    {
+     "id": "e123",
+     "t": "state",
+     "x": 824,
+     "y": 678,
+     "w": 172,
+     "h": 16,
+     "r": 3,
+     "tag": "gcu:st.permit",
+     "size": 12,
+     "ndt": "МШР: —",
+     "nm": "Разрешение МШР",
+     "sts": [
+      {
+       "v": 1,
+       "tx": "МШР: РАЗРЕШЕНО",
+       "f": "#1E8A3C",
+       "c": "#FFFFFF"
+      },
+      {
+       "v": 0,
+       "tx": "МШР: ЗАПРЕЩЕНО",
+       "f": "#C42B2B",
+       "c": "#FFFFFF"
+      }
+     ]
+    },
+    {
+     "id": "e124",
+     "t": "rect",
+     "x": 262,
+     "y": 98,
+     "w": 206,
+     "h": 84,
+     "r": 4,
+     "fill": "#F4F4F1",
+     "stroke": "#B3B6B0",
+     "lw": 1,
+     "nm": "Воздух ПМУ"
+    },
+    {
+     "id": "e125",
+     "t": "text",
+     "x": 272,
+     "y": 103,
+     "w": 190,
+     "h": 20,
+     "tx": "Воздух пневматики ПМУ",
+     "size": 13,
+     "color": "#1D2023",
+     "align": "left",
+     "bold": true
+    },
+    {
+     "id": "e126",
+     "t": "text",
+     "x": 272,
+     "y": 128,
+     "w": 110,
+     "h": 20,
+     "tx": "ПМУ насосов",
+     "size": 14,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": false
+    },
+    {
+     "id": "e127",
+     "t": "value",
+     "x": 378,
+     "y": 128,
+     "w": 80,
+     "h": 20,
+     "tag": "gcu:air.2.p",
+     "ok": "gcu:air.2.ok",
+     "dec": 1,
+     "unit": "бар",
+     "size": 15,
+     "align": "right",
+     "r": 0
+    },
+    {
+     "id": "e128",
+     "t": "line",
+     "x": 270,
+     "y": 152,
+     "x2": 460,
+     "y2": 152,
+     "w": 0,
+     "h": 0,
+     "color": "#D3D5D0",
+     "lw": 1
+    },
+    {
+     "id": "e129",
+     "t": "text",
+     "x": 272,
+     "y": 156,
+     "w": 110,
+     "h": 20,
+     "tx": "ПМУ циклонов",
+     "size": 14,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": false
+    },
+    {
+     "id": "e130",
+     "t": "value",
+     "x": 378,
+     "y": 156,
+     "w": 80,
+     "h": 20,
+     "tag": "gcu:air.1.p",
+     "ok": "gcu:air.1.ok",
+     "dec": 1,
+     "unit": "бар",
+     "size": 15,
+     "align": "right",
+     "r": 0
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "name": "Образец: свои данные (DB200)",
+   "w": 1024,
+   "h": 664,
+   "ox": 0,
+   "oy": 48,
+   "bg": "#DFE0DC",
+   "demoChip": [
+    660,
+    62
+   ],
+   "els": [
+    {
+     "id": "e1001",
+     "t": "text",
+     "x": 20,
+     "y": 60,
+     "w": 600,
+     "h": 28,
+     "tx": "Образец: свои данные из DB200 «MY_DB» (только для изучения)",
+     "size": 16,
+     "bold": true,
+     "align": "left",
+     "color": "#1D2023"
+    },
+    {
+     "id": "e1002",
+     "t": "rect",
+     "x": 20,
+     "y": 100,
+     "w": 600,
+     "h": 300,
+     "r": 4,
+     "fill": "#F4F4F1",
+     "stroke": "#B3B6B0",
+     "lw": 1,
+     "nm": "Панель моторов"
+    },
+    {
+     "id": "e1003",
+     "t": "text",
+     "x": 40,
+     "y": 108,
+     "w": 100,
+     "h": 20,
+     "tx": "Мотор",
+     "size": 13,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": true
+    },
+    {
+     "id": "e1004",
+     "t": "text",
+     "x": 150,
+     "y": 108,
+     "w": 100,
+     "h": 20,
+     "tx": "Состояние",
+     "size": 13,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": true
+    },
+    {
+     "id": "e1005",
+     "t": "text",
+     "x": 330,
+     "y": 108,
+     "w": 100,
+     "h": 20,
+     "tx": "Скорость",
+     "size": 13,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": true
+    },
+    {
+     "id": "e1006",
+     "t": "text",
+     "x": 430,
+     "y": 108,
+     "w": 100,
+     "h": 20,
+     "tx": "Авария",
+     "size": 13,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": true
+    },
+    {
+     "id": "e1007",
+     "t": "text",
+     "x": 500,
+     "y": 108,
+     "w": 100,
+     "h": 20,
+     "tx": "",
+     "size": 13,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": true
+    },
+    {
+     "id": "e1008",
+     "t": "group",
+     "x": 30,
+     "y": 140,
+     "w": 580,
+     "h": 72,
+     "nm": "Мотор 1",
+     "els": [
+      {
+       "id": "e1009",
+       "t": "pump",
+       "x": 0,
+       "y": 0,
+       "w": 60,
+       "h": 60,
+       "src": "tag",
+       "vt": "MY_DB.Motor[1].State",
+       "lb": "M1",
+       "act": {
+        "a": "popup",
+        "id": "pm",
+        "p": "1"
+       }
+      },
+      {
+       "id": "e1010",
+       "t": "state",
+       "x": 110,
+       "y": 14,
+       "w": 170,
+       "h": 32,
+       "tag": "MY_DB.Motor[1].State",
+       "size": 15,
+       "sts": [
+        {
+         "v": 0,
+         "tx": "СТОИТ",
+         "f": "#C4C7CB",
+         "c": "#1D2023"
+        },
+        {
+         "v": 1,
+         "tx": "ГОТОВ",
+         "f": "#2F6FB8",
+         "c": "#FFFFFF"
+        },
+        {
+         "v": 2,
+         "tx": "РАБОТА",
+         "f": "#1E8A3C",
+         "c": "#FFFFFF"
+        },
+        {
+         "v": 3,
+         "tx": "АВАРИЯ",
+         "f": "#C42B2B",
+         "c": "#FFFFFF",
+         "bl": true
+        },
+        {
+         "v": 4,
+         "tx": "РЕМОНТ",
+         "f": "#ECEDEA",
+         "c": "#1D2023"
+        },
+        {
+         "v": 5,
+         "tx": "ПУСК / ОСТАНОВ",
+         "f": "#E0A100",
+         "c": "#1D2023"
+        }
+       ]
+      },
+      {
+       "id": "e1011",
+       "t": "value",
+       "x": 300,
+       "y": 14,
+       "w": 90,
+       "h": 32,
+       "tag": "MY_DB.Motor[1].Speed",
+       "dec": 1,
+       "unit": "%",
+       "size": 18,
+       "fill": "#FFFFFF",
+       "stroke": "#B3B6B0"
+      },
+      {
+       "id": "e1012",
+       "t": "lamp",
+       "x": 410,
+       "y": 20,
+       "w": 20,
+       "h": 20,
+       "tag": "MY_DB.Motor[1].Fault",
+       "on": "#C42B2B",
+       "off": "#FFFFFF",
+       "bl": true
+      },
+      {
+       "id": "e1013",
+       "t": "button",
+       "x": 470,
+       "y": 12,
+       "w": 100,
+       "h": 36,
+       "tx": "Управление",
+       "size": 14,
+       "act": {
+        "a": "popup",
+        "id": "pm",
+        "p": "1"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e1014",
+     "t": "group",
+     "x": 30,
+     "y": 224,
+     "w": 580,
+     "h": 72,
+     "nm": "Мотор 2",
+     "els": [
+      {
+       "id": "e1015",
+       "t": "pump",
+       "x": 0,
+       "y": 0,
+       "w": 60,
+       "h": 60,
+       "src": "tag",
+       "vt": "MY_DB.Motor[2].State",
+       "lb": "M2",
+       "act": {
+        "a": "popup",
+        "id": "pm",
+        "p": "2"
+       }
+      },
+      {
+       "id": "e1016",
+       "t": "state",
+       "x": 110,
+       "y": 14,
+       "w": 170,
+       "h": 32,
+       "tag": "MY_DB.Motor[2].State",
+       "size": 15,
+       "sts": [
+        {
+         "v": 0,
+         "tx": "СТОИТ",
+         "f": "#C4C7CB",
+         "c": "#1D2023"
+        },
+        {
+         "v": 1,
+         "tx": "ГОТОВ",
+         "f": "#2F6FB8",
+         "c": "#FFFFFF"
+        },
+        {
+         "v": 2,
+         "tx": "РАБОТА",
+         "f": "#1E8A3C",
+         "c": "#FFFFFF"
+        },
+        {
+         "v": 3,
+         "tx": "АВАРИЯ",
+         "f": "#C42B2B",
+         "c": "#FFFFFF",
+         "bl": true
+        },
+        {
+         "v": 4,
+         "tx": "РЕМОНТ",
+         "f": "#ECEDEA",
+         "c": "#1D2023"
+        },
+        {
+         "v": 5,
+         "tx": "ПУСК / ОСТАНОВ",
+         "f": "#E0A100",
+         "c": "#1D2023"
+        }
+       ]
+      },
+      {
+       "id": "e1017",
+       "t": "value",
+       "x": 300,
+       "y": 14,
+       "w": 90,
+       "h": 32,
+       "tag": "MY_DB.Motor[2].Speed",
+       "dec": 1,
+       "unit": "%",
+       "size": 18,
+       "fill": "#FFFFFF",
+       "stroke": "#B3B6B0"
+      },
+      {
+       "id": "e1018",
+       "t": "lamp",
+       "x": 410,
+       "y": 20,
+       "w": 20,
+       "h": 20,
+       "tag": "MY_DB.Motor[2].Fault",
+       "on": "#C42B2B",
+       "off": "#FFFFFF",
+       "bl": true
+      },
+      {
+       "id": "e1019",
+       "t": "button",
+       "x": 470,
+       "y": 12,
+       "w": 100,
+       "h": 36,
+       "tx": "Управление",
+       "size": 14,
+       "act": {
+        "a": "popup",
+        "id": "pm",
+        "p": "2"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e1020",
+     "t": "group",
+     "x": 30,
+     "y": 308,
+     "w": 580,
+     "h": 72,
+     "nm": "Мотор 3",
+     "els": [
+      {
+       "id": "e1021",
+       "t": "pump",
+       "x": 0,
+       "y": 0,
+       "w": 60,
+       "h": 60,
+       "src": "tag",
+       "vt": "MY_DB.Motor[3].State",
+       "lb": "M3",
+       "act": {
+        "a": "popup",
+        "id": "pm",
+        "p": "3"
+       }
+      },
+      {
+       "id": "e1022",
+       "t": "state",
+       "x": 110,
+       "y": 14,
+       "w": 170,
+       "h": 32,
+       "tag": "MY_DB.Motor[3].State",
+       "size": 15,
+       "sts": [
+        {
+         "v": 0,
+         "tx": "СТОИТ",
+         "f": "#C4C7CB",
+         "c": "#1D2023"
+        },
+        {
+         "v": 1,
+         "tx": "ГОТОВ",
+         "f": "#2F6FB8",
+         "c": "#FFFFFF"
+        },
+        {
+         "v": 2,
+         "tx": "РАБОТА",
+         "f": "#1E8A3C",
+         "c": "#FFFFFF"
+        },
+        {
+         "v": 3,
+         "tx": "АВАРИЯ",
+         "f": "#C42B2B",
+         "c": "#FFFFFF",
+         "bl": true
+        },
+        {
+         "v": 4,
+         "tx": "РЕМОНТ",
+         "f": "#ECEDEA",
+         "c": "#1D2023"
+        },
+        {
+         "v": 5,
+         "tx": "ПУСК / ОСТАНОВ",
+         "f": "#E0A100",
+         "c": "#1D2023"
+        }
+       ]
+      },
+      {
+       "id": "e1023",
+       "t": "value",
+       "x": 300,
+       "y": 14,
+       "w": 90,
+       "h": 32,
+       "tag": "MY_DB.Motor[3].Speed",
+       "dec": 1,
+       "unit": "%",
+       "size": 18,
+       "fill": "#FFFFFF",
+       "stroke": "#B3B6B0"
+      },
+      {
+       "id": "e1024",
+       "t": "lamp",
+       "x": 410,
+       "y": 20,
+       "w": 20,
+       "h": 20,
+       "tag": "MY_DB.Motor[3].Fault",
+       "on": "#C42B2B",
+       "off": "#FFFFFF",
+       "bl": true
+      },
+      {
+       "id": "e1025",
+       "t": "button",
+       "x": 470,
+       "y": 12,
+       "w": 100,
+       "h": 36,
+       "tx": "Управление",
+       "size": 14,
+       "act": {
+        "a": "popup",
+        "id": "pm",
+        "p": "3"
+       }
+      }
+     ]
+    },
+    {
+     "id": "e1026",
+     "t": "text",
+     "x": 660,
+     "y": 100,
+     "w": 120,
+     "h": 20,
+     "tx": "Уровень",
+     "size": 14,
+     "color": "#4B5157",
+     "align": "left",
+     "bold": true
+    },
+    {
+     "id": "e1027",
+     "t": "bar",
+     "x": 660,
+     "y": 125,
+     "w": 50,
+     "h": 275,
+     "tag": "MY_DB.Level",
+     "min": 0,
+     "max": 100,
+     "fill": "#3F7FB4",
+     "sv": false
+    },
+    {
+     "id": "e1028",
+     "t": "value",
+     "x": 720,
+     "y": 250,
+     "w": 90,
+     "h": 30,
+     "tag": "MY_DB.Level",
+     "dec": 1,
+     "unit": "%",
+     "size": 20,
+     "align": "left"
+    },
+    {
+     "id": "e1029",
+     "t": "trend",
+     "x": 20,
+     "y": 420,
+     "w": 600,
+     "h": 230,
+     "min": 0,
+     "max": 100,
+     "span": 300,
+     "dec": 0,
+     "nm": "Тренд",
+     "pens": [
+      {
+       "tag": "MY_DB.Motor[1].Speed",
+       "c": "#2F6FB8",
+       "n": "M1 скорость"
+      },
+      {
+       "tag": "MY_DB.Level",
+       "c": "#3F7FB4",
+       "n": "Уровень"
+      }
+     ]
+    },
+    {
+     "id": "e1030",
+     "t": "alarms",
+     "x": 640,
+     "y": 420,
+     "w": 370,
+     "h": 140,
+     "empty": "Аварий моторов нет",
+     "items": [
+      {
+       "tag": "MY_DB.Motor[1].Fault",
+       "tx": "Мотор 1: авария",
+       "c": "A"
+      },
+      {
+       "tag": "MY_DB.Motor[2].Fault",
+       "tx": "Мотор 2: авария",
+       "c": "A"
+      },
+      {
+       "tag": "MY_DB.Motor[3].Fault",
+       "tx": "Мотор 3: авария",
+       "c": "A"
+      },
+      {
+       "tag": "MY_DB.Motor[1].Local",
+       "tx": "Мотор 1: местное управление",
+       "c": "W"
+      },
+      {
+       "tag": "MY_DB.Motor[2].Local",
+       "tx": "Мотор 2: местное управление",
+       "c": "W"
+      },
+      {
+       "tag": "MY_DB.Motor[3].Local",
+       "tx": "Мотор 3: местное управление",
+       "c": "W"
+      }
+     ]
+    },
+    {
+     "id": "e1031",
+     "t": "text",
+     "x": 640,
+     "y": 576,
+     "w": 360,
+     "h": 20,
+     "tx": "Толчок (действует, пока нажата)",
+     "size": 13,
+     "color": "#4B5157",
+     "align": "left"
+    },
+    {
+     "id": "e1032",
+     "t": "hold",
+     "x": 640,
+     "y": 600,
+     "w": 170,
+     "h": 56,
+     "tx": "◀ НАЗАД",
+     "style": "blue",
+     "tag": "MY_DB.Jog",
+     "v": 2,
+     "rv": 0,
+     "ms": 200,
+     "alive": "MY_DB.Alive"
+    },
+    {
+     "id": "e1033",
+     "t": "hold",
+     "x": 830,
+     "y": 600,
+     "w": 170,
+     "h": 56,
+     "tx": "ВПЕРЁД ▶",
+     "style": "green",
+     "tag": "MY_DB.Jog",
+     "v": 1,
+     "rv": 0,
+     "ms": 200,
+     "alive": "MY_DB.Alive"
+    },
+    {
+     "id": "e1034",
+     "t": "clock",
+     "x": 840,
+     "y": 60,
+     "w": 170,
+     "h": 28,
+     "fm": "datetime",
+     "size": 15,
+     "align": "right"
+    }
+   ]
+  }
+ ],
+ "pops": [
+  {
+   "id": "pm",
+   "name": "Мотор (окно управления)",
+   "ti": "Мотор # — управление",
+   "w": 420,
+   "h": 320,
+   "els": [
+    {
+     "id": "e1035",
+     "t": "state",
+     "x": 16,
+     "y": 58,
+     "w": 388,
+     "h": 40,
+     "tag": "MY_DB.Motor[#].State",
+     "size": 18,
+     "sts": [
+      {
+       "v": 0,
+       "tx": "СТОИТ",
+       "f": "#C4C7CB",
+       "c": "#1D2023"
+      },
+      {
+       "v": 1,
+       "tx": "ГОТОВ",
+       "f": "#2F6FB8",
+       "c": "#FFFFFF"
+      },
+      {
+       "v": 2,
+       "tx": "РАБОТА",
+       "f": "#1E8A3C",
+       "c": "#FFFFFF"
+      },
+      {
+       "v": 3,
+       "tx": "АВАРИЯ",
+       "f": "#C42B2B",
+       "c": "#FFFFFF",
+       "bl": true
+      },
+      {
+       "v": 4,
+       "tx": "РЕМОНТ",
+       "f": "#ECEDEA",
+       "c": "#1D2023"
+      },
+      {
+       "v": 5,
+       "tx": "ПУСК / ОСТАНОВ",
+       "f": "#E0A100",
+       "c": "#1D2023"
+      }
+     ]
+    },
+    {
+     "id": "e1036",
+     "t": "text",
+     "x": 16,
+     "y": 116,
+     "w": 180,
+     "h": 24,
+     "tx": "Скорость",
+     "size": 15,
+     "color": "#4B5157",
+     "align": "left"
+    },
+    {
+     "id": "e1037",
+     "t": "value",
+     "x": 254,
+     "y": 116,
+     "w": 150,
+     "h": 24,
+     "tag": "MY_DB.Motor[#].Speed",
+     "dec": 1,
+     "unit": "%",
+     "size": 17,
+     "align": "right"
+    },
+    {
+     "id": "e1038",
+     "t": "text",
+     "x": 16,
+     "y": 152,
+     "w": 180,
+     "h": 24,
+     "tx": "Задание",
+     "size": 15,
+     "color": "#4B5157",
+     "align": "left"
+    },
+    {
+     "id": "e1039",
+     "t": "input",
+     "x": 254,
+     "y": 150,
+     "w": 150,
+     "h": 28,
+     "tag": "MY_DB.Motor[#].SpeedSP",
+     "dec": 1,
+     "unit": "%",
+     "min": 0,
+     "max": 100,
+     "ti": "Мотор #: задание скорости, %"
+    },
+    {
+     "id": "e1040",
+     "t": "lamp",
+     "x": 16,
+     "y": 192,
+     "w": 18,
+     "h": 18,
+     "tag": "MY_DB.Motor[#].Local",
+     "on": "#E0A100",
+     "lb": "Местное управление",
+     "size": 14
+    },
+    {
+     "id": "e1041",
+     "t": "lamp",
+     "x": 220,
+     "y": 192,
+     "w": 18,
+     "h": 18,
+     "tag": "MY_DB.Motor[#].Fault",
+     "on": "#C42B2B",
+     "bl": true,
+     "lb": "Авария",
+     "size": 14
+    },
+    {
+     "id": "e1042",
+     "t": "button",
+     "x": 16,
+     "y": 250,
+     "w": 120,
+     "h": 48,
+     "tx": "ПУСК",
+     "style": "green",
+     "ac": {
+      "m": "all",
+      "l": [
+       {
+        "tag": "MY_DB.Motor[#].Run",
+        "op": "1",
+        "v": ""
+       }
+      ]
+     },
+     "en": {
+      "m": "all",
+      "l": [
+       {
+        "tag": "MY_DB.Motor[#].Local",
+        "op": "0",
+        "v": ""
+       }
+      ]
+     },
+     "why": "Мотор в местном управлении",
+     "act": {
+      "a": "write",
+      "tag": "MY_DB.Motor[#].Cmd",
+      "v": "1",
+      "cf": "Пустить мотор #?",
+      "log": "Оператор: пуск мотора #"
+     }
+    },
+    {
+     "id": "e1043",
+     "t": "button",
+     "x": 150,
+     "y": 250,
+     "w": 120,
+     "h": 48,
+     "tx": "СТОП",
+     "en": {
+      "m": "all",
+      "l": [
+       {
+        "tag": "MY_DB.Motor[#].Local",
+        "op": "0",
+        "v": ""
+       }
+      ]
+     },
+     "why": "Мотор в местном управлении",
+     "act": {
+      "a": "write",
+      "tag": "MY_DB.Motor[#].Cmd",
+      "v": "2",
+      "cf": "Остановить мотор #?",
+      "log": "Оператор: стоп мотора #"
+     }
+    },
+    {
+     "id": "e1044",
+     "t": "button",
+     "x": 284,
+     "y": 250,
+     "w": 120,
+     "h": 48,
+     "tx": "СБРОС",
+     "act": {
+      "a": "write",
+      "tag": "MY_DB.Motor[#].Cmd",
+      "v": "4",
+      "msg": "Сброс отправлен"
+     }
+    }
+   ]
+  }
+ ]
+}

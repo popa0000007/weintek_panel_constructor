@@ -1,0 +1,12 @@
+{
+ "cmdAddr": "Address|AAABFwBTaWVtZW5zIFM3LTEyMDAvUzctMTUwMGgHADEwMDAwMDAAAAAAAAIBAA==",
+ "speedAddr": "Address|AAABFwBTaWVtZW5zIFM3LTEyMDAvUzctMTUwMGgHADEwMDAwNDIAAAAAAAIBAA==",
+ "selAddr": "Address|AAABFwBTaWVtZW5zIFM3LTEyMDAvUzctMTUwMGgHADEwMDAxNzQAAAAAAAIBAA==",
+ "setAddr": "Address|AAABFwBTaWVtZW5zIFM3LTEyMDAvUzctMTUwMGgHADEwMTAwMDAAAAAAAAIBAA==",
+ "ioAddr": "Address|AAABFwBTaWVtZW5zIFM3LTEyMDAvUzctMTUwMGgHADEwMjAwMDAAAAAAAAIBAA==",
+ "demo": false,
+ "fontFamily": "Arial",
+ "useBold": true,
+ "boolHighByteFirst": true,
+ "realWordSwap": false
+}

@@ -1,0 +1,711 @@
+﻿// Обмен с панелью Weintek. Компилировать последним (после 4_GCU_IO_Main.scl).
+// HMI_GCU — DB100 (не оптимизированный, не сохраняемый): команды и состояние.
+// HMI_SET — DB101 (не оптимизированный, сохраняемый): уставки. Это единственное место,
+//            где меняются уставки ГЦУ: каждый цикл они проверяются и копируются в iGCU.
+// Номера DB задайте вручную: свойства блока -> General -> Number (manual).
+
+TYPE "UDT_HmiValve"
+TITLE = 'Задвижка для панели (4 байта)'
+VERSION : 0.1
+   STRUCT
+      F : Struct   // +0.0
+         Opened : Bool;
+         Closed : Bool;
+         Moving : Bool;
+         Fault : Bool;
+         Auto : Bool;
+         FltTravel : Bool;
+         FltLimits : Bool;
+         FltSwitch : Bool;
+         Target : Bool;
+         Local : Bool;
+         FltSignal : Bool;
+         Repair : Bool;
+         Res12 : Bool;
+         Res13 : Bool;
+         Res14 : Bool;
+         Res15 : Bool;
+      END_STRUCT;
+      View : Int;   // +2  0 закрыта, 1 открыта, 2 в движении, 3 авария, 4 ремонт, 5 положение неизвестно
+   END_STRUCT;
+
+END_TYPE
+
+TYPE "UDT_HmiPump"
+TITLE = 'Насос для панели (16 байт)'
+VERSION : 0.1
+   STRUCT
+      Step : Int;   // +0  шаг последовательности (0, 10..100, 200..280, 900..920)
+      FaultCode : Int;   // +2  код аварии линии
+      Speed : Real;   // +4  задание скорости, %
+      F : Struct   // +8.0
+         Running : Bool;
+         Ready : Bool;
+         Fault : Bool;
+         InRun : Bool;
+         Starting : Bool;
+         Stopping : Bool;
+         Remote : Bool;
+         FltDrive : Bool;
+         FltComm : Bool;
+         FltStart : Bool;
+         FltStop : Bool;
+         FltUnxStart : Bool;
+         FltUnxStop : Bool;
+         IsDuty : Bool;
+         Selected : Bool;
+         Repair : Bool;
+      END_STRUCT;
+      DrvState : Int;   // +10 состояние ПЧ: 1 не готов, 2 запрет вкл., 3 готов к вкл., 4 готов, 5 работа, 8 авария
+      Starts : Int;   // +12 счётчик пусков
+      View : Int;   // +14 0 стоит, 1 готов, 2 работа, 3 авария, 4 ремонт, 5 пуск/останов
+   END_STRUCT;
+
+END_TYPE
+
+DATA_BLOCK "HMI_GCU"
+TITLE = 'Обмен с панелью: команды и состояние'
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+NON_RETAIN
+   STRUCT
+      Cmd : Int;   // 0    ГЦУ: 1 пуск, 2 стоп, 4 сброс, 10 автомат, 11 ручной
+      PumpCmd : Array[1..2] of Int;   // 2    насос: 1 пуск, 2 стоп, 4 сброс (пуск/стоп — только РУЧНОЙ)
+      ValveCmd : Array[1..18] of Int;   // 6    задвижка: 1 открыть, 2 закрыть, 4 сброс
+      ManSpeed : Array[1..2] of Real;   // 42   ручное задание скорости, %
+      St : Struct   // 50.0
+         AutoMode : Bool;
+         ProgRun : Bool;
+         ReadyAuto : Bool;
+         CanSwitchAuto : Bool;
+         SystemRun : Bool;
+         PermitMill : Bool;
+         LevelOk : Bool;
+         PressOk : Bool;
+         Res8 : Bool;
+         Res9 : Bool;
+         Res10 : Bool;
+         Res11 : Bool;
+         Res12 : Bool;
+         Res13 : Bool;
+         Res14 : Bool;
+         Res15 : Bool;
+      END_STRUCT;
+      Alm : Struct   // 52.0
+         LevelBad : Bool;
+         PressBad : Bool;
+         LevelHH : Bool;
+         LevelH : Bool;
+         LevelL : Bool;
+         LevelLL : Bool;
+         LvlHiMaxCyc : Bool;
+         LvlLoMinCyc : Bool;
+         Pump1Fault : Bool;
+         Pump2Fault : Bool;
+         ABP : Bool;
+         NoPump : Bool;
+         CycFault : Bool;
+         LevelStop : Bool;
+         EStop : Bool;   // 53.6 аварийный стоп
+         Res15 : Bool;
+      END_STRUCT;
+      ActivePump : Int;   // 54
+      NCycOpen : Int;   // 56
+      Level : Real;   // 58   уровень зумпфа, %
+      Press : Real;   // 62   давление, бар
+      SpeedOut : Real;   // 66   задание от регулятора давления, %
+      Pump : Array[1..2] of "UDT_HmiPump";   // 70
+      Valve : Array[1..18] of "UDT_HmiValve";   // 102  1..6 Н-1, 7..12 Н-2, 13..18 ГЦ1..6
+      // ---- Всплывающее окно задвижки: одно на все 18, данные выбранной подставляет ПЛК ----
+      SelValve : Int;   // 174  номер выбранной задвижки 1..18 (пишет панель при открытии окна)
+      SelCmd : Int;   // 176  команда выбранной задвижке: 1 открыть, 2 закрыть, 4 сброс; 1001..1600 — время хода (код − 1000) с
+      Sel : "UDT_HmiValve";   // 178  состояние выбранной задвижки (копия Valve[SelValve])
+      SelTravel : Int;   // 182  допустимое время хода, с
+      SelCycles : Int;   // 184  счётчик циклов открытия/закрытия
+      SelCanCmd : Bool;   // 186.0  кнопки ОТКРЫТЬ/ЗАКРЫТЬ доступны (ручной, дистанция, нет аварии)
+      // ---- Давление в линиях нагнетания насосов (после насоса, до задвижки нагнетания) ----
+      LinePress : Array[1..2] of Real;   // 188, 192  бар: [1] линия 36.4 (Н-1, AI 15), [2] линия 36.5 (Н-2, AI 16)
+      LineOk : Array[1..2] of Bool;   // 196.0, 196.1  достоверность
+      // ---- Давление воздуха пневматики ПМУ ----
+      AirPress : Array[1..2] of Real;   // 198, 202  бар: [1] AI 17 (%IW39), [2] AI 18 (%IW77); на панели [1] — «ПМУ циклонов», [2] — «ПМУ насосов»
+      AirOk : Array[1..2] of Bool;   // 206.0, 206.1  достоверность
+      // ---- Гидроподпор насосов (окна насосов) ----
+      SealPress : Array[1..2] of Real;   // 208, 212  давление гидроподпора Н-1 / Н-2 (AI 7 / AI 8)
+      SealFlow : Array[1..2] of Real;   // 216, 220  расход гидроподпора Н-1 / Н-2 (AI 9 / AI 10)
+      SealOk : Struct   // 224.0  достоверность и уставки
+         Press1 : Bool;
+         Press2 : Bool;
+         Flow1 : Bool;
+         Flow2 : Bool;
+         Press1HH : Bool;   // 224.4  AlmHiHi давления Н-1
+         Press1LL : Bool;   // 224.5  AlmLoLo давления Н-1
+         Press2HH : Bool;   // 224.6
+         Press2LL : Bool;   // 224.7
+      END_STRUCT;
+      Alm2 : Struct   // 226.0  дополнительные аварии и предупреждения
+         EStopGCU : Bool;   // 226.0  нажата кнопка аварийного стопа: пульт ГЦУ (DI 73)
+         EStopCyc : Bool;   // 226.1  шкаф гидроциклонов (DI 74)
+         EStopPLC : Bool;   // 226.2  шкаф ПЛК (DI 96)
+         EStopHMI : Bool;   // 226.3  панель HMI (DI 97)
+         SealBad1 : Bool;   // 226.4  датчик давления гидроподпора Н-1 недостоверен (предупреждение)
+         SealBad2 : Bool;   // 226.5  датчик давления гидроподпора Н-2 недостоверен
+         DoorGCU : Bool;   // 226.6  пульт ГЦУ: дверь открыта (DI 82 = 0)
+         DoorCyc : Bool;   // 226.7  шкаф гидроциклонов: дверь открыта (DI 86 = 0)
+         DoorPLC : Bool;   // 227.0  шкаф ПЛК: дверь открыта (DI 94 = 1)
+         AirGCU : Bool;   // 227.1  пульт ГЦУ: нет давления воздуха (реле, DI 83 = 0)
+         AirCyc : Bool;   // 227.2  шкаф гидроциклонов: нет давления воздуха (реле, DI 87 = 0)
+         Light : Bool;   // 227.3  световая сигнализация включена
+         Horn : Bool;   // 227.4  звуковая сигнализация включена
+         Res13 : Bool;
+         Res14 : Bool;
+         Res15 : Bool;
+      END_STRUCT;   // размер DB 228 байт
+   END_STRUCT;
+
+
+BEGIN
+
+END_DATA_BLOCK
+
+DATA_BLOCK "HMI_SET"
+TITLE = 'Обмен с панелью: уставки (сохраняемые)'
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+   STRUCT
+      Press_SP : Real;   // 0  Уставка давления, бар
+      Press_Kp : Real;   // 4  Kp регулятора давления, %/бар
+      Press_Ti : Real;   // 8  Ti регулятора давления, с
+      Speed_Min : Real;   // 12  Скорость минимум, %
+      Speed_Max : Real;   // 16  Скорость максимум, %
+      Level_SP : Real;   // 20  Уставка уровня, %
+      Level_Hyst : Real;   // 24  Зона нечувствительности уровня ±, %
+      Level_StartMin : Real;   // 28  Минимум уровня для пуска, %
+      Cyc_T_Add : Int;   // 32  Подключение циклона через, с
+      Cyc_T_Remove : Int;   // 34  Отключение циклона через, с
+      Cyc_NStart : Int;   // 36  Циклонов при пуске, шт
+      Cyc_NMin : Int;   // 38  Циклонов минимум, шт
+      Cyc_NMax : Int;   // 40  Циклонов максимум, шт
+      DutyPump : Int;   // 42  Основной насос, 1/2
+      Repair : Struct   // 44.0  вывод в ремонт
+         Pump1 : Bool;
+         Pump2 : Bool;
+         Cyc1 : Bool;
+         Cyc2 : Bool;
+         Cyc3 : Bool;
+         Cyc4 : Bool;
+         Cyc5 : Bool;
+         Cyc6 : Bool;
+         Res8 : Bool;
+         Res9 : Bool;
+         Res10 : Bool;
+         Res11 : Bool;
+         Res12 : Bool;
+         Res13 : Bool;
+         Res14 : Bool;
+         Res15 : Bool;
+      END_STRUCT;
+      T_Scour : Int;   // 46  Размыв при пуске, с
+      T_FlushStart : Int;   // 48  Промывка при пуске, с
+      T_FlushStop : Int;   // 50  Промывка при останове, с
+      T_Drain : Int;   // 52  Дренаж, с
+   END_STRUCT;
+
+
+BEGIN
+   Press_SP := 1.0;
+   Press_Kp := 20.0;
+   Press_Ti := 10.0;
+   Speed_Min := 40.0;
+   Speed_Max := 100.0;
+   Level_SP := 70.0;
+   Level_Hyst := 5.0;
+   Level_StartMin := 30.0;
+   Cyc_T_Add := 30;
+   Cyc_T_Remove := 30;
+   Cyc_NStart := 2;
+   Cyc_NMin := 1;
+   Cyc_NMax := 6;
+   DutyPump := 1;
+   T_Scour := 10;
+   T_FlushStart := 20;
+   T_FlushStop := 30;
+   T_Drain := 60;
+
+END_DATA_BLOCK
+
+FUNCTION "GCU_HMI_In" : Void
+TITLE = 'Панель -> ГЦУ: команды и уставки'
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.4
+//Команды задвижкам и ПЧ уходят в стандартные DB (VALVE / MOTORDP) с Src = srcPanel.
+//Открыть/закрыть и пуск/стоп — только в РУЧНОМ; сброс аварий — всегда.
+   VAR_TEMP 
+      i : Int;
+   END_VAR
+
+
+BEGIN
+	// ---------- Команды ГЦУ ----------
+	CASE "HMI_GCU".Cmd OF
+	    1: "iGCU".HmiStart := TRUE;
+	    2: "iGCU".HmiStop := TRUE;
+	    4: "iGCU".HmiReset := TRUE;
+	    8: "iGCU".HmiAck := TRUE;   // квитировать: выключить звуковую сигнализацию
+	    10: "iGCU".HmiAuto := TRUE;
+	    11: "iGCU".HmiManual := TRUE;
+	END_CASE;
+	"HMI_GCU".Cmd := 0;
+	
+	// ---------- Команды насосов, ручное задание скорости ----------
+	FOR #i := 1 TO 2 DO
+	    CASE "HMI_GCU".PumpCmd[#i] OF
+	        1, 2:   // пуск / стоп ПЧ
+	            IF NOT "iGCU".AutoMode THEN
+	                "MOTORDP".Item[#i].Cmd := "HMI_GCU".PumpCmd[#i];
+	                "MOTORDP".Item[#i].Src := "srcPanel";
+	            END_IF;
+	        4:      // сброс аварий линии: ПЧ и её задвижки
+	            "iGCU".Pump[#i].HmiReset := TRUE;
+	            "iGCU".HmiAck := TRUE;   // любой сброс выключает звук
+	    END_CASE;
+	    "HMI_GCU".PumpCmd[#i] := 0;
+	    // в автомате поле на панели следит за заданием (безударный переход в ручной)
+	    IF "iGCU".AutoMode THEN
+	        "HMI_GCU".ManSpeed[#i] := "iGCU".Pump[#i].ManSpeed;
+	    ELSE
+	        "HMI_GCU".ManSpeed[#i] := LIMIT(MN := 0.0, IN := "HMI_GCU".ManSpeed[#i], MX := 100.0);
+	        "iGCU".Pump[#i].ManSpeed := "HMI_GCU".ManSpeed[#i];
+	    END_IF;
+	END_FOR;
+	
+	// ---------- Команды задвижек (ValveCmd[i] -> VALVE.Item[i]) ----------
+	// команда из всплывающего окна идёт так же, как из ValveCmd[SelValve]
+	// SelCmd 1001..1600 — не команда, а новое время хода (SelCmd - 1000) с: WaitOpen и WaitClose, в любом режиме
+	IF ("HMI_GCU".SelValve >= 1) AND ("HMI_GCU".SelValve <= 18) THEN
+	    IF ("HMI_GCU".SelCmd >= 1001) AND ("HMI_GCU".SelCmd <= 1600) THEN
+	        "VALVE".Item["HMI_GCU".SelValve].WaitOpen := INT_TO_DINT("HMI_GCU".SelCmd - 1000) * 1000;
+	        "VALVE".Item["HMI_GCU".SelValve].WaitClose := INT_TO_DINT("HMI_GCU".SelCmd - 1000) * 1000;
+	    ELSIF "HMI_GCU".SelCmd <> 0 THEN
+	        "HMI_GCU".ValveCmd["HMI_GCU".SelValve] := "HMI_GCU".SelCmd;
+	    END_IF;
+	END_IF;
+	"HMI_GCU".SelCmd := 0;
+	FOR #i := 1 TO 18 DO
+	    CASE "HMI_GCU".ValveCmd[#i] OF
+	        1, 2:   // открыть / закрыть
+	            IF NOT "iGCU".AutoMode THEN
+	                "VALVE".Item[#i].Cmd := "HMI_GCU".ValveCmd[#i];
+	                "VALVE".Item[#i].Src := "srcPanel";
+	            END_IF;
+	        4:      // сброс аварии
+	            "VALVE".Item[#i].Cmd := "cmdFLTRES";
+	            "VALVE".Item[#i].Src := "srcPanel";
+	            "iGCU".HmiAck := TRUE;   // любой сброс выключает звук
+	    END_CASE;
+	    "HMI_GCU".ValveCmd[#i] := 0;
+	END_FOR;
+	
+	// ---------- Уставки: проверка диапазона и копирование в iGCU ----------
+	"HMI_SET".Press_SP := LIMIT(MN := 0.1, IN := "HMI_SET".Press_SP, MX := 2.5);
+	"HMI_SET".Press_Kp := LIMIT(MN := 0.0, IN := "HMI_SET".Press_Kp, MX := 1000.0);
+	"HMI_SET".Press_Ti := LIMIT(MN := 0.0, IN := "HMI_SET".Press_Ti, MX := 3600.0);
+	"HMI_SET".Speed_Min := LIMIT(MN := 0.0, IN := "HMI_SET".Speed_Min, MX := 100.0);
+	"HMI_SET".Speed_Max := LIMIT(MN := "HMI_SET".Speed_Min, IN := "HMI_SET".Speed_Max, MX := 100.0);
+	"HMI_SET".Level_SP := LIMIT(MN := 5.0, IN := "HMI_SET".Level_SP, MX := 95.0);
+	"HMI_SET".Level_Hyst := LIMIT(MN := 0.5, IN := "HMI_SET".Level_Hyst, MX := 20.0);
+	"HMI_SET".Level_StartMin := LIMIT(MN := 0.0, IN := "HMI_SET".Level_StartMin, MX := 100.0);
+	"HMI_SET".Cyc_T_Add := LIMIT(MN := 1, IN := "HMI_SET".Cyc_T_Add, MX := 600);
+	"HMI_SET".Cyc_T_Remove := LIMIT(MN := 1, IN := "HMI_SET".Cyc_T_Remove, MX := 600);
+	"HMI_SET".Cyc_NStart := LIMIT(MN := 1, IN := "HMI_SET".Cyc_NStart, MX := 6);
+	"HMI_SET".Cyc_NMax := LIMIT(MN := 1, IN := "HMI_SET".Cyc_NMax, MX := 6);
+	"HMI_SET".Cyc_NMin := LIMIT(MN := 0, IN := "HMI_SET".Cyc_NMin, MX := "HMI_SET".Cyc_NMax);
+	"HMI_SET".DutyPump := LIMIT(MN := 1, IN := "HMI_SET".DutyPump, MX := 2);
+	"HMI_SET".T_Scour := LIMIT(MN := 1, IN := "HMI_SET".T_Scour, MX := 600);
+	"HMI_SET".T_FlushStart := LIMIT(MN := 1, IN := "HMI_SET".T_FlushStart, MX := 600);
+	"HMI_SET".T_FlushStop := LIMIT(MN := 1, IN := "HMI_SET".T_FlushStop, MX := 600);
+	"HMI_SET".T_Drain := LIMIT(MN := 1, IN := "HMI_SET".T_Drain, MX := 600);
+	
+	"iGCU".Press_SP := "HMI_SET".Press_SP;
+	"iGCU".Press_Kp := "HMI_SET".Press_Kp;
+	"iGCU".Press_Ti := "HMI_SET".Press_Ti;
+	"iGCU".Speed_Min := "HMI_SET".Speed_Min;
+	"iGCU".Speed_Max := "HMI_SET".Speed_Max;
+	"iGCU".Level_SP := "HMI_SET".Level_SP;
+	"iGCU".Level_Hyst := "HMI_SET".Level_Hyst;
+	"iGCU".Level_StartMin := "HMI_SET".Level_StartMin;
+	"iGCU".Cyc_NStart := "HMI_SET".Cyc_NStart;
+	"iGCU".Cyc_NMin := "HMI_SET".Cyc_NMin;
+	"iGCU".Cyc_NMax := "HMI_SET".Cyc_NMax;
+	"iGCU".DutyPump := "HMI_SET".DutyPump;
+	"iGCU".Cyc_T_Add := DINT_TO_TIME(INT_TO_DINT("HMI_SET".Cyc_T_Add) * 1000);
+	"iGCU".Cyc_T_Remove := DINT_TO_TIME(INT_TO_DINT("HMI_SET".Cyc_T_Remove) * 1000);
+	"iGCU".PumpDisabled[1] := "HMI_SET".Repair.Pump1;
+	"iGCU".PumpDisabled[2] := "HMI_SET".Repair.Pump2;
+	"iGCU".CycDisabled[1] := "HMI_SET".Repair.Cyc1;
+	"iGCU".CycDisabled[2] := "HMI_SET".Repair.Cyc2;
+	"iGCU".CycDisabled[3] := "HMI_SET".Repair.Cyc3;
+	"iGCU".CycDisabled[4] := "HMI_SET".Repair.Cyc4;
+	"iGCU".CycDisabled[5] := "HMI_SET".Repair.Cyc5;
+	"iGCU".CycDisabled[6] := "HMI_SET".Repair.Cyc6;
+	FOR #i := 1 TO 2 DO
+	    "iGCU".Pump[#i].T_Scour := DINT_TO_TIME(INT_TO_DINT("HMI_SET".T_Scour) * 1000);
+	    "iGCU".Pump[#i].T_FlushStart := DINT_TO_TIME(INT_TO_DINT("HMI_SET".T_FlushStart) * 1000);
+	    "iGCU".Pump[#i].T_FlushStop := DINT_TO_TIME(INT_TO_DINT("HMI_SET".T_FlushStop) * 1000);
+	    "iGCU".Pump[#i].T_Drain := DINT_TO_TIME(INT_TO_DINT("HMI_SET".T_Drain) * 1000);
+	END_FOR;
+
+END_FUNCTION
+
+FUNCTION "GCU_HMI_Out" : Void
+TITLE = 'ГЦУ -> панель: состояние'
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.4
+   VAR_TEMP 
+      i : Int;
+      Repair : Bool;
+   END_VAR
+
+
+BEGIN
+	// ---------- Общее состояние ----------
+	"HMI_GCU".St.AutoMode := "iGCU".AutoMode;
+	"HMI_GCU".St.ProgRun := "iGCU".ProgRun;
+	"HMI_GCU".St.ReadyAuto := "iGCU".ReadyAuto;
+	"HMI_GCU".St.CanSwitchAuto := "iGCU".CanSwitchAuto;
+	"HMI_GCU".St.SystemRun := "iGCU".SystemRun;
+	"HMI_GCU".St.PermitMill := "iGCU".PermitMill;
+	"HMI_GCU".St.LevelOk := "AI".Item[1].Quality;
+	"HMI_GCU".St.PressOk := "AI".Item[2].Quality;
+	"HMI_GCU".Alm.LevelBad := "iGCU".AlarmWord.%X0;
+	"HMI_GCU".Alm.PressBad := "iGCU".AlarmWord.%X1;
+	"HMI_GCU".Alm.LevelHH := "iGCU".AlarmWord.%X2;
+	"HMI_GCU".Alm.LevelH := "iGCU".AlarmWord.%X3;
+	"HMI_GCU".Alm.LevelL := "iGCU".AlarmWord.%X4;
+	"HMI_GCU".Alm.LevelLL := "iGCU".AlarmWord.%X5;
+	"HMI_GCU".Alm.LvlHiMaxCyc := "iGCU".AlarmWord.%X6;
+	"HMI_GCU".Alm.LvlLoMinCyc := "iGCU".AlarmWord.%X7;
+	"HMI_GCU".Alm.Pump1Fault := "iGCU".AlarmWord.%X8;
+	"HMI_GCU".Alm.Pump2Fault := "iGCU".AlarmWord.%X9;
+	"HMI_GCU".Alm.ABP := "iGCU".AlarmWord.%X10;
+	"HMI_GCU".Alm.NoPump := "iGCU".AlarmWord.%X11;
+	"HMI_GCU".Alm.CycFault := "iGCU".AlarmWord.%X12;
+	"HMI_GCU".Alm.LevelStop := "iGCU".AlarmWord.%X13;
+	"HMI_GCU".Alm.EStop := "iGCU".AlarmWord.%X14;
+	"HMI_GCU".ActivePump := "iGCU".ActivePump;
+	"HMI_GCU".NCycOpen := "iGCU".NCycOpen;
+	"HMI_GCU".Level := "AI".Item[1].Value;
+	"HMI_GCU".Press := "AI".Item[2].Value;
+	"HMI_GCU".SpeedOut := "iGCU".SpeedOut;
+	"HMI_GCU".LinePress[1] := "AI".Item[15].Value;
+	"HMI_GCU".LinePress[2] := "AI".Item[16].Value;
+	"HMI_GCU".LineOk[1] := "AI".Item[15].Quality;
+	"HMI_GCU".LineOk[2] := "AI".Item[16].Quality;
+	"HMI_GCU".AirPress[1] := "AI".Item[17].Value;
+	"HMI_GCU".AirPress[2] := "AI".Item[18].Value;
+	"HMI_GCU".AirOk[1] := "AI".Item[17].Quality;
+	"HMI_GCU".AirOk[2] := "AI".Item[18].Quality;
+	// гидроподпор
+	FOR #i := 1 TO 2 DO
+	    "HMI_GCU".SealPress[#i] := "AI".Item[6 + #i].Value;
+	    "HMI_GCU".SealFlow[#i] := "AI".Item[8 + #i].Value;
+	END_FOR;
+	"HMI_GCU".SealOk.Press1 := "AI".Item[7].Quality;
+	"HMI_GCU".SealOk.Press2 := "AI".Item[8].Quality;
+	"HMI_GCU".SealOk.Flow1 := "AI".Item[9].Quality;
+	"HMI_GCU".SealOk.Flow2 := "AI".Item[10].Quality;
+	"HMI_GCU".SealOk.Press1HH := "AI".Item[7].AlmHiHi;
+	"HMI_GCU".SealOk.Press1LL := "AI".Item[7].AlmLoLo;
+	"HMI_GCU".SealOk.Press2HH := "AI".Item[8].AlmHiHi;
+	"HMI_GCU".SealOk.Press2LL := "AI".Item[8].AlmLoLo;
+	// кнопки аварийного стопа (НО: 1 = нажата), двери, реле давления воздуха — только при достоверном сигнале
+	"HMI_GCU".Alm2.EStopGCU := "DI".Item[73].Value OR NOT "DI".Item[73].Quality;
+	"HMI_GCU".Alm2.EStopCyc := "DI".Item[74].Value OR NOT "DI".Item[74].Quality;
+	"HMI_GCU".Alm2.EStopPLC := "DI".Item[96].Value OR NOT "DI".Item[96].Quality;
+	"HMI_GCU".Alm2.EStopHMI := "DI".Item[97].Value OR NOT "DI".Item[97].Quality;
+	"HMI_GCU".Alm2.SealBad1 := NOT "AI".Item[7].Quality;
+	"HMI_GCU".Alm2.SealBad2 := NOT "AI".Item[8].Quality;
+	"HMI_GCU".Alm2.DoorGCU := "DI".Item[82].Quality AND NOT "DI".Item[82].Value;
+	"HMI_GCU".Alm2.DoorCyc := "DI".Item[86].Quality AND NOT "DI".Item[86].Value;
+	"HMI_GCU".Alm2.DoorPLC := "DI".Item[94].Quality AND "DI".Item[94].Value;
+	"HMI_GCU".Alm2.AirGCU := "DI".Item[83].Quality AND NOT "DI".Item[83].Value;
+	"HMI_GCU".Alm2.AirCyc := "DI".Item[87].Quality AND NOT "DI".Item[87].Value;
+	"HMI_GCU".Alm2.Light := "iGCU".Light;
+	"HMI_GCU".Alm2.Horn := "iGCU".Horn;
+	
+	// ---------- Насосы ----------
+	FOR #i := 1 TO 2 DO
+	    "HMI_GCU".Pump[#i].Step := "iGCU".Pump[#i].State;
+	    "HMI_GCU".Pump[#i].FaultCode := "iGCU".Pump[#i].FaultCode;
+	    "HMI_GCU".Pump[#i].Speed := "iGCU".Pump[#i].SpeedSP;
+	    "HMI_GCU".Pump[#i].F.Running := "iGCU".Pump[#i].IsRunning;
+	    "HMI_GCU".Pump[#i].F.Ready := "iGCU".Pump[#i].Ready;
+	    "HMI_GCU".Pump[#i].F.Fault := "iGCU".Pump[#i].FaultAny;
+	    "HMI_GCU".Pump[#i].F.InRun := "iGCU".Pump[#i].InRun;
+	    "HMI_GCU".Pump[#i].F.Starting := "iGCU".Pump[#i].Starting;
+	    "HMI_GCU".Pump[#i].F.Stopping := "iGCU".Pump[#i].Stopping;
+	    "HMI_GCU".Pump[#i].F.Remote := ("MOTORDP".Item[#i].Mode = "cmDistOper");
+	    "HMI_GCU".Pump[#i].F.FltDrive := "MOTORDP".Item[#i].FLT_DRIVE_FAULT;
+	    "HMI_GCU".Pump[#i].F.FltComm := "MOTORDP".Item[#i].FLT_QUAL;
+	    "HMI_GCU".Pump[#i].F.FltStart := "MOTORDP".Item[#i].FLT_START;
+	    "HMI_GCU".Pump[#i].F.FltStop := "MOTORDP".Item[#i].FLT_STOP;
+	    "HMI_GCU".Pump[#i].F.FltUnxStart := "MOTORDP".Item[#i].FLT_UNX_START;
+	    "HMI_GCU".Pump[#i].F.FltUnxStop := "MOTORDP".Item[#i].FLT_UNX_STOP;
+	    "HMI_GCU".Pump[#i].F.IsDuty := ("iGCU".DutyPump = #i);
+	    "HMI_GCU".Pump[#i].F.Selected := ("iGCU".ActivePump = #i);
+	    "HMI_GCU".Pump[#i].F.Repair := "iGCU".PumpDisabled[#i];
+	    "HMI_GCU".Pump[#i].DrvState := "MOTORDP".Item[#i].intState;
+	    "HMI_GCU".Pump[#i].Starts := "MOTORDP".Item[#i].OperCycle;
+	    // состояние для многопозиционного индикатора
+	    IF "HMI_GCU".Pump[#i].F.Repair THEN
+	        "HMI_GCU".Pump[#i].View := 4;
+	    ELSIF "HMI_GCU".Pump[#i].F.Fault THEN
+	        "HMI_GCU".Pump[#i].View := 3;
+	    ELSIF "HMI_GCU".Pump[#i].F.Starting OR "HMI_GCU".Pump[#i].F.Stopping THEN
+	        "HMI_GCU".Pump[#i].View := 5;
+	    ELSIF "HMI_GCU".Pump[#i].F.Running THEN
+	        "HMI_GCU".Pump[#i].View := 2;
+	    ELSIF "HMI_GCU".Pump[#i].F.Ready THEN
+	        "HMI_GCU".Pump[#i].View := 1;
+	    ELSE
+	        "HMI_GCU".Pump[#i].View := 0;
+	    END_IF;
+	END_FOR;
+	
+	// ---------- Задвижки (VALVE.Item[i] -> HMI_GCU.Valve[i]) ----------
+	FOR #i := 1 TO 18 DO
+	    #Repair := FALSE;
+	    IF #i >= 13 THEN
+	        #Repair := "iGCU".CycDisabled[#i - 12];
+	    END_IF;
+	    "HMI_GCU".Valve[#i].F.Opened := ("VALVE".Item[#i].State = "stIS_OPENED");
+	    "HMI_GCU".Valve[#i].F.Closed := ("VALVE".Item[#i].State = "stIS_CLOSED");
+	    "HMI_GCU".Valve[#i].F.Moving := ("VALVE".Item[#i].State = "stOPENING") OR ("VALVE".Item[#i].State = "stCLOSING");
+	    "HMI_GCU".Valve[#i].F.Fault := "VALVE".Item[#i].IsFault;
+	    "HMI_GCU".Valve[#i].F.Auto := "iGCU".AutoMode AND ("VALVE".Item[#i].Mode = "cmDistOper");
+	    "HMI_GCU".Valve[#i].F.FltTravel := "VALVE".Item[#i].FLT_OPEN OR "VALVE".Item[#i].FLT_CLOSE;
+	    "HMI_GCU".Valve[#i].F.FltLimits := "VALVE".Item[#i].FLT_SIGNAL OR "VALVE".Item[#i].FLT_UNX_OPEN OR "VALVE".Item[#i].FLT_UNX_CLOSE;
+	    "HMI_GCU".Valve[#i].F.FltSwitch := "VALVE".Item[#i].FLT_BIT_02;
+	    "HMI_GCU".Valve[#i].F.Target := ("VALVE".Item[#i].State = "stIS_OPENED") OR ("VALVE".Item[#i].State = "stOPENING");
+	    "HMI_GCU".Valve[#i].F.Local := ("VALVE".Item[#i].Mode = "cmLocal");
+	    "HMI_GCU".Valve[#i].F.FltSignal := "VALVE".Item[#i].FLT_QUAL;
+	    "HMI_GCU".Valve[#i].F.Repair := #Repair;
+	    // состояние для многопозиционного индикатора
+	    IF #Repair THEN
+	        "HMI_GCU".Valve[#i].View := 4;
+	    ELSIF "HMI_GCU".Valve[#i].F.Fault THEN
+	        "HMI_GCU".Valve[#i].View := 3;
+	    ELSIF "HMI_GCU".Valve[#i].F.Moving THEN
+	        "HMI_GCU".Valve[#i].View := 2;
+	    ELSIF "HMI_GCU".Valve[#i].F.Opened THEN
+	        "HMI_GCU".Valve[#i].View := 1;
+	    ELSIF "HMI_GCU".Valve[#i].F.Closed THEN
+	        "HMI_GCU".Valve[#i].View := 0;
+	    ELSE
+	        // нет ни одного концевика (или оба) и нет движения — положение неизвестно, а не «закрыта»
+	        "HMI_GCU".Valve[#i].View := 5;
+	    END_IF;
+	END_FOR;
+	
+	// ---------- Всплывающее окно: выбранная задвижка ----------
+	#i := "HMI_GCU".SelValve;
+	IF (#i >= 1) AND (#i <= 18) THEN
+	    "HMI_GCU".Sel := "HMI_GCU".Valve[#i];
+	    "HMI_GCU".SelTravel := DINT_TO_INT("VALVE".Item[#i].WaitOpen / 1000);
+	    "HMI_GCU".SelCycles := "VALVE".Item[#i].OperCycle;
+	    "HMI_GCU".SelCanCmd := NOT "iGCU".AutoMode AND NOT "HMI_GCU".Sel.F.Local AND NOT "HMI_GCU".Sel.F.Fault;
+	ELSE
+	    "HMI_GCU".Sel.F.Opened := FALSE;   // окно не выбрано — показываем пусто
+	    "HMI_GCU".Sel.F.Closed := FALSE;
+	    "HMI_GCU".Sel.F.Moving := FALSE;
+	    "HMI_GCU".Sel.F.Fault := FALSE;
+	    "HMI_GCU".Sel.View := 0;
+	    "HMI_GCU".SelTravel := 0;
+	    "HMI_GCU".SelCycles := 0;
+	    "HMI_GCU".SelCanCmd := FALSE;
+	END_IF;
+	
+END_FUNCTION
+
+DATA_BLOCK "HMI_IO"
+TITLE = 'Обмен с панелью: просмотр и правка сигнала DI/DO/AI/AO'
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+NON_RETAIN
+//Номер DB задайте вручную: 102. Панель пишет Kind + Id (выбор сигнала),
+//ПЛК каждый цикл копирует выбранный Item в буфер нужного типа.
+//Правка: панель пишет Kind, Id, Cmd (код поля), CmdVal одним запросом; ПЛК применяет и обнуляет Cmd.
+   STRUCT
+      Kind : Int;   // 0   1 DI, 2 DO, 3 AI, 4 AO
+      Id : Int;   // 2   номер сигнала (Item)
+      Cmd : Int;   // 4   код поля для правки (0 — нет)
+      CmdVal : Real;   // 6   новое значение (Bool: 0/1)
+      MaxId : Int;   // 10  размер массива выбранного типа
+      Ack : Int;   // 12  счётчик выполненных правок
+      DIn : "TDIData";   // 14  копия DI.Item[Id] (28 байт)
+      DOut : "TDOData";   // 42  копия DO.Item[Id] (20 байт)
+      AIn : "TAIData";   // 62  копия AI.Item[Id] (94 байта)
+      AOut : "TAOData";   // 156 копия AO.Item[Id] (42 байта) — размер DB 198 байт
+   END_STRUCT;
+
+
+BEGIN
+
+END_DATA_BLOCK
+
+FUNCTION "GCU_HMI_IO" : Void
+TITLE = 'Панель: просмотр и правка параметров сигнала'
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+//Коды полей (Cmd):
+//  1 Active, 2 Mask, 3 MaskValue(DI/DO, Bool), 4 AlmUse, 5 AlmMode, 6 AlmDisable, 7 Inverse, 8 StatBit_REV,
+//  9 HiHiUse, 10 HiUse, 11 LoUse, 12 LoLoUse,
+//  20 Tf, 21 Timeout (мс), 22 MaskValue (AI/AO, Real), 23 MinEU, 24 MaxEU, 25 HiHi, 26 Hi, 27 Lo, 28 LoLo,
+//  29 Factor, 30 Threshold, 31 AIType/AOType, 32 MinRaw, 33 MaxRaw, 34 Overflow, 35 Underflow
+   VAR_TEMP 
+      b : Bool;
+      n : Int;
+      r : Real;
+      d : DInt;
+      Done : Bool;
+   END_VAR
+
+
+BEGIN
+	#b := "HMI_IO".CmdVal >= 0.5;
+	#r := "HMI_IO".CmdVal;
+	#n := REAL_TO_INT(LIMIT(MN := -32768.0, IN := "HMI_IO".CmdVal, MX := 32767.0));
+	#d := REAL_TO_DINT(LIMIT(MN := 0.0, IN := "HMI_IO".CmdVal, MX := 3600000.0));
+	#Done := FALSE;
+	
+	CASE "HMI_IO".Kind OF
+	    1:  // ---------- DI ----------
+	        "HMI_IO".MaxId := 99;
+	        IF ("HMI_IO".Id >= 1) AND ("HMI_IO".Id <= 99) THEN
+	            #Done := TRUE;
+	            CASE "HMI_IO".Cmd OF
+	                1: "DI".Item["HMI_IO".Id].Active := #b;
+	                2: "DI".Item["HMI_IO".Id].Mask := #b;
+	                3: "DI".Item["HMI_IO".Id].MaskValue := #b;
+	                4: "DI".Item["HMI_IO".Id].AlmUse := #b;
+	                5: "DI".Item["HMI_IO".Id].AlmMode := #b;
+	                6: "DI".Item["HMI_IO".Id].AlmDisable := #b;
+	                7: "DI".Item["HMI_IO".Id].Inverse := #b;
+	                8: "DI".Item["HMI_IO".Id].StatBit_REV := #b;
+	                20: "DI".Item["HMI_IO".Id].Tf := LIMIT(MN := 0.0, IN := #r, MX := 60.0);
+	                21: "DI".Item["HMI_IO".Id].Timeout := #d;
+	                ELSE
+	                    #Done := FALSE;
+	            END_CASE;
+	            "HMI_IO".DIn := "DI".Item["HMI_IO".Id];
+	        END_IF;
+	        
+	    2:  // ---------- DO ----------
+	        "HMI_IO".MaxId := 44;
+	        IF ("HMI_IO".Id >= 1) AND ("HMI_IO".Id <= 44) THEN
+	            #Done := TRUE;
+	            CASE "HMI_IO".Cmd OF
+	                1: "DO".Item["HMI_IO".Id].Active := #b;
+	                2: "DO".Item["HMI_IO".Id].Mask := #b;
+	                3: "DO".Item["HMI_IO".Id].MaskValue := #b;
+	                7: "DO".Item["HMI_IO".Id].Inverse := #b;
+	                8: "DO".Item["HMI_IO".Id].StatBit_REV := #b;
+	                ELSE
+	                    #Done := FALSE;
+	            END_CASE;
+	            "HMI_IO".DOut := "DO".Item["HMI_IO".Id];
+	        END_IF;
+	        
+	    3:  // ---------- AI ----------
+	        "HMI_IO".MaxId := 18;
+	        IF ("HMI_IO".Id >= 1) AND ("HMI_IO".Id <= 18) THEN
+	            #Done := TRUE;
+	            CASE "HMI_IO".Cmd OF
+	                1: "AI".Item["HMI_IO".Id].Active := #b;
+	                2: "AI".Item["HMI_IO".Id].Mask := #b;
+	                6: "AI".Item["HMI_IO".Id].AlmDisable := #b;
+	                9: "AI".Item["HMI_IO".Id].HiHiUse := #b;
+	                10: "AI".Item["HMI_IO".Id].HiUse := #b;
+	                11: "AI".Item["HMI_IO".Id].LoUse := #b;
+	                12: "AI".Item["HMI_IO".Id].LoLoUse := #b;
+	                20: "AI".Item["HMI_IO".Id].Tf := LIMIT(MN := 0.0, IN := #r, MX := 60.0);
+	                21: "AI".Item["HMI_IO".Id].Timeout := #d;
+	                22: "AI".Item["HMI_IO".Id].MaskValue := #r;
+	                23: "AI".Item["HMI_IO".Id].MinEU := #r;
+	                24: "AI".Item["HMI_IO".Id].MaxEU := #r;
+	                25: "AI".Item["HMI_IO".Id].HiHi := #r;
+	                26: "AI".Item["HMI_IO".Id].Hi := #r;
+	                27: "AI".Item["HMI_IO".Id].Lo := #r;
+	                28: "AI".Item["HMI_IO".Id].LoLo := #r;
+	                29: "AI".Item["HMI_IO".Id].Factor := #r;
+	                30: "AI".Item["HMI_IO".Id].Threshold := LIMIT(MN := 0.0, IN := #r, MX := 10.0);
+	                31: "AI".Item["HMI_IO".Id].AIType := #n;
+	                32: "AI".Item["HMI_IO".Id].MinRaw := #n;
+	                33: "AI".Item["HMI_IO".Id].MaxRaw := #n;
+	                34: "AI".Item["HMI_IO".Id].Overflow := #n;
+	                35: "AI".Item["HMI_IO".Id].Underflow := #n;
+	                ELSE
+	                    #Done := FALSE;
+	            END_CASE;
+	            "HMI_IO".AIn := "AI".Item["HMI_IO".Id];
+	        END_IF;
+	        
+	    4:  // ---------- AO ----------
+	        "HMI_IO".MaxId := 2;
+	        IF ("HMI_IO".Id >= 1) AND ("HMI_IO".Id <= 2) THEN
+	            #Done := TRUE;
+	            CASE "HMI_IO".Cmd OF
+	                1: "AO".Item["HMI_IO".Id].Active := #b;
+	                2: "AO".Item["HMI_IO".Id].Mask := #b;
+	                22: "AO".Item["HMI_IO".Id].MaskValue := #r;
+	                23: "AO".Item["HMI_IO".Id].MinEU := #r;
+	                24: "AO".Item["HMI_IO".Id].MaxEU := #r;
+	                31: "AO".Item["HMI_IO".Id].AOType := #n;
+	                32: "AO".Item["HMI_IO".Id].MinRaw := #n;
+	                33: "AO".Item["HMI_IO".Id].MaxRaw := #n;
+	                ELSE
+	                    #Done := FALSE;
+	            END_CASE;
+	            "HMI_IO".AOut := "AO".Item["HMI_IO".Id];
+	        END_IF;
+	        
+	    ELSE
+	        "HMI_IO".MaxId := 0;
+	END_CASE;
+	
+	IF ("HMI_IO".Cmd <> 0) AND #Done THEN
+	    "HMI_IO".Ack := "HMI_IO".Ack + 1;
+	END_IF;
+	"HMI_IO".Cmd := 0;
+
+END_FUNCTION
+
+FUNCTION "GCU_Main" : Void
+TITLE = 'ГЦУ: вызвать в Main [OB1]'
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.6
+   VAR_TEMP 
+      i : Int;
+   END_VAR
+
+
+BEGIN
+	"GCU_Map_In"();     // DI_HNDL, AI_HNDL
+	"GCU_HMI_In"();     // команды и уставки панели
+	"iGCU"();           // алгоритм ГЦУ: команды механизмам (Src = srcAuto)
+	// драйверы задвижек -> DB DO
+	FOR #i := 1 TO "VALVE".Count DO
+	    "Valve_Driver"(ID := #i);
+	END_FOR;
+	// драйверы ПЧ -> слово управления по DP
+	FOR #i := 1 TO "MOTORDP".Count DO
+	    "MotorDP_Driver_Danfos"(ID := #i);
+	END_FOR;
+	"iPD"();            // пульподелитель: толчковое управление 3 задвижками -> DB DO
+	// световая и звуковая сигнализация (общая авария ГЦУ)
+	"DO".Item[43].Value := "iGCU".Light;
+	"DO".Item[44].Value := "iGCU".Horn;
+	"GCU_Map_Out"();    // DO_HNDL, AO_HNDL
+	"GCU_HMI_Out"();    // состояние для панели
+	"GCU_HMI_IO"();     // окно «Входы/выходы» панели: просмотр и правка сигнала
+	
+END_FUNCTION
